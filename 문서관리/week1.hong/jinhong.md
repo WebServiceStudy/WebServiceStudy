@@ -302,5 +302,5 @@
        spring.datasource.hikari.jdbc-url=jdbc:h2:mem://localhost/~/testdb;MODE=MYSQL
        spring.h2.console.enabled=true
        ```
-5. test123
+
     </details>
