@@ -1,5 +1,5 @@
 <div align="center">
-작성자(버전) | 수정일 / jinhong(Ver.0.3.) / 27th August 2022year
+작성자(버전) | 수정일 / jinhong(Ver.0.4.) / 28th August 2022year
 </div>
 
 # 환경세팅
