@@ -15,14 +15,15 @@
 
 - 소프트웨어 개발 키트(Software Development Kit)
     - JDK 1.8.0.2.1
+
 - 개발 툴(Devolver Tool)
     - IntelliJ IDEA
-
+    - DB (MySQL)
+   
 - 형상관리(Version Control Revision Control)
     - GitHub
 
   </details>
-
 
   <details markdown="1">
   <summary>Spring boot initializr 생성</summary>
@@ -303,4 +304,36 @@
        spring.h2.console.enabled=true
        ```
 
-    </details>
+   </details>
+   
+   <details markdown="1">
+   <summary>MySQL 스키마</summary>
+
+   - MySQL 설치
+     - Window
+         1.
+
+       - Linux
+         1. 
+
+   
+   - MySQL Setting 스키마 - Table 구축은 나중에
+      ```mysql
+      # CREATE USER '<본인 이름>'@localhost IDENTIFIED BY '****';
+      CREATE USER 'jinhong'@localhost IDENTIFIED BY '****';
+   
+      # GRANT ALL PRIVILEGES ON <web_service_study_DB>.*(하위) '본인이름'@localhost;
+      GRANT ALL PRIVILEGES ON web_service_study_DB.* TO 'jinhong'@localhost;
+      SHOW DATABASES;
+   
+      use web_service_study_DB;
+   
+      # 삭제 건들지마시오.
+      # DROP DATABASE WEBSERVICESTUDY_DB;
+   
+      CREATE DATABASE web_service_study_DB default CHARACTER SET UTF8;
+   
+      CREATE DATABASE WEBSERVICESTUDY_DB;
+      ```
+     
+   </details>
