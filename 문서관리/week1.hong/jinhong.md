@@ -1,5 +1,5 @@
 <div align="center">
-작성자(버전) | 수정일 / jinhong(Ver.0.4.) / 28th August 2022year
+작성자(버전) | 수정일 / jinhong(Ver.0.4.) / 29th August 2022year
 </div>
 
 # 환경세팅
@@ -311,11 +311,100 @@
 
    - MySQL 설치
      - Window
-         1.
+         1. [MYSQL 공식홈페이지](www.mysql.com/) 접속
 
-       - Linux
-         1. 
+            <div align="center">
+                  <img src="https://user-images.githubusercontent.com/66407386/187079915-263d613e-9764-4f93-9453-28cafbdd5d7d.png" width="500" height="" />
+            </div>
 
+         2. 공식홈페이지 상단 네비게이션에서 "DOWNLOADS" → MySQL Community(GPL) Downloads → MySQL Community Server → 해당 버전 맞게 설정
+
+            <div align="center">
+                  <img src="https://user-images.githubusercontent.com/66407386/187079905-f219b442-453c-4929-afeb-44db1f0e0639.png" width="500" height="" />
+            </div>
+
+         3. Developer Default" 선택 후 Next 클릭
+
+            <div align="center">
+                  <img src="https://user-images.githubusercontent.com/66407386/187079942-e0c98d46-13a6-4ad9-9439-40eb592949aa.png" width="500" height="" />
+            </div>
+
+         4. 포트 설정 
+
+            <div align="center">
+                  <img src="https://user-images.githubusercontent.com/66407386/187079993-8ceee9b5-d3a9-4889-9020-d3a3c17873cd.png" width="500" height="" />
+            </div>
+
+
+         5. MYSQL Accounts 설정
+         
+            <div align="center">
+                  <img src="https://user-images.githubusercontent.com/66407386/187080012-7a94e7ca-198d-4555-a2c4-91e040857221.png" width="500" height="" />
+            </div>
+
+              > 조금 있다 사용해야하기 때문에 꼭 기억해두자. 
+
+            <div align="center">
+                  <img src="https://user-images.githubusercontent.com/66407386/187080059-64a1b46c-7e60-48ee-90e3-d13592d924ae.png" width="500" height="" />
+            </div>
+
+              > 위에 Accounts 설정했던 방식으로 설정 내용 작성
+
+         6. MYSQL Workbench 실행
+         
+            <div align="center">
+                  <img src="https://user-images.githubusercontent.com/66407386/187080042-031528cd-82da-48a2-8f34-ff3c26115fb1.png" width="500" height="" />
+            </div>
+         
+         7. 아래 MySQL Setting 스키마 copy 하여 해당 본인에 맞게 설정
+
+     - Linux (Homebrew를 이용한 MySQL 설치)
+         1. "터미널" 접속 Homebrew가 설치되었는지 아래와 같이 확인
+            ```shell
+              // homebrew가 있는지 확인
+              brew 
+              
+              // homebrew의 최신 버전 업데이트 진행
+              brew update
+            ```
+          
+         2. MySQL 설치 
+            ```shell
+              // MySQL 설치 명령어
+              brew install mysql" 
+              
+              // 설치 완료가 뜨게 된다면 
+              brew list로 설치가 되었는지 확인
+            ```
+           
+         3. MySQL서버를 실행 및 설정 내용
+            ```shell
+             // Mysql서버를 실행싵킨다.
+             mysql.server start
+             
+             Would you like to setup VALIDATE PASSWORD component?" - (해석) 비밀번호 관련 가이드 설정에 관한 질문이다.
+                Yes = 복잡한 비밀번호 설정
+                "No" = 쉬운 비밀번호 설정
+             
+             "Remove anonymous users?" - (해석) 사용자 설정을 묻는 질문이다.
+                "Yes" = "mysql -u root" 처럼 -u 옵션이 필요하다.
+                No = "mysql"처럼 -u 옵션이 필요 없다.
+             
+             "Disallow root login remotely?" - (해석) 다른 IP에서 root 아이디로 원격접속을 설청하는 질문이다.
+                "Yes" = 원격접속 불가능
+                No = 원격접속 가능
+            
+            
+              "Remove test database and access to it?" - (해석) Test 데이터베이스 관련 설정하는 질문이다.
+                "Yes" = Test 데이터베이스 제거
+                No = Test 데이터베이스 유지
+
+              "Reload privilege tables now?" - (해석) 변경된 권한을 테이블에 적용하는 설정에 대한 질문이다.
+                "Yes" = 적용시킨다.
+                No = 적용시키지 않는다.
+            ```
+           
+         4. MySQL 실행 및 아래 MySQL Setting 스키마 copy 하여 해당 본인에 맞게 설정
    
    - MySQL Setting 스키마 - Table 구축은 나중에
       ```mysql
@@ -337,3 +426,11 @@
       ```
      
    </details>
+
+#### 참고자료 및 출처
+1. [윈도우 MYSQL 설정](https://goddaehee.tistory.com/277)
+
+---
+<div align="center">
+   문제 발생시 이슈에 코멘트를 달아주시면 감사하겠습니다.
+</div>
