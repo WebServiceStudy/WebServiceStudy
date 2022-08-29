@@ -1,10 +1,10 @@
  3주차. 개인 정리 내용
 
 ### 목차
-1. [MySQL 테이블 기초 초안]()
+1. [MySQL 테이블 기초 초안](https://github.com/WebServiceStudy/WebServiceStudy/blob/main/%EB%AC%B8%EC%84%9C%EA%B4%80%EB%A6%AC/week3/hong/jinhong.md#1-mysql-%ED%85%8C%EC%9D%B4%EB%B8%94-%EA%B8%B0%EC%B4%88-%EC%B4%88%EC%95%88)
 2. []()
 3. []()
-4. [참고자료]()
+4. [참고자료](https://github.com/WebServiceStudy/WebServiceStudy/blob/main/%EB%AC%B8%EC%84%9C%EA%B4%80%EB%A6%AC/week3/hong/jinhong.md#%EC%B0%B8%EA%B3%A0%EC%9E%90%EB%A3%8C)
 
 ---
 
