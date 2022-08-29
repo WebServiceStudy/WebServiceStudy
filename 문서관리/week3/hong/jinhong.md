@@ -25,7 +25,7 @@ CREATE TABLE member_table (
 	mb_Ins_date 	VARCHAR(8), 				 /* 유저_추가일 */
 	mb_upd_date 	VARCHAR(8), 				 /* 유저_수정일 */
 	mb_alias_name	VARCHAR(20)	NOT NULL,		 /* 유저_닉네임 */
-	mb_photo	VARCHAR(100)				 /* 유저_프로필 */
+	mb_photo	VARCHAR(1000)				 /* 유저_프로필 */
 	mb_account_lev 	VARCHAR(10) 				 /* 유저_등급 */
 	mb_account_yn 	VARCHAR(1), 				 /* 유저_휴먼계정여부 */
 	mb_lastlog_date VARCHAR(8)				 /* 유저_마지막_접속일 */
@@ -61,7 +61,7 @@ CREATE TABLE board_?_table (
 	brd_upd_date	VARCHAR(18),		 		 /* 게시판_수정일 */
 	brd_title	VARCHAR(100)	NOT NULL,		 /* 게시판_제목 */
 	brd_writer	VARCHAR(20)	NOT NULL,		 /* 게시판_작성자 - IF익명이 있다면 NOT NULL 제거 ELSE 닉네임 적용 */
-	brd_contents	BLOB,		 			/* 게시판_내용 */
+	brd_contents	VARCHAR(1000),	 			 /* 게시판_내용 */
 	brd_see_cnt	INT		NOT NULL,		 /* 게시판_조회수 */
 ) ENGINE=MYISAM CHARSET=utf8;
 
