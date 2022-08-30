@@ -2,9 +2,8 @@
 
 ### 목차
 1. [MySQL 테이블 기초 초안](https://github.com/WebServiceStudy/WebServiceStudy/blob/main/%EB%AC%B8%EC%84%9C%EA%B4%80%EB%A6%AC/week3/hong/jinhong.md#1-mysql-%ED%85%8C%EC%9D%B4%EB%B8%94-%EA%B8%B0%EC%B4%88-%EC%B4%88%EC%95%88)
-2. []()
-3. []()
-4. [참고자료](https://github.com/WebServiceStudy/WebServiceStudy/blob/main/%EB%AC%B8%EC%84%9C%EA%B4%80%EB%A6%AC/week3/hong/jinhong.md#%EC%B0%B8%EA%B3%A0%EC%9E%90%EB%A3%8C)
+2. [주제는 무엇으로 할까?]()
+3. [참고자료](https://github.com/WebServiceStudy/WebServiceStudy/blob/main/%EB%AC%B8%EC%84%9C%EA%B4%80%EB%A6%AC/week3/hong/jinhong.md#%EC%B0%B8%EA%B3%A0%EC%9E%90%EB%A3%8C)
 
 ---
 
@@ -70,6 +69,36 @@ CREATE TABLE reply_table (
 
 ) ENGINE=MYISAM CHARSET=utf8;
 ```
+
+#### 2. 주제는 무엇으로 할까?
+- 주제
+  1. (강함) 서울시 버스 위치 홈페이지 제작
+     - 필요한 API 및 기타 라이브러리
+       - [네이버 로그인](https://developers.naver.com/products/login/api/api.md)
+       - [카카오 로그인](https://developers.kakao.com/docs/latest/ko/kakaologin/common)
+       - [구글 로그인](https://choseongho93.tistory.com/327)
+       - [버스 GPS API](http://api.bus.go.kr/) 
+       - [kakao지도 API](https://apis.map.kakao.com/)
+       - [소켓 io](https://socket.io/docs/v4/)      
+    <br/>
+  2. (중간) 직장인 무작위 매칭 홈페이지 
+     - 필요한 API 및 기타 라이브러리
+       - [네이버 로그인](https://developers.naver.com/products/login/api/api.md)
+       - [카카오 로그인](https://developers.kakao.com/docs/latest/ko/kakaologin/common)
+       - [구글 로그인](https://choseongho93.tistory.com/327)
+       - [kakao지도 API](https://apis.map.kakao.com/)  
+       - [소켓 io](https://socket.io/docs/v4/)
+    <br/><br/>
+  3. (중간) 맛집 탐방 홈페이지
+     - 필요한 API 및 기타 라이브러리
+       - [네이버 로그인](https://developers.naver.com/products/login/api/api.md)
+       - [카카오 로그인](https://developers.kakao.com/docs/latest/ko/kakaologin/common)
+       - [구글 로그인](https://choseongho93.tistory.com/327)
+       - [kakao지도 API](https://apis.map.kakao.com/)
+     <br/><br/>  
+  4. (약함) 클론코딩
+    
+
 
 #### 참고자료
 1. [[MySQL] BLOB vs TEXT](https://m.blog.naver.com/PostView.naver?isHttpsRedirect=true&blogId=sory1008&logNo=2209322494500)
