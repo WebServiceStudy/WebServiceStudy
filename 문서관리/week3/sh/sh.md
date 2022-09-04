@@ -41,17 +41,18 @@ password는 3번에서 MYSQL_ROOT_PASSWORD=1234 여기서 1234 부분입니다.
     
 
 ### 3.mysql 세팅 
-해당 부분은 각자 사용하시는 db 툴로 진행하시면 좋을거 같습니다. 저는 제가 쓰는 툴로 진행하겠습니다
-- db 연결
-![img_2.png](img_2.png)
-- query console 창 오픈 후 create database web_service_study_DB;
+해당 부분은 각자 사용하시는 db 툴로 진행하시면 좋을거 같습니다. 저는 제가 쓰는 툴로 진행하겠습니다   <br><br> 
+db 연결  
+![img_2.png](img_2.png)  <br>
+query console 창 오픈 후 create database web_service_study_DB;
 ![img_3.png](img_3.png)
-- 프로젝트 내 application.properties 작성
-  - spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver
-    spring.datasource.url=jdbc:mysql://localhost:3306/web_service_study_DB?useSSL=false&useUnicode=true&serverTimezone=Asia/Seoul
-    spring.datasource.username=root
-    spring.datasource.password=비밀번호
-    spring.jpa.open-in-view=false
+프로젝트 내 application.properties 작성  
+
+     spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver
+     spring.datasource.url=jdbc:mysql://localhost:3306/web_service_study_DB?useSSL=false&useUnicode=true&serverTimezone=Asia/Seoul
+     spring.datasource.username=root
+     spring.datasource.password=비밀번호
+     spring.jpa.open-in-view=false
 
     
 
