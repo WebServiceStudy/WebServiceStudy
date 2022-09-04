@@ -31,10 +31,12 @@ cmd 창 오픈 후 아래 명령어 순서대로 <br>
     CONTAINER ID   IMAGE          COMMAND                  CREATED        STATUS                   PORTS                               NAMES
     55cb7d8d3515   mysql:latest   "docker-entrypoint.s…"   8 days ago     Up 58 minutes            0.0.0.0:3306->3306/tcp, 33060/tcp   mysql
     
+    5.docker exec -it <3번에서 지정한 컨테이너 이름> bash -> 컨테이너 내부로 접속  
     
-5.docker exec -it <3번에서 지정한 컨테이너 이름> bash -> 컨테이너 내부로 접속  
-6.mysql -u root -p  
+    6.mysql -u root -p  
+
 ![img_1.png](img_1.png)  
+
 password는 3번에서 MYSQL_ROOT_PASSWORD=1234 여기서 1234 부분입니다.
     
 
