@@ -1,7 +1,7 @@
-package com.wss.webservicestudy.web.domain.posts;
+package com.wss.webservicestudy.web.domain.feed;
 
-import com.wss.webservicestudy.web.domain.posts.entity.Posts;
-import com.wss.webservicestudy.web.domain.posts.repository.PostsRepository;
+import com.wss.webservicestudy.web.domain.feed.entity.Posts;
+import com.wss.webservicestudy.web.domain.feed.repository.PostsRepository;
 import org.junit.After;
 import org.junit.Test;
 import org.junit.runner.RunWith;
