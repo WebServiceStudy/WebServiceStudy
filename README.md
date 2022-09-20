@@ -35,13 +35,13 @@
             <a href="https://github.com/hongcoding94"><img width="75px" src="https://avatars.githubusercontent.com/u/66407386?v=4" /></a>
         </td>
         <td align="center">
-            <a href="https://github.com/rlorloc47"><img width="75px" src="https://avatars.githubusercontent.com/u/89571328?v=4" /></a>
+            <a href=" "><img width="75px" src=" " /></a>
         </td>
         <td align="center">
             <a href="https://github.com/je-pa"><img width="75px" src="https://avatars.githubusercontent.com/u/76720692?v=4" /></a>
         </td>
         <td align="center">
-            <a href="https://github.com/tkfmxh"><img width="75px" src="https://avatars.githubusercontent.com/u/60864023?v=4" /></a>
+            <a href=" "><img width="75px" src=" " /></a>
         </td>
         <td align="center">
             <a href="https://github.com/tkdgus97"><img width="75px" src="https://avatars.githubusercontent.com/u/106962275?v=4" /></a>
@@ -56,9 +56,9 @@
     <tr>
         <td align="center">name<br/>(ID)</td>
         <td align="center">정진홍<br/>(hongcoding94)</td>
-        <td align="center">조은<br/>(rlorloc47)</td>
+        <td align="center"> <br/></td>
         <td align="center">박지은<br/>( je-pa )</td>
-        <td align="center">홍석인<br/>(tkfmxh)</td>
+        <td align="center"> <br/></td>
         <td align="center">전상현<br/>(tkdgus97)</td>
         <td align="center">김유미<br/>(gkfgran5037)</td>
         <td align="center">김우진<br/>(dnwlsrla40)</td>
