@@ -8,6 +8,16 @@ group = 'com.wss'
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '17'
 
+configurations {
+	compileOnly {
+		extendsFrom annotationProcessor
+	}
+	all {
+		//logback과의 충돌 방지
+		exclude group: 'org.springframework.boot', module: 'spring-boot-starter-logging'
+	}
+}
+
 repositories {
 	mavenCentral()
 }
@@ -42,5 +52,8 @@ dependencies {
 	//Swagger2 - https://mvnrepository.com/artifact/io.springfox/springfox-swagger-ui
 	implementation group: 'io.springfox', name: 'springfox-swagger-ui', version: '2.9.2'
 	implementation group: 'io.springfox', name: 'springfox-swagger2', version: '2.9.2'
+
+	// slf4j2
+	implementation 'org.springframework.boot:spring-boot-starter-log4j2'
 }
 
