@@ -30,6 +30,12 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	testImplementation 'junit:junit:4.13.1'
 
+	// Sprint Security
+	implementation 'org.springframework.boot:spring-boot-starter-security'
+
+	// OAuth2
+	implementation 'org.springframework.security:spring-security-oauth2-client'
+	implementation 'org.springframework.security:spring-security-oauth2-jose'
 	// 5.X ↓ 에서 사용
 	// implementation 'org.projectlombok:lombok'
 
@@ -49,11 +55,13 @@ dependencies {
 	implementation 'mysql:mysql-connector-java:'
 	runtimeOnly 'mysql:mysql-connector-java'
 
-	//Swagger2 - https://mvnrepository.com/artifact/io.springfox/springfox-swagger-ui
+	//Swagger2
 	implementation group: 'io.springfox', name: 'springfox-swagger-ui', version: '2.9.2'
 	implementation group: 'io.springfox', name: 'springfox-swagger2', version: '2.9.2'
 
-	// slf4j2
+	// log4j2
 	implementation 'org.springframework.boot:spring-boot-starter-log4j2'
+
+
 }
 
