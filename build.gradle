@@ -13,7 +13,7 @@ configurations {
 		extendsFrom annotationProcessor
 	}
 	all {
-		//logback과의 충돌 방지
+		// logback과의 충돌 방지
 		exclude group: 'org.springframework.boot', module: 'spring-boot-starter-logging'
 	}
 }
@@ -55,7 +55,7 @@ dependencies {
 	implementation 'mysql:mysql-connector-java:'
 	runtimeOnly 'mysql:mysql-connector-java'
 
-	//Swagger2
+	// Swagger2
 	implementation group: 'io.springfox', name: 'springfox-swagger-ui', version: '2.9.2'
 	implementation group: 'io.springfox', name: 'springfox-swagger2', version: '2.9.2'
 
