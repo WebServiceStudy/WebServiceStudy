@@ -32,6 +32,12 @@ public class SwaggerConfig {
     }
 
     @Bean
+    public Docket testApi() {
+        return restAPI("테스트", Predicates.or(
+                PathSelectors.regex("/test.*")));
+    }
+
+    @Bean
     public Docket commonApi() {
         return restAPI("공통", Predicates.or(
                 PathSelectors.regex("/common.*")));
@@ -86,7 +92,7 @@ public class SwaggerConfig {
     private ApiInfo apiInfo() {
         return new ApiInfoBuilder()
                 .title("WSS Spring Boot REST API")
-                .version("1.0.0")
+                .version("ver 1.2")
                 .description("Web Service Study 프로젝트")
                 .build();
     }
@@ -99,8 +105,16 @@ public class SwaggerConfig {
         responseMessages.add(new ResponseMessageBuilder().code(401).message("미 로그인").build());
         responseMessages.add(new ResponseMessageBuilder().code(403).message("권한없음").build());
         responseMessages.add(new ResponseMessageBuilder().code(404).message("경로 오류").build());
+        responseMessages.add(new ResponseMessageBuilder().code(405).message("허용되지 않는 메소드").build());
+        responseMessages.add(new ResponseMessageBuilder().code(408).message("요청 시간초과").build());
         responseMessages.add(new ResponseMessageBuilder().code(412).message("처리중 오류").build());
+        responseMessages.add(new ResponseMessageBuilder().code(444).message("응답 없음").build());
         responseMessages.add(new ResponseMessageBuilder().code(500).message("서버에러").build());
+        responseMessages.add(new ResponseMessageBuilder().code(503).message("서버 과부화").build());
+        responseMessages.add(new ResponseMessageBuilder().code(505).message("HTTP 지원하지 않는 요청").build());
+        responseMessages.add(new ResponseMessageBuilder().code(507).message("용량 부족").build());
+        responseMessages.add(new ResponseMessageBuilder().code(511).message("네트워크 인증 필요").build());
+        responseMessages.add(new ResponseMessageBuilder().code(520).message("명확하지 않음 에러[Unknown Error]").build());
         return responseMessages;
     }
 }
