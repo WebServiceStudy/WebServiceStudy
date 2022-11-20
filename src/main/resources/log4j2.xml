@@ -3,7 +3,7 @@
 
     <!-- 해당 설정파일에서 사용하는 프로퍼티-->
     <Properties>
-        <property name="LOGS_PATH">C:\test_logs</property>
+        <property name="LOGS_PATH">C://test_logs</property>
     </Properties>
 
     <Appenders>
@@ -14,8 +14,8 @@
 
         <!-- 파일 -->
         <RollingFile name ="RollingFile">
-            <FileName>${LOGS_PATH}/log4j2.log</FileName>
-            <FilePattern>${LOGS_PATH}/log4j2.%d{yyyy-MM-dd}.%i.log.gz</FilePattern>
+            <FileName>${LOGS_PATH}\log4j2.log</FileName>
+            <FilePattern>${LOGS_PATH}\log4j2.%d{yyyy-MM-dd}.%i.log.gz</FilePattern>
             <PatternLayout>
                 <Pattern>%d{yyyy-MM-dd HH:mm:ss} %5p [%c] %m%n</Pattern>
             </PatternLayout>
