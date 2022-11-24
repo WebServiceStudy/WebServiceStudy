@@ -14,8 +14,8 @@ import java.util.Map;
 @RequestMapping("/api/v1")
 public class TestController {
 
-    @ApiOperation(value="MAP 테스트")
-    @GetMapping("user/search")
+    @ApiOperation(value="MAP 테스트", notes="해당 map 테스트입니다.")
+    @GetMapping("/user/search")
     public Map<String, String> search() {
         Map<String, String> response = new HashMap<String, String>();
         response.put("name", "taehong.kim");
