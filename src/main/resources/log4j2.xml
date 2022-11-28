@@ -3,7 +3,8 @@
 
     <!-- 해당 설정파일에서 사용하는 프로퍼티-->
     <Properties>
-        <property name="LOGS_PATH">C:\test_logs</property>
+        <property name="LOGS_PATH_MAC">C:\test_logs</property>      <!-- mac버전 -->
+        <!--<property name="LOGS_PATH_WIN">c:/logs/log.log"</property>  window버전 -->
     </Properties>
 
     <Appenders>
@@ -14,14 +15,15 @@
 
         <!-- 파일 -->
         <RollingFile name ="RollingFile">
-            <FileName>${LOGS_PATH}/log4j2.log</FileName>
-            <FilePattern>${LOGS_PATH}/log4j2.%d{yyyy-MM-dd}.%i.log.gz</FilePattern>
+            <FileName>${LOGS_PATH_MAC}/log4j2.log</FileName>
+            <FilePattern>${LOGS_PATH_MAC}/log4j2.%d{yyyy-MM-dd}.%i.log.gz</FilePattern>
             <PatternLayout>
                 <Pattern>%d{yyyy-MM-dd HH:mm:ss} %5p [%c] %m%n</Pattern>
             </PatternLayout>
             <Policies>
-                <SizeBasedTriggeringPolicy size="200MB"/>
-                <TimeBasedTriggeringPolicy interval = "1" modulate = "true"/>
+                <SizeBasedTriggeringPolicy size="2000MB"/> <!-- 2000MB 용량이 초과시 DefaultRolloverStrategy 정책만큼 넘버링 -->
+                <TimeBasedTriggeringPolicy interval = "1" modulate = "true"/><!-- 일별 로그 파일 생성-->
+                <DefaultRolloverStrategy max="500" fileIndex="min" /><!-- 롤링 파일 500개 까지 생성 -->
             </Policies>
         </RollingFile>
     </Appenders>
@@ -44,5 +46,10 @@
             <AppenderRef ref="console" />
             <AppenderRef ref="RollingFile" />
         </Root>
+
+        <logger name="com.test" additivity="false" >
+            <AppenderRef ref="console" level="info" />
+            <AppenderRef ref="file" level="debug" />
+        </logger>
     </Loggers>
 </Configuration>
