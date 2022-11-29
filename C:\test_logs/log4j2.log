@@ -1,0 +1,102 @@
+2022-11-25 00:59:12  WARN [com.zaxxer.hikari.pool.HikariPool] HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=9m41s593ms).
+2022-11-25 01:53:31  WARN [com.zaxxer.hikari.pool.HikariPool] HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=50m19s497ms).
+2022-11-25 02:56:58  WARN [com.zaxxer.hikari.pool.HikariPool] HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=1h3m26s635ms).
+2022-11-25 04:04:31  WARN [com.zaxxer.hikari.pool.HikariPool] HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=1h7m32s941ms).
+2022-11-25 04:54:03  WARN [com.zaxxer.hikari.pool.HikariPool] HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=49m32s8ms).
+2022-11-25 05:40:37  WARN [com.zaxxer.hikari.pool.HikariPool] HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=46m33s785ms).
+2022-11-25 05:57:24  WARN [com.zaxxer.hikari.pool.HikariPool] HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=16m46s920ms).
+2022-11-25 06:14:34  WARN [com.zaxxer.hikari.pool.HikariPool] HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=17m9s838ms).
+2022-11-25 06:49:25  WARN [com.zaxxer.hikari.pool.HikariPool] HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=34m51s236ms).
+2022-11-25 07:24:34  WARN [com.zaxxer.hikari.pool.HikariPool] HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=35m8s767ms).
+2022-11-25 08:13:44  WARN [com.zaxxer.hikari.pool.HikariPool] HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=49m10s336ms).
+2022-11-25 08:46:25  WARN [com.zaxxer.hikari.pool.HikariPool] HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=32m41s231ms).
+2022-11-25 09:38:10  WARN [com.zaxxer.hikari.pool.HikariPool] HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=51m44s725ms).
+2022-11-25 10:25:10  WARN [com.zaxxer.hikari.pool.HikariPool] HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=47m403ms).
+2022-11-25 10:58:02  WARN [com.zaxxer.hikari.pool.HikariPool] HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=32m51s579ms).
+2022-11-25 11:47:25  WARN [com.zaxxer.hikari.pool.HikariPool] HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=49m23s559ms).
+2022-11-25 12:35:57  WARN [com.zaxxer.hikari.pool.HikariPool] HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=48m31s577ms).
+2022-11-25 13:25:24  WARN [com.zaxxer.hikari.pool.HikariPool] HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=49m27s250ms).
+2022-11-25 13:59:59  WARN [com.zaxxer.hikari.pool.HikariPool] HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=34m34s966ms).
+2022-11-25 14:48:46  WARN [com.zaxxer.hikari.pool.HikariPool] HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=48m46s691ms).
+2022-11-25 15:23:24  WARN [com.zaxxer.hikari.pool.HikariPool] HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=34m38s597ms).
+2022-11-25 16:12:33  WARN [com.zaxxer.hikari.pool.HikariPool] HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=49m8s748ms).
+2022-11-25 17:02:53  WARN [com.zaxxer.hikari.pool.HikariPool] HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=50m19s857ms).
+2022-11-25 17:37:16  WARN [com.zaxxer.hikari.pool.HikariPool] HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=34m23s314ms).
+2022-11-25 18:27:19  WARN [com.zaxxer.hikari.pool.HikariPool] HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=50m2s774ms).
+2022-11-25 19:14:53  WARN [com.zaxxer.hikari.pool.HikariPool] HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=47m33s597ms).
+2022-11-25 19:26:16  WARN [com.zaxxer.hikari.pool.HikariPool] HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=11m23s419ms).
+2022-11-25 19:26:46  WARN [com.zaxxer.hikari.pool.HikariPool] HikariPool-1 - Retrograde clock change detected (housekeeper delta=29s846ms), soft-evicting connections from pool.
+2022-11-25 19:40:07  INFO [org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean] Closing JPA EntityManagerFactory for persistence unit 'default'
+2022-11-25 19:40:07  INFO [com.zaxxer.hikari.HikariDataSource] HikariPool-1 - Shutdown initiated...
+2022-11-25 19:40:07  INFO [com.zaxxer.hikari.HikariDataSource] HikariPool-1 - Shutdown completed.
+2022-11-25 19:40:22  INFO [com.wss.webservicestudy.WebservicestudyApplication] Starting WebservicestudyApplication using Java 17.0.4.1 on Jinhongui-MacBookPro.local with PID 98471 (/Users/jinhongjeong/WebServiceStudy/build/classes/java/main started by jinhongjeong in /Users/jinhongjeong/WebServiceStudy)
+2022-11-25 19:40:22  INFO [com.wss.webservicestudy.WebservicestudyApplication] No active profile set, falling back to 1 default profile: "default"
+2022-11-25 19:40:23  INFO [org.springframework.data.repository.config.RepositoryConfigurationDelegate] Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2022-11-25 19:40:23  INFO [org.springframework.data.repository.config.RepositoryConfigurationDelegate] Finished Spring Data repository scanning in 11 ms. Found 0 JPA repository interfaces.
+2022-11-25 19:40:23  INFO [org.springframework.boot.web.embedded.tomcat.TomcatWebServer] Tomcat initialized with port(s): 80 (http)
+2022-11-25 19:40:23  INFO [org.apache.coyote.http11.Http11NioProtocol] Initializing ProtocolHandler ["http-nio-80"]
+2022-11-25 19:40:23  INFO [org.apache.catalina.core.StandardService] Starting service [Tomcat]
+2022-11-25 19:40:23  INFO [org.apache.catalina.core.StandardEngine] Starting Servlet engine: [Apache Tomcat/9.0.65]
+2022-11-25 19:40:23  INFO [org.apache.catalina.core.ContainerBase.[Tomcat].[localhost].[/]] Initializing Spring embedded WebApplicationContext
+2022-11-25 19:40:23  INFO [org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext] Root WebApplicationContext: initialization completed in 1546 ms
+2022-11-25 19:40:23  INFO [org.hibernate.jpa.internal.util.LogHelper] HHH000204: Processing PersistenceUnitInfo [name: default]
+2022-11-25 19:40:23  INFO [org.hibernate.Version] HHH000412: Hibernate ORM core version 5.6.10.Final
+2022-11-25 19:40:24  INFO [org.hibernate.annotations.common.Version] HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+2022-11-25 19:40:24  INFO [com.zaxxer.hikari.HikariDataSource] HikariPool-1 - Starting...
+2022-11-25 19:40:24  INFO [com.zaxxer.hikari.HikariDataSource] HikariPool-1 - Start completed.
+2022-11-25 19:40:24  INFO [org.hibernate.dialect.Dialect] HHH000400: Using dialect: org.hibernate.dialect.MySQL57Dialect
+2022-11-25 19:40:24  INFO [org.hibernate.engine.transaction.jta.platform.internal.JtaPlatformInitiator] HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2022-11-25 19:40:24  INFO [org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean] Initialized JPA EntityManagerFactory for persistence unit 'default'
+2022-11-25 19:40:24  WARN [org.springframework.boot.autoconfigure.orm.jpa.JpaBaseConfiguration$JpaWebConfiguration] spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2022-11-25 19:40:24  WARN [org.springframework.boot.autoconfigure.security.servlet.UserDetailsServiceAutoConfiguration] 
+
+Using generated security password: 8866b295-1219-4b96-b87b-6e63d4a4e686
+
+This generated password is for development use only. Your security configuration must be updated before running your application in production.
+
+2022-11-25 19:40:24  INFO [org.springframework.security.web.DefaultSecurityFilterChain] Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@696ce057, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@5eba9e41, org.springframework.security.web.context.SecurityContextPersistenceFilter@1468fc85, org.springframework.security.web.header.HeaderWriterFilter@632dc41, org.springframework.security.web.csrf.CsrfFilter@4ca907af, org.springframework.security.web.authentication.logout.LogoutFilter@65da1cbe, org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter@5cf80dfb, org.springframework.security.web.authentication.ui.DefaultLoginPageGeneratingFilter@7f8f5d37, org.springframework.security.web.authentication.ui.DefaultLogoutPageGeneratingFilter@13809363, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@63ed5dae, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@d70dbeb, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@564d3940, org.springframework.security.web.session.SessionManagementFilter@3aa1c45, org.springframework.security.web.access.ExceptionTranslationFilter@3921e96f, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@746f8520]
+2022-11-25 19:40:24  INFO [springfox.documentation.spring.web.PropertySourcedRequestMappingHandlerMapping] Mapped URL path [/v2/api-docs] onto method [springfox.documentation.swagger2.web.Swagger2Controller#getDocumentation(String, HttpServletRequest)]
+2022-11-25 19:40:25  INFO [org.apache.coyote.http11.Http11NioProtocol] Starting ProtocolHandler ["http-nio-80"]
+2022-11-25 19:40:25  INFO [org.springframework.boot.web.embedded.tomcat.TomcatWebServer] Tomcat started on port(s): 80 (http) with context path ''
+2022-11-25 19:40:25  INFO [springfox.documentation.spring.web.plugins.DocumentationPluginsBootstrapper] Context refreshed
+2022-11-25 19:40:25  INFO [springfox.documentation.spring.web.plugins.DocumentationPluginsBootstrapper] Found 8 custom documentation plugin(s)
+2022-11-25 19:40:25  INFO [springfox.documentation.spring.web.scanners.ApiListingReferenceScanner] Scanning for api listing references
+2022-11-25 19:40:25  INFO [springfox.documentation.spring.web.scanners.ApiListingReferenceScanner] Scanning for api listing references
+2022-11-25 19:40:25  INFO [springfox.documentation.spring.web.scanners.ApiListingReferenceScanner] Scanning for api listing references
+2022-11-25 19:40:25  INFO [springfox.documentation.spring.web.scanners.ApiListingReferenceScanner] Scanning for api listing references
+2022-11-25 19:40:25  INFO [springfox.documentation.spring.web.scanners.ApiListingReferenceScanner] Scanning for api listing references
+2022-11-25 19:40:25  INFO [springfox.documentation.spring.web.scanners.ApiListingReferenceScanner] Scanning for api listing references
+2022-11-25 19:40:25  INFO [springfox.documentation.spring.web.readers.operation.CachingOperationNameGenerator] Generating unique operation named: homeUsingGET_1
+2022-11-25 19:40:25  INFO [springfox.documentation.spring.web.readers.operation.CachingOperationNameGenerator] Generating unique operation named: homeUsingHEAD_1
+2022-11-25 19:40:25  INFO [springfox.documentation.spring.web.readers.operation.CachingOperationNameGenerator] Generating unique operation named: homeUsingPOST_1
+2022-11-25 19:40:25  INFO [springfox.documentation.spring.web.readers.operation.CachingOperationNameGenerator] Generating unique operation named: homeUsingPUT_1
+2022-11-25 19:40:25  INFO [springfox.documentation.spring.web.readers.operation.CachingOperationNameGenerator] Generating unique operation named: homeUsingPATCH_1
+2022-11-25 19:40:25  INFO [springfox.documentation.spring.web.readers.operation.CachingOperationNameGenerator] Generating unique operation named: homeUsingDELETE_1
+2022-11-25 19:40:25  INFO [springfox.documentation.spring.web.readers.operation.CachingOperationNameGenerator] Generating unique operation named: homeUsingOPTIONS_1
+2022-11-25 19:40:25  INFO [springfox.documentation.spring.web.readers.operation.CachingOperationNameGenerator] Generating unique operation named: homeUsingTRACE_1
+2022-11-25 19:40:25  INFO [springfox.documentation.spring.web.scanners.ApiListingReferenceScanner] Scanning for api listing references
+2022-11-25 19:40:25  INFO [springfox.documentation.spring.web.readers.operation.CachingOperationNameGenerator] Generating unique operation named: homeUsingGET_2
+2022-11-25 19:40:25  INFO [springfox.documentation.spring.web.readers.operation.CachingOperationNameGenerator] Generating unique operation named: homeUsingHEAD_2
+2022-11-25 19:40:25  INFO [springfox.documentation.spring.web.readers.operation.CachingOperationNameGenerator] Generating unique operation named: homeUsingPOST_2
+2022-11-25 19:40:25  INFO [springfox.documentation.spring.web.readers.operation.CachingOperationNameGenerator] Generating unique operation named: homeUsingPUT_2
+2022-11-25 19:40:25  INFO [springfox.documentation.spring.web.readers.operation.CachingOperationNameGenerator] Generating unique operation named: homeUsingPATCH_2
+2022-11-25 19:40:25  INFO [springfox.documentation.spring.web.readers.operation.CachingOperationNameGenerator] Generating unique operation named: homeUsingDELETE_2
+2022-11-25 19:40:25  INFO [springfox.documentation.spring.web.readers.operation.CachingOperationNameGenerator] Generating unique operation named: homeUsingOPTIONS_2
+2022-11-25 19:40:25  INFO [springfox.documentation.spring.web.readers.operation.CachingOperationNameGenerator] Generating unique operation named: homeUsingTRACE_2
+2022-11-25 19:40:25  INFO [springfox.documentation.spring.web.readers.operation.CachingOperationNameGenerator] Generating unique operation named: homeUsingGET_3
+2022-11-25 19:40:25  INFO [springfox.documentation.spring.web.readers.operation.CachingOperationNameGenerator] Generating unique operation named: homeUsingHEAD_3
+2022-11-25 19:40:25  INFO [springfox.documentation.spring.web.readers.operation.CachingOperationNameGenerator] Generating unique operation named: homeUsingPOST_3
+2022-11-25 19:40:25  INFO [springfox.documentation.spring.web.readers.operation.CachingOperationNameGenerator] Generating unique operation named: homeUsingPUT_3
+2022-11-25 19:40:25  INFO [springfox.documentation.spring.web.readers.operation.CachingOperationNameGenerator] Generating unique operation named: homeUsingPATCH_3
+2022-11-25 19:40:25  INFO [springfox.documentation.spring.web.readers.operation.CachingOperationNameGenerator] Generating unique operation named: homeUsingDELETE_3
+2022-11-25 19:40:25  INFO [springfox.documentation.spring.web.readers.operation.CachingOperationNameGenerator] Generating unique operation named: homeUsingOPTIONS_3
+2022-11-25 19:40:25  INFO [springfox.documentation.spring.web.readers.operation.CachingOperationNameGenerator] Generating unique operation named: homeUsingTRACE_3
+2022-11-25 19:40:25  INFO [springfox.documentation.spring.web.scanners.ApiListingReferenceScanner] Scanning for api listing references
+2022-11-25 19:40:25  INFO [com.wss.webservicestudy.WebservicestudyApplication] Started WebservicestudyApplication in 3.683 seconds (JVM running for 4.752)
+2022-11-25 19:40:35  INFO [org.apache.catalina.core.ContainerBase.[Tomcat].[localhost].[/]] Initializing Spring DispatcherServlet 'dispatcherServlet'
+2022-11-25 19:40:35  INFO [org.springframework.web.servlet.DispatcherServlet] Initializing Servlet 'dispatcherServlet'
+2022-11-25 19:40:35  INFO [org.springframework.web.servlet.DispatcherServlet] Completed initialization in 2 ms
+2022-11-25 19:55:24  WARN [com.zaxxer.hikari.pool.HikariPool] HikariPool-1 - Retrograde clock change detected (housekeeper delta=29s863ms), soft-evicting connections from pool.
+2022-11-25 20:03:57  INFO [org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean] Closing JPA EntityManagerFactory for persistence unit 'default'
+2022-11-25 20:03:57  INFO [com.zaxxer.hikari.HikariDataSource] HikariPool-1 - Shutdown initiated...
+2022-11-25 20:03:57  INFO [com.zaxxer.hikari.HikariDataSource] HikariPool-1 - Shutdown completed.
