@@ -8,6 +8,16 @@ group = 'com.wss'
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '17'
 
+configurations {
+	compileOnly {
+		extendsFrom annotationProcessor
+	}
+	all {
+		// logback과의 충돌 방지
+		exclude group: 'org.springframework.boot', module: 'spring-boot-starter-logging'
+	}
+}
+
 repositories {
 	mavenCentral()
 }
@@ -17,8 +27,14 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	implementation 'org.springframework.boot:spring-boot-starter-web'
-	testImplementation 'junit:junit:4.13.1'
+	testImplementation 'junit:junit:4.13.2'
 
+	// Sprint Security
+	implementation 'org.springframework.boot:spring-boot-starter-security'
+
+	// OAuth2
+	implementation 'org.springframework.security:spring-security-oauth2-client'
+	implementation 'org.springframework.security:spring-security-oauth2-jose'
 	// 5.X ↓ 에서 사용
 	// implementation 'org.projectlombok:lombok'
 
@@ -37,8 +53,21 @@ dependencies {
 	// MySQL
 	implementation 'mysql:mysql-connector-java:'
 	runtimeOnly 'mysql:mysql-connector-java'
+
+	// Swagger2
+	implementation group: 'io.springfox', name: 'springfox-swagger-ui', version: '2.9.2'
+	implementation group: 'io.springfox', name: 'springfox-swagger2', version: '2.9.2'
+
+	// log4j2
+	implementation 'org.springframework.boot:spring-boot-starter-log4j2'
+
+	// https://mvnrepository.com/artifact/com.googlecode.json-simple/json-simple
+	implementation group: 'com.googlecode.json-simple', name: 'json-simple', version: '1.1.1'
+
+	// https://mvnrepository.com/artifact/org.webjars/jquery
+	implementation group: 'org.webjars', name: 'jquery', version: '3.5.1'
+
+	// Thymeleaf (뷰 템플릿 엔진)
+	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
 }
 
-tasks.named('test') {
-	useJUnitPlatform()
-}
