@@ -1737,3 +1737,62 @@ org.thymeleaf.exceptions.TemplateInputException: Error resolving template [index
 2022-12-02 21:03:34  INFO [org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean] Closing JPA EntityManagerFactory for persistence unit 'default'
 2022-12-02 21:03:34  INFO [com.zaxxer.hikari.HikariDataSource] HikariPool-1 - Shutdown initiated...
 2022-12-02 21:03:34  INFO [com.zaxxer.hikari.HikariDataSource] HikariPool-1 - Shutdown completed.
+2022-12-02 21:55:57  INFO [com.wss.webservicestudy.WebservicestudyApplication] Starting WebservicestudyApplication using Java 17.0.5 on DESKTOP-5KJR8CB with PID 18572 (C:\code\WebServiceStudy\build\classes\java\main started by break in C:\code\WebServiceStudy)
+2022-12-02 21:55:57  INFO [com.wss.webservicestudy.WebservicestudyApplication] The following 1 profile is active: "oauth"
+2022-12-02 21:55:57  INFO [org.springframework.data.repository.config.RepositoryConfigurationDelegate] Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2022-12-02 21:55:57  INFO [org.springframework.data.repository.config.RepositoryConfigurationDelegate] Finished Spring Data repository scanning in 43 ms. Found 1 JPA repository interfaces.
+2022-12-02 21:55:58  INFO [org.springframework.boot.web.embedded.tomcat.TomcatWebServer] Tomcat initialized with port(s): 8080 (http)
+2022-12-02 21:55:58  INFO [org.apache.coyote.http11.Http11NioProtocol] Initializing ProtocolHandler ["http-nio-8080"]
+2022-12-02 21:55:58  INFO [org.apache.catalina.core.StandardService] Starting service [Tomcat]
+2022-12-02 21:55:58  INFO [org.apache.catalina.core.StandardEngine] Starting Servlet engine: [Apache Tomcat/9.0.65]
+2022-12-02 21:55:58  INFO [org.apache.catalina.core.ContainerBase.[Tomcat].[localhost].[/]] Initializing Spring embedded WebApplicationContext
+2022-12-02 21:55:58  INFO [org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext] Root WebApplicationContext: initialization completed in 1170 ms
+2022-12-02 21:55:58  INFO [org.hibernate.jpa.internal.util.LogHelper] HHH000204: Processing PersistenceUnitInfo [name: default]
+2022-12-02 21:55:58  INFO [org.hibernate.Version] HHH000412: Hibernate ORM core version 5.6.10.Final
+2022-12-02 21:55:58  INFO [org.hibernate.annotations.common.Version] HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+2022-12-02 21:55:58  INFO [com.zaxxer.hikari.HikariDataSource] HikariPool-1 - Starting...
+2022-12-02 21:55:58  INFO [com.zaxxer.hikari.HikariDataSource] HikariPool-1 - Start completed.
+2022-12-02 21:55:58  INFO [org.hibernate.dialect.Dialect] HHH000400: Using dialect: org.hibernate.dialect.MySQL57Dialect
+2022-12-02 21:55:58 ERROR [org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean] Failed to initialize JPA EntityManagerFactory: The [com.wss.webservicestudy.web.domain.user.entity.User] and [com.wss.webservicestudy.web.user.entity.User] entities share the same JPA entity name: [User] which is not allowed!
+2022-12-02 21:55:58  WARN [org.springframework.boot.web.servlet.context.AnnotationConfigServletWebServerApplicationContext] Exception encountered during context initialization - cancelling refresh attempt: org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'entityManagerFactory' defined in class path resource [org/springframework/boot/autoconfigure/orm/jpa/HibernateJpaConfiguration.class]: Invocation of init method failed; nested exception is org.hibernate.DuplicateMappingException: The [com.wss.webservicestudy.web.domain.user.entity.User] and [com.wss.webservicestudy.web.user.entity.User] entities share the same JPA entity name: [User] which is not allowed!
+2022-12-02 21:55:58  INFO [com.zaxxer.hikari.HikariDataSource] HikariPool-1 - Shutdown initiated...
+2022-12-02 21:55:58  INFO [com.zaxxer.hikari.HikariDataSource] HikariPool-1 - Shutdown completed.
+2022-12-02 21:55:58  INFO [org.apache.catalina.core.StandardService] Stopping service [Tomcat]
+2022-12-02 21:55:58  INFO [org.springframework.boot.autoconfigure.logging.ConditionEvaluationReportLoggingListener] 
+
+Error starting ApplicationContext. To display the conditions report re-run your application with 'debug' enabled.
+2022-12-02 21:55:58 ERROR [org.springframework.boot.SpringApplication] Application run failed
+org.springframework.beans.factory.BeanCreationException: Error creating bean with name 'entityManagerFactory' defined in class path resource [org/springframework/boot/autoconfigure/orm/jpa/HibernateJpaConfiguration.class]: Invocation of init method failed; nested exception is org.hibernate.DuplicateMappingException: The [com.wss.webservicestudy.web.domain.user.entity.User] and [com.wss.webservicestudy.web.user.entity.User] entities share the same JPA entity name: [User] which is not allowed!
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1804) ~[spring-beans-5.3.22.jar:5.3.22]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.doCreateBean(AbstractAutowireCapableBeanFactory.java:620) ~[spring-beans-5.3.22.jar:5.3.22]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.createBean(AbstractAutowireCapableBeanFactory.java:542) ~[spring-beans-5.3.22.jar:5.3.22]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.lambda$doGetBean$0(AbstractBeanFactory.java:335) ~[spring-beans-5.3.22.jar:5.3.22]
+	at org.springframework.beans.factory.support.DefaultSingletonBeanRegistry.getSingleton(DefaultSingletonBeanRegistry.java:234) ~[spring-beans-5.3.22.jar:5.3.22]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.doGetBean(AbstractBeanFactory.java:333) ~[spring-beans-5.3.22.jar:5.3.22]
+	at org.springframework.beans.factory.support.AbstractBeanFactory.getBean(AbstractBeanFactory.java:208) ~[spring-beans-5.3.22.jar:5.3.22]
+	at org.springframework.context.support.AbstractApplicationContext.getBean(AbstractApplicationContext.java:1154) ~[spring-context-5.3.22.jar:5.3.22]
+	at org.springframework.context.support.AbstractApplicationContext.finishBeanFactoryInitialization(AbstractApplicationContext.java:908) ~[spring-context-5.3.22.jar:5.3.22]
+	at org.springframework.context.support.AbstractApplicationContext.refresh(AbstractApplicationContext.java:583) ~[spring-context-5.3.22.jar:5.3.22]
+	at org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext.refresh(ServletWebServerApplicationContext.java:147) ~[spring-boot-2.7.3.jar:2.7.3]
+	at org.springframework.boot.SpringApplication.refresh(SpringApplication.java:734) ~[spring-boot-2.7.3.jar:2.7.3]
+	at org.springframework.boot.SpringApplication.refreshContext(SpringApplication.java:408) ~[spring-boot-2.7.3.jar:2.7.3]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:308) ~[spring-boot-2.7.3.jar:2.7.3]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1306) ~[spring-boot-2.7.3.jar:2.7.3]
+	at org.springframework.boot.SpringApplication.run(SpringApplication.java:1295) ~[spring-boot-2.7.3.jar:2.7.3]
+	at com.wss.webservicestudy.WebservicestudyApplication.main(WebservicestudyApplication.java:11) ~[main/:?]
+Caused by: org.hibernate.DuplicateMappingException: The [com.wss.webservicestudy.web.domain.user.entity.User] and [com.wss.webservicestudy.web.user.entity.User] entities share the same JPA entity name: [User] which is not allowed!
+	at org.hibernate.boot.internal.InFlightMetadataCollectorImpl.addEntityBinding(InFlightMetadataCollectorImpl.java:311) ~[hibernate-core-5.6.10.Final.jar:5.6.10.Final]
+	at org.hibernate.cfg.AnnotationBinder.bindClass(AnnotationBinder.java:813) ~[hibernate-core-5.6.10.Final.jar:5.6.10.Final]
+	at org.hibernate.boot.model.source.internal.annotations.AnnotationMetadataSourceProcessorImpl.processEntityHierarchies(AnnotationMetadataSourceProcessorImpl.java:225) ~[hibernate-core-5.6.10.Final.jar:5.6.10.Final]
+	at org.hibernate.boot.model.process.spi.MetadataBuildingProcess$1.processEntityHierarchies(MetadataBuildingProcess.java:239) ~[hibernate-core-5.6.10.Final.jar:5.6.10.Final]
+	at org.hibernate.boot.model.process.spi.MetadataBuildingProcess.complete(MetadataBuildingProcess.java:282) ~[hibernate-core-5.6.10.Final.jar:5.6.10.Final]
+	at org.hibernate.jpa.boot.internal.EntityManagerFactoryBuilderImpl.metadata(EntityManagerFactoryBuilderImpl.java:1460) ~[hibernate-core-5.6.10.Final.jar:5.6.10.Final]
+	at org.hibernate.jpa.boot.internal.EntityManagerFactoryBuilderImpl.build(EntityManagerFactoryBuilderImpl.java:1494) ~[hibernate-core-5.6.10.Final.jar:5.6.10.Final]
+	at org.springframework.orm.jpa.vendor.SpringHibernateJpaPersistenceProvider.createContainerEntityManagerFactory(SpringHibernateJpaPersistenceProvider.java:58) ~[spring-orm-5.3.22.jar:5.3.22]
+	at org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean.createNativeEntityManagerFactory(LocalContainerEntityManagerFactoryBean.java:365) ~[spring-orm-5.3.22.jar:5.3.22]
+	at org.springframework.orm.jpa.AbstractEntityManagerFactoryBean.buildNativeEntityManagerFactory(AbstractEntityManagerFactoryBean.java:409) ~[spring-orm-5.3.22.jar:5.3.22]
+	at org.springframework.orm.jpa.AbstractEntityManagerFactoryBean.afterPropertiesSet(AbstractEntityManagerFactoryBean.java:396) ~[spring-orm-5.3.22.jar:5.3.22]
+	at org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean.afterPropertiesSet(LocalContainerEntityManagerFactoryBean.java:341) ~[spring-orm-5.3.22.jar:5.3.22]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.invokeInitMethods(AbstractAutowireCapableBeanFactory.java:1863) ~[spring-beans-5.3.22.jar:5.3.22]
+	at org.springframework.beans.factory.support.AbstractAutowireCapableBeanFactory.initializeBean(AbstractAutowireCapableBeanFactory.java:1800) ~[spring-beans-5.3.22.jar:5.3.22]
+	... 16 more
