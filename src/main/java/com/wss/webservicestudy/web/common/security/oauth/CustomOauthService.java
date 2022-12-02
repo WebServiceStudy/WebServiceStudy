@@ -43,10 +43,15 @@ public class CustomOauthService extends DefaultOAuth2UserService {
         Map<String, Object> attributes = oAuth2User.getAttributes();
         String provider = oAuth2UserRequest.getClientRegistration().getRegistrationId(); //
         OAuthUserInfo oauthUserInfo = getOauthUserInfo(provider, attributes);
+        String accessToken = oAuth2UserRequest.getAccessToken().getTokenValue();
 
         if (oauthUserInfo == null) throw new AssertionError();
 
         User user = getUserEntityByOauthUserInfo(oauthUserInfo);
+
+
+        httpSession.setAttribute("user", user);
+        httpSession.setAttribute("access_token", accessToken);
 
         return new PrincipalDetail(user, attributes);
     }
