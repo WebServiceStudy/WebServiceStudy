@@ -49,7 +49,6 @@ public class CustomOauthService extends DefaultOAuth2UserService {
 
         User user = getUserEntityByOauthUserInfo(oauthUserInfo);
 
-
         httpSession.setAttribute("user", user);
         httpSession.setAttribute("access_token", accessToken);
 
