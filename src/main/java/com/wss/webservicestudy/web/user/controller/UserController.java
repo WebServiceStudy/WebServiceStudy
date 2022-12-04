@@ -1,15 +1,28 @@
 package com.wss.webservicestudy.web.user.controller;
 
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiOperation;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-@Api(tags="유저")
-@RestController
+import com.wss.webservicestudy.web.common.security.core.userdetails.CustomOAuth2UserService;
+import com.wss.webservicestudy.web.user.domain.User;
+import org.springframework.security.oauth2.client.userinfo.DefaultOAuth2UserService;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PostMapping;
+
+@Controller
 public class UserController {
-    @ApiOperation(value="페이지 테스트", notes="유저 페이지 테스트를 하기위한 내용을 적용한다.")
-    @RequestMapping("/user")
-    public String home() {
-        return "hello World";
+    private final CustomOAuth2UserService customOAuth2UserService;
+
+    public UserController(CustomOAuth2UserService customOAuth2UserService) {
+        this.customOAuth2UserService = customOAuth2UserService;
     }
+
+    @GetMapping("/loginForm")
+    public String loginForm(){
+        return "login";
+    }
+
+//    @PostMapping("/join")
+//    public String join(@ModelAttribute User user){
+//        return "redirect:/loginFrom";
+//    }
 }
