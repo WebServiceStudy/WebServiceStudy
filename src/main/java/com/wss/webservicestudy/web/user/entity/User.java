@@ -30,6 +30,8 @@ public class User {
     @Enumerated(EnumType.STRING)
     private Role role;
 
+    private String birthday;
+
     @Builder
     public User(Long id, String name, String email, LoginType loginType, Role role) {
         this.id = id;
