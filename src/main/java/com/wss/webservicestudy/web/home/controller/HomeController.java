@@ -27,4 +27,10 @@ public class HomeController {
         }
         return "success";
     }
+
+    @GetMapping("/test/exeption")
+    public void testtt() {
+        int a = 1;
+        throw new NullPointerException();
+    }
 }
