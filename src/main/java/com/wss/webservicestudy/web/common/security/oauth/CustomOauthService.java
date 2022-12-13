@@ -1,11 +1,13 @@
 package com.wss.webservicestudy.web.common.security.oauth;
 
 import com.wss.webservicestudy.web.common.security.domain.PrincipalDetail;
+import com.wss.webservicestudy.web.common.security.domain.SessionUser;
 import com.wss.webservicestudy.web.common.security.oauth.userinfo.GoogleUserInfo;
 import com.wss.webservicestudy.web.common.security.oauth.userinfo.KakaoUserInfo;
 import com.wss.webservicestudy.web.common.security.oauth.userinfo.OAuthUserInfo;
 import com.wss.webservicestudy.web.user.entity.User;
 import com.wss.webservicestudy.web.user.repository.UserRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -18,6 +20,7 @@ import org.springframework.stereotype.Service;
 import javax.servlet.http.HttpSession;
 import java.util.Map;
 
+@Slf4j
 @Service
 public class CustomOauthService extends DefaultOAuth2UserService {
 
@@ -46,8 +49,9 @@ public class CustomOauthService extends DefaultOAuth2UserService {
             throw new AssertionError();
         }
         User user = getUserEntityByOauthUserInfo(oauthUserInfo);
-        httpSession.setAttribute("user", user);
-        httpSession.setAttribute("access_token", accessToken);
+        log.info("login user ==========="+ user.getName());
+
+        httpSession.setAttribute("user", new SessionUser(user));
 
         return new PrincipalDetail(user, attributes);
     }
