@@ -1,6 +1,7 @@
 package com.wss.webservicestudy.web.common.security.oauth;
 
 import com.wss.webservicestudy.web.common.security.domain.PrincipalDetail;
+import com.wss.webservicestudy.web.common.security.oauth.userinfo.GoogleUserInfo;
 import com.wss.webservicestudy.web.common.security.oauth.userinfo.KakaoUserInfo;
 import com.wss.webservicestudy.web.common.security.oauth.userinfo.OAuthUserInfo;
 import com.wss.webservicestudy.web.user.entity.User;
@@ -40,8 +41,10 @@ public class CustomOauthService extends DefaultOAuth2UserService {
     @Override
     public OAuth2User loadUser(OAuth2UserRequest oAuth2UserRequest) throws OAuth2AuthenticationException {
         OAuth2User oAuth2User = super.loadUser(oAuth2UserRequest);
-        Map<String, Object> attributes = oAuth2User.getAttributes();
+
         String provider = oAuth2UserRequest.getClientRegistration().getRegistrationId(); //
+
+        Map<String, Object> attributes = oAuth2User.getAttributes();
         OAuthUserInfo oauthUserInfo = getOauthUserInfo(provider, attributes);
         String accessToken = oAuth2UserRequest.getAccessToken().getTokenValue();
 
@@ -60,11 +63,11 @@ public class CustomOauthService extends DefaultOAuth2UserService {
         if(provider.equals("kakao")){
             return new KakaoUserInfo(attributes);
         }
-        /**
+
         else if(provider.equals("google")){
             return new GoogleUserInfo(attributes);
         }
-         */
+
         return null;
     }
 

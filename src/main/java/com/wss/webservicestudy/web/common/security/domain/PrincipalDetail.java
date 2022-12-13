@@ -25,12 +25,19 @@ public class PrincipalDetail implements OAuth2User {
         this.user = user;
     }
 
-
+    /**
+     * OAuth2User 구현
+     * @return
+     */
     @Override
     public Map<String, Object> getAttributes() {
         return this.attributes;
     }
 
+    /**
+      * UserDetails 구현
+      * 해당 유저의 권한목록 리턴
+      */
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         Collection<GrantedAuthority> collect = new ArrayList<>();

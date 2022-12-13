@@ -9,10 +9,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 @SpringBootApplication
 public class WebservicestudyApplication {
-	@Bean
-	public PasswordEncoder passwordEncoder(){
-		return new BCryptPasswordEncoder();
-	}
+//	@Bean
+//	public PasswordEncoder passwordEncoder(){
+//		return new BCryptPasswordEncoder();
+//	}
 
 	public static void main(String[] args) {
 		SpringApplication.run(WebservicestudyApplication.class, args);
