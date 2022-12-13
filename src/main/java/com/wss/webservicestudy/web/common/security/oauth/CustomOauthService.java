@@ -2,6 +2,7 @@ package com.wss.webservicestudy.web.common.security.oauth;
 
 import com.wss.webservicestudy.web.common.security.domain.PrincipalDetail;
 import com.wss.webservicestudy.web.common.security.domain.SessionUser;
+import com.wss.webservicestudy.web.common.security.oauth.userinfo.GoogleUserInfo;
 import com.wss.webservicestudy.web.common.security.oauth.userinfo.KakaoUserInfo;
 import com.wss.webservicestudy.web.common.security.oauth.userinfo.OAuthUserInfo;
 import com.wss.webservicestudy.web.user.entity.User;
