@@ -36,4 +36,4 @@ out/
 ### VS Code ###
 .vscode/
 !/${LOGS_PATH}/
-/${LOGS_PATH_MAC}/log4j2.log
+/${LOGS_PATH_MAC}/
