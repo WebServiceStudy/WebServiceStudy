@@ -5,13 +5,16 @@ import com.wss.webservicestudy.web.user.entity.User;
 import lombok.Getter;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 @Getter
 @Entity
 public class Feed {
 
     @Id
+    @Column(name = "FEED_ID")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
@@ -19,9 +22,8 @@ public class Feed {
     @JoinColumn(name = "ID")
     private User writer;
 
-    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JoinColumn(name = "MEET_ID")
-    private FeedMeet feedMeet;
+    @OneToMany(mappedBy = "feed", cascade = CascadeType.ALL)
+    private List<FeedMeet> feedMeets = new ArrayList<>();
 
     @Column(nullable = false)
     private String title;
@@ -30,15 +32,21 @@ public class Feed {
     @Lob
     private String content;
 
-    private String lattitude;
-
-    private String longitude;
-
-    private Date date;
-
-    private String addr;
-
     @Enumerated(EnumType.STRING)
     private FeedStatus status;
+
+    @Column(nullable = false)
+    private Date date;
+
+    @Column(nullable = false)
+    private String addr;
+
+    private String latitude;
+    private String longitude;
+
+    private int maxUser;
+    private int curMale;
+    private int curFemale;
+
 
 }

@@ -1,5 +1,6 @@
 package com.wss.webservicestudy.web.feed.entity;
 
+import com.wss.webservicestudy.web.user.entity.User;
 import lombok.Getter;
 
 import javax.persistence.*;
@@ -13,16 +14,13 @@ public class FeedMeet {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
-    @OneToOne(mappedBy = "feedMeet")
-    private long feedId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "FEED_ID")
+    private Feed feed;
 
-    private int max;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "ID")
+    private User user;
 
-    @Column(name = "CUR_MALE")
-    private int curMale;
 
-    @Column(name = "CUR_FEMALE")
-    private int curFemale;
-
-    // user
 }
