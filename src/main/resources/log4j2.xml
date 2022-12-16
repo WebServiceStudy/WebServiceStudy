@@ -4,7 +4,8 @@
     <!-- 해당 설정파일에서 사용하는 프로퍼티-->
     <Properties>
 <!--        <property name="LOGS_PATH_MAC">C:\test_logs</property>      &lt;!&ndash; mac버전 &ndash;&gt;-->
-        <property name="LOGS_PATH_WIN">c:/logs/log.log"</property>  window버전
+<!--         window버전            -->
+        <property name="LOGS_PATH_WIN">c:/logs/log.log"</property>
     </Properties>
 
     <Appenders>
