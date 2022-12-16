@@ -45,12 +45,13 @@ public class CustomOauthService extends DefaultOAuth2UserService {
     public OAuth2User loadUser(OAuth2UserRequest oAuth2UserRequest) throws OAuth2AuthenticationException {
         OAuth2User oAuth2User = super.loadUser(oAuth2UserRequest);
         Map<String, Object> attributes = oAuth2User.getAttributes();
-        String provider = oAuth2UserRequest.getClientRegistration().getRegistrationId(); //
+        String provider = oAuth2UserRequest.getClientRegistration().getRegistrationId();
         OAuthUserInfo oauthUserInfo = getOauthUserInfo(provider, attributes);
         String accessToken = oAuth2UserRequest.getAccessToken().getTokenValue();
 
-        if (oauthUserInfo == null) throw new AssertionError();
-
+        if (oauthUserInfo == null) {
+            throw new AssertionError();
+        }
         User user = getUserEntityByOauthUserInfo(oauthUserInfo);
 
         log.info("login user ==========="+ user.getName());
@@ -64,11 +65,9 @@ public class CustomOauthService extends DefaultOAuth2UserService {
         if(provider.equals("kakao")){
             return new KakaoUserInfo(attributes);
         }
-
-        else if(provider.equals("google")){
+        if(provider.equals("google")){
             return new GoogleUserInfo(attributes);
         }
-
         return null;
     }
 
@@ -79,9 +78,7 @@ public class CustomOauthService extends DefaultOAuth2UserService {
             User newUser = oauth2UserInfo.toUser();
             newUser.setPassword(passwordEncoder.encode(pwd));
             return userRepository.save(newUser);
-        } else {
-            return userRepository.findByEmail(email);
         }
+        return userRepository.findByEmail(email);
     }
-
 }

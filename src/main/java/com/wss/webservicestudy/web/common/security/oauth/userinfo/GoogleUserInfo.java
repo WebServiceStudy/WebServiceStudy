@@ -6,10 +6,12 @@ import com.wss.webservicestudy.web.user.type.Role;
 
 import java.util.Map;
 
-public class GoogleUserInfo implements OAuthUserInfo{
-    private final Map<String, Object> google_account;
-    public GoogleUserInfo(Map<String, Object> account) {
-        this.google_account = account; //json으로 준다
+public class GoogleUserInfo implements OAuthUserInfo {
+
+    private final Map<String, Object> attributes;
+
+    public GoogleUserInfo(Map<String, Object> attributes) {
+        this.attributes = attributes;
     }
 
     @Override
@@ -19,12 +21,12 @@ public class GoogleUserInfo implements OAuthUserInfo{
 
     @Override
     public String getName() {
-        return (String) google_account.get("name");
+        return (String) attributes.get("name");
     }
 
     @Override
     public String getEmail() {
-        return (String) google_account.get("email");
+        return (String) attributes.get("email");
     }
 
     @Override
