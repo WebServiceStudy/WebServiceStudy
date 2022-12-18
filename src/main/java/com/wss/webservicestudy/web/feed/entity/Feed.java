@@ -1,8 +1,8 @@
 package com.wss.webservicestudy.web.feed.entity;
 
 import com.wss.webservicestudy.web.feed.type.FeedStatus;
-import com.wss.webservicestudy.web.user.entity.User;
 import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -10,6 +10,7 @@ import java.util.Date;
 import java.util.List;
 
 @Getter
+@Setter
 @Entity
 public class Feed {
 
@@ -18,9 +19,9 @@ public class Feed {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    /*@ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "ID")
-    private User writer;
+    private User writer;*/
 
     @OneToMany(mappedBy = "feed", cascade = CascadeType.ALL)
     private List<FeedMeet> feedMeets = new ArrayList<>();
@@ -48,5 +49,8 @@ public class Feed {
     private int curMale;
     private int curFemale;
 
-
+    public void addFeedMeet(FeedMeet feedMeet) {
+        this.feedMeets.add(feedMeet);
+        feedMeet.setFeed(this);
+    }
 }

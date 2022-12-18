@@ -1,6 +1,5 @@
 package com.wss.webservicestudy.web.feed.entity;
 
-import com.wss.webservicestudy.web.user.entity.User;
 import lombok.Getter;
 
 import javax.persistence.*;
@@ -18,9 +17,19 @@ public class FeedMeet {
     @JoinColumn(name = "FEED_ID")
     private Feed feed;
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    /*@ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "ID")
-    private User user;
+    private User user;*/
 
+    public static FeedMeet createFeedMeet(Feed feed) {
+        FeedMeet feedMeet = new FeedMeet();
+        feedMeet.setFeed(feed);
+        feed.addFeedMeet(feedMeet);
+        return feedMeet;
+    }
 
+    public void setFeed(Feed feed) {
+        this.feed = feed;
+        feed.getFeedMeets().add(this);
+    }
 }
