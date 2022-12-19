@@ -11,7 +11,7 @@ public class KakaoUserInfo implements OAuthUserInfo {
     private final Map<String, Object> kakao_account;
 
     public KakaoUserInfo(Map<String, Object> account) {
-        this.kakao_account =  (Map<String, Object>) account.get("kakao_account");
+        this.kakao_account =  (Map<String, Object>) account.get("kakao_account"); //json으로 준다
     }
 
     @Override

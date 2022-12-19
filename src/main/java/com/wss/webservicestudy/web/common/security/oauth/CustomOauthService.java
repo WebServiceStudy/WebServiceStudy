@@ -8,6 +8,7 @@ import com.wss.webservicestudy.web.common.security.oauth.userinfo.OAuthUserInfo;
 import com.wss.webservicestudy.web.user.entity.User;
 import com.wss.webservicestudy.web.user.repository.UserRepository;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -18,6 +19,7 @@ import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpSession;
+import java.security.Principal;
 import java.util.Map;
 
 @Slf4j
@@ -26,10 +28,12 @@ public class CustomOauthService extends DefaultOAuth2UserService {
 
     private UserRepository userRepository;
     private HttpSession httpSession;
+
     private PasswordEncoder passwordEncoder;
 
     @Value("${oauth.default.pwd}")
     private String pwd;
+
 
     public CustomOauthService(UserRepository userRepository, HttpSession httpSession, @Lazy PasswordEncoder passwordEncoder) {
         this.userRepository = userRepository;
@@ -49,6 +53,7 @@ public class CustomOauthService extends DefaultOAuth2UserService {
             throw new AssertionError();
         }
         User user = getUserEntityByOauthUserInfo(oauthUserInfo);
+
         log.info("login user ==========="+ user.getName());
 
         httpSession.setAttribute("user", new SessionUser(user));
