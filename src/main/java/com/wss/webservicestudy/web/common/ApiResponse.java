@@ -3,7 +3,9 @@ package com.wss.webservicestudy.web.common;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
+import io.swagger.annotations.ApiParam;
 
+import java.math.BigInteger;
 import java.util.StringJoiner;
 import java.util.function.Supplier;
 
@@ -12,12 +14,16 @@ import java.util.function.Supplier;
 public class ApiResponse<T> {
 
     @ApiModelProperty(position = 0)
+    @ApiParam(value="RequestSuccess")
     private boolean success;
     @ApiModelProperty(position = 1)
+    @ApiParam(value="RequestServerStatus")
     private String code;
     @ApiModelProperty(position = 2)
+    @ApiParam(value="RequestGetData")
     private Supplier<T> result;
     @ApiModelProperty(position = 3)
+    @ApiParam(value="RequestGetMessage")
     private String message;
 
     public ApiResponse(boolean success, String code, String message, Supplier<T> result) {

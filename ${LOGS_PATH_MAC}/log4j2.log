@@ -334,3 +334,65 @@ java.lang.NullPointerException: null
 2022-12-12 20:59:06  INFO [org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean] Closing JPA EntityManagerFactory for persistence unit 'default'
 2022-12-12 20:59:06  INFO [com.zaxxer.hikari.HikariDataSource] HikariPool-1 - Shutdown initiated...
 2022-12-12 20:59:06  INFO [com.zaxxer.hikari.HikariDataSource] HikariPool-1 - Shutdown completed.
+2022-12-22 19:36:52  INFO [com.wss.webservicestudy.WebservicestudyApplication] Starting WebservicestudyApplication using Java 17.0.4.1 on Jinhongui-MacBookPro.local with PID 59283 (/Users/jinhongjeong/WebServiceStudy/build/classes/java/main started by jinhongjeong in /Users/jinhongjeong/WebServiceStudy)
+2022-12-22 19:36:52  INFO [com.wss.webservicestudy.WebservicestudyApplication] The following 1 profile is active: "oauth"
+2022-12-22 19:36:53  INFO [org.springframework.data.repository.config.RepositoryConfigurationDelegate] Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2022-12-22 19:36:53  INFO [org.springframework.data.repository.config.RepositoryConfigurationDelegate] Finished Spring Data repository scanning in 37 ms. Found 1 JPA repository interfaces.
+2022-12-22 19:36:54  INFO [org.springframework.boot.web.embedded.tomcat.TomcatWebServer] Tomcat initialized with port(s): 8080 (http)
+2022-12-22 19:36:54  INFO [org.apache.coyote.http11.Http11NioProtocol] Initializing ProtocolHandler ["http-nio-8080"]
+2022-12-22 19:36:54  INFO [org.apache.catalina.core.StandardService] Starting service [Tomcat]
+2022-12-22 19:36:54  INFO [org.apache.catalina.core.StandardEngine] Starting Servlet engine: [Apache Tomcat/9.0.65]
+2022-12-22 19:36:54  INFO [org.apache.catalina.core.ContainerBase.[Tomcat].[localhost].[/]] Initializing Spring embedded WebApplicationContext
+2022-12-22 19:36:54  INFO [org.springframework.boot.web.servlet.context.ServletWebServerApplicationContext] Root WebApplicationContext: initialization completed in 1742 ms
+2022-12-22 19:36:54  INFO [org.hibernate.jpa.internal.util.LogHelper] HHH000204: Processing PersistenceUnitInfo [name: default]
+2022-12-22 19:36:54  INFO [org.hibernate.Version] HHH000412: Hibernate ORM core version 5.6.10.Final
+2022-12-22 19:36:54  INFO [org.hibernate.annotations.common.Version] HCANN000001: Hibernate Commons Annotations {5.1.2.Final}
+2022-12-22 19:36:54  INFO [com.zaxxer.hikari.HikariDataSource] HikariPool-1 - Starting...
+2022-12-22 19:36:54  INFO [com.zaxxer.hikari.HikariDataSource] HikariPool-1 - Start completed.
+2022-12-22 19:36:54  INFO [org.hibernate.dialect.Dialect] HHH000400: Using dialect: org.hibernate.dialect.MySQL57Dialect
+2022-12-22 19:36:55  INFO [org.hibernate.engine.transaction.jta.platform.internal.JtaPlatformInitiator] HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2022-12-22 19:36:55  INFO [org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean] Initialized JPA EntityManagerFactory for persistence unit 'default'
+2022-12-22 19:36:55  INFO [org.springframework.security.web.DefaultSecurityFilterChain] Will secure any request with [org.springframework.security.web.session.DisableEncodeUrlFilter@689fcf08, org.springframework.security.web.context.request.async.WebAsyncManagerIntegrationFilter@738153d8, org.springframework.security.web.context.SecurityContextPersistenceFilter@3338d29d, org.springframework.security.web.header.HeaderWriterFilter@9e4388d, org.springframework.security.web.authentication.logout.LogoutFilter@218fc40d, org.springframework.security.oauth2.client.web.OAuth2AuthorizationRequestRedirectFilter@44bd7f24, org.springframework.security.oauth2.client.web.OAuth2LoginAuthenticationFilter@6e3acd7, org.springframework.security.web.authentication.ui.DefaultLoginPageGeneratingFilter@77511e9c, org.springframework.security.web.authentication.ui.DefaultLogoutPageGeneratingFilter@1a3272e0, org.springframework.security.web.savedrequest.RequestCacheAwareFilter@3792fed8, org.springframework.security.web.servletapi.SecurityContextHolderAwareRequestFilter@35d145fb, org.springframework.security.web.authentication.AnonymousAuthenticationFilter@7bc3c59f, org.springframework.security.web.session.SessionManagementFilter@21399e53, org.springframework.security.web.access.ExceptionTranslationFilter@42d96745, org.springframework.security.web.access.intercept.FilterSecurityInterceptor@377d55]
+2022-12-22 19:36:55  INFO [springfox.documentation.spring.web.PropertySourcedRequestMappingHandlerMapping] Mapped URL path [/v2/api-docs] onto method [springfox.documentation.swagger2.web.Swagger2Controller#getDocumentation(String, HttpServletRequest)]
+2022-12-22 19:36:56  INFO [org.springframework.boot.autoconfigure.web.servlet.WelcomePageHandlerMapping] Adding welcome page template: index
+2022-12-22 19:36:56  INFO [org.springframework.boot.web.embedded.tomcat.TomcatWebServer] Tomcat started on port(s): 8080 (http) with context path ''
+2022-12-22 19:36:56  INFO [springfox.documentation.spring.web.plugins.DocumentationPluginsBootstrapper] Context refreshed
+2022-12-22 19:36:56  INFO [springfox.documentation.spring.web.plugins.DocumentationPluginsBootstrapper] Found 8 custom documentation plugin(s)
+2022-12-22 19:36:56  INFO [springfox.documentation.spring.web.scanners.ApiListingReferenceScanner] Scanning for api listing references
+2022-12-22 19:36:56  INFO [springfox.documentation.spring.web.scanners.ApiListingReferenceScanner] Scanning for api listing references
+2022-12-22 19:36:56  INFO [springfox.documentation.spring.web.scanners.ApiListingReferenceScanner] Scanning for api listing references
+2022-12-22 19:36:56  INFO [springfox.documentation.spring.web.scanners.ApiListingReferenceScanner] Scanning for api listing references
+2022-12-22 19:36:56  INFO [springfox.documentation.spring.web.scanners.ApiListingReferenceScanner] Scanning for api listing references
+2022-12-22 19:36:56  INFO [springfox.documentation.spring.web.scanners.ApiListingReferenceScanner] Scanning for api listing references
+2022-12-22 19:36:56  INFO [springfox.documentation.spring.web.readers.operation.CachingOperationNameGenerator] Generating unique operation named: homeUsingGET_1
+2022-12-22 19:36:56  INFO [springfox.documentation.spring.web.readers.operation.CachingOperationNameGenerator] Generating unique operation named: homeUsingHEAD_1
+2022-12-22 19:36:56  INFO [springfox.documentation.spring.web.readers.operation.CachingOperationNameGenerator] Generating unique operation named: homeUsingPOST_1
+2022-12-22 19:36:56  INFO [springfox.documentation.spring.web.readers.operation.CachingOperationNameGenerator] Generating unique operation named: homeUsingPUT_1
+2022-12-22 19:36:56  INFO [springfox.documentation.spring.web.readers.operation.CachingOperationNameGenerator] Generating unique operation named: homeUsingPATCH_1
+2022-12-22 19:36:56  INFO [springfox.documentation.spring.web.readers.operation.CachingOperationNameGenerator] Generating unique operation named: homeUsingDELETE_1
+2022-12-22 19:36:56  INFO [springfox.documentation.spring.web.readers.operation.CachingOperationNameGenerator] Generating unique operation named: homeUsingOPTIONS_1
+2022-12-22 19:36:56  INFO [springfox.documentation.spring.web.readers.operation.CachingOperationNameGenerator] Generating unique operation named: homeUsingTRACE_1
+2022-12-22 19:36:56  INFO [springfox.documentation.spring.web.scanners.ApiListingReferenceScanner] Scanning for api listing references
+2022-12-22 19:36:56  INFO [springfox.documentation.spring.web.readers.operation.CachingOperationNameGenerator] Generating unique operation named: homeUsingGET_2
+2022-12-22 19:36:56  INFO [springfox.documentation.spring.web.readers.operation.CachingOperationNameGenerator] Generating unique operation named: homeUsingHEAD_2
+2022-12-22 19:36:56  INFO [springfox.documentation.spring.web.readers.operation.CachingOperationNameGenerator] Generating unique operation named: homeUsingPOST_2
+2022-12-22 19:36:56  INFO [springfox.documentation.spring.web.readers.operation.CachingOperationNameGenerator] Generating unique operation named: homeUsingPUT_2
+2022-12-22 19:36:56  INFO [springfox.documentation.spring.web.readers.operation.CachingOperationNameGenerator] Generating unique operation named: homeUsingPATCH_2
+2022-12-22 19:36:56  INFO [springfox.documentation.spring.web.readers.operation.CachingOperationNameGenerator] Generating unique operation named: homeUsingDELETE_2
+2022-12-22 19:36:56  INFO [springfox.documentation.spring.web.readers.operation.CachingOperationNameGenerator] Generating unique operation named: homeUsingOPTIONS_2
+2022-12-22 19:36:56  INFO [springfox.documentation.spring.web.readers.operation.CachingOperationNameGenerator] Generating unique operation named: homeUsingTRACE_2
+2022-12-22 19:36:56  INFO [springfox.documentation.spring.web.readers.operation.CachingOperationNameGenerator] Generating unique operation named: homeUsingGET_3
+2022-12-22 19:36:56  INFO [springfox.documentation.spring.web.readers.operation.CachingOperationNameGenerator] Generating unique operation named: homeUsingGET_4
+2022-12-22 19:36:56  INFO [springfox.documentation.spring.web.readers.operation.CachingOperationNameGenerator] Generating unique operation named: homeUsingHEAD_3
+2022-12-22 19:36:56  INFO [springfox.documentation.spring.web.readers.operation.CachingOperationNameGenerator] Generating unique operation named: homeUsingPOST_3
+2022-12-22 19:36:56  INFO [springfox.documentation.spring.web.readers.operation.CachingOperationNameGenerator] Generating unique operation named: homeUsingPUT_3
+2022-12-22 19:36:56  INFO [springfox.documentation.spring.web.readers.operation.CachingOperationNameGenerator] Generating unique operation named: homeUsingPATCH_3
+2022-12-22 19:36:56  INFO [springfox.documentation.spring.web.readers.operation.CachingOperationNameGenerator] Generating unique operation named: homeUsingDELETE_3
+2022-12-22 19:36:56  INFO [springfox.documentation.spring.web.readers.operation.CachingOperationNameGenerator] Generating unique operation named: homeUsingOPTIONS_3
+2022-12-22 19:36:56  INFO [springfox.documentation.spring.web.readers.operation.CachingOperationNameGenerator] Generating unique operation named: homeUsingTRACE_3
+2022-12-22 19:36:56  INFO [springfox.documentation.spring.web.scanners.ApiListingReferenceScanner] Scanning for api listing references
+2022-12-22 19:36:56  INFO [springfox.documentation.spring.web.readers.operation.CachingOperationNameGenerator] Generating unique operation named: testttUsingGET_1
+2022-12-22 19:36:56  INFO [com.wss.webservicestudy.WebservicestudyApplication] Started WebservicestudyApplication in 4.564 seconds (JVM running for 5.715)
+2022-12-22 19:36:56  INFO [org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean] Closing JPA EntityManagerFactory for persistence unit 'default'
+2022-12-22 19:36:56  INFO [com.zaxxer.hikari.HikariDataSource] HikariPool-1 - Shutdown initiated...
+2022-12-22 19:36:56  INFO [com.zaxxer.hikari.HikariDataSource] HikariPool-1 - Shutdown completed.

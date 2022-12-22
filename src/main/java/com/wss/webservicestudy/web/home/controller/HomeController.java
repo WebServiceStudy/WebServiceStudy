@@ -1,18 +1,28 @@
 package com.wss.webservicestudy.web.home.controller;
 
+import com.wss.webservicestudy.web.common.ApiResponse;
 import com.wss.webservicestudy.web.common.security.domain.SessionUser;
+import com.wss.webservicestudy.web.home.service.HomeService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpSession;
+import java.math.BigInteger;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @Controller
 public class HomeController {
     private final HttpSession httpSession;
 
-    public HomeController(HttpSession httpSession) {
+    private final HomeService homeService;
+
+    public HomeController(HttpSession httpSession, HomeService homeService) {
         this.httpSession = httpSession;
+        this.homeService = homeService;
     }
 
     @GetMapping("/")
@@ -33,4 +43,29 @@ public class HomeController {
         int a = 1;
         throw new NullPointerException();
     }
+
+    @GetMapping("/test/ex-list")
+    public ApiResponse<List<String>> exList() {
+        List<String> ex = new ArrayList<>();
+        ex.add("진홍");
+        ex.add("상현");
+        ex.add("지은");
+        ex.add("우진");
+        ex.add("유미");
+
+        return ApiResponse.ok(ex);
+    }
+
+    @GetMapping("/test/ex-map")
+    public ApiResponse<Map<String, String>> exMap() {
+        Map<String, String> ex = new HashMap<String, String>();
+            ex.put("팀원", "유미");
+            ex.put("팀원", "우진");
+            ex.put("팀원", "지은");
+            ex.put("팀원", "상현");
+            ex.put("팀원", "진홍");
+
+        return ApiResponse.ok(ex);
+    }
+
 }
