@@ -19,7 +19,8 @@ public class HomeService {
     }
 
     public List<String> toTestdataRepository() {
-        List<TestEntity> exList = testdataRepository.findAll();
+        List<TestEntity>
+                exList = testdataRepository.findAll();
         List<String> exString = new ArrayList<>();
         for(TestEntity exEntity : exList) {
             exString.add(exEntity.getTeamMember());
