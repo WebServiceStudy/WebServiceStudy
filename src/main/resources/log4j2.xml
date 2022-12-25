@@ -5,7 +5,7 @@
     <Properties>
 <!--        <property name="LOGS_PATH_MAC">C:\test_logs</property>      &lt;!&ndash; mac버전 &ndash;&gt;-->
 <!--         window버전            -->
-        <property name="LOGS_PATH_WIN">c:/logs/log.log"</property>
+        <property name="LOGS_PATH_MAC">c:/logs/log.log"</property>
     </Properties>
 
     <Appenders>

@@ -16,15 +16,15 @@ public class ApiResponse<T> {
     @ApiModelProperty(position = 1)
     private String code;
     @ApiModelProperty(position = 2)
-    private Supplier<T> result;
+    private Supplier<T> data;
     @ApiModelProperty(position = 3)
     private String message;
 
-    public ApiResponse(boolean success, String code, String message, Supplier<T> result) {
+    public ApiResponse(boolean success, String code, String message, Supplier<T> data) {
         this.success = success;
         this.code = code;
         this.message = message;
-        this.result = result;
+        this.data = data;
     }
 
     public boolean isSuccess() {
@@ -36,7 +36,7 @@ public class ApiResponse<T> {
     }
 
     public T getResult() {
-        return result.get();
+        return data.get();
     }
 
     public String getMessage() {
@@ -48,7 +48,7 @@ public class ApiResponse<T> {
         return new StringJoiner(", ", ApiResponse.class.getSimpleName() + "[", "]")
                 .add("success=" + success)
                 .add("code='" + code + "'")
-                .add("result=" + result)
+                .add("data=" + data)
                 .add("message=" + message)
                 .toString();
     }
@@ -58,28 +58,28 @@ public class ApiResponse<T> {
         return ok("ok");
     }
 
-    public static <T> ApiResponse<T> ok(T result) {
-        return new ApiResponse<>(true, "200", "SUCCESS", () -> result);
+    public static <T> ApiResponse<T> ok(T data) {
+        return new ApiResponse<>(true, "200", "SUCCESS", () -> data);
     }
 
-    public static <T> ApiResponse<T> message(String message, T result) {
-        return new ApiResponse<>(true, "200", message, () -> result);
+    public static <T> ApiResponse<T> message(String message, T data) {
+        return new ApiResponse<>(true, "200", message, () -> data);
     }
 
-    public static <T> ApiResponse<T> fail(String code, T result) {
-        return new ApiResponse<>(false, code, "FAIL", () -> result);
+    public static <T> ApiResponse<T> fail(String code, T data) {
+        return new ApiResponse<>(false, code, "FAIL", () -> data);
     }
 
-    public static <T> ApiResponse<T> fail(int code, T result) {
-        return new ApiResponse<>(false, String.valueOf(code), "FAIL", () -> result);
+    public static <T> ApiResponse<T> fail(int code, T data) {
+        return new ApiResponse<>(false, String.valueOf(code), "FAIL", () -> data);
     }
 
-    public static <T> ApiResponse<T> fail(String code, String message, T result) {
-        return new ApiResponse<>(false, code, message, () -> result);
+    public static <T> ApiResponse<T> fail(String code, String message, T data) {
+        return new ApiResponse<>(false, code, message, () -> data);
     }
 
-    public static <T> ApiResponse<T> fail(int code, String message, T result) {
-        return new ApiResponse<>(false, String.valueOf(code), message, () -> result);
+    public static <T> ApiResponse<T> fail(int code, String message, T data) {
+        return new ApiResponse<>(false, String.valueOf(code), message, () -> data);
     }
 
 }
