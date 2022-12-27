@@ -1,19 +1,17 @@
 package com.wss.webservicestudy.web.feed.controller;
 
 import com.wss.webservicestudy.web.feed.dto.CreateFeedDto;
+import com.wss.webservicestudy.web.feed.dto.UpdateFeedDto;
 import com.wss.webservicestudy.web.feed.service.FeedService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
 @Api(tags="게시판")
 @RestController
-@RequestMapping("/feed")
+@RequestMapping("/feeds")
 public class FeedController {
     private final FeedService feedService;
 
@@ -31,5 +29,11 @@ public class FeedController {
     @PostMapping("")
     public Long create(@RequestBody @Valid CreateFeedDto feedDto){
         return feedService.create(feedDto);
+    }
+
+    @ApiOperation(value = "피드 수정", notes = "피드 수정")
+    @PutMapping("/{feed}")
+    public Long update(@PathVariable(name="feed") Long feedId, @RequestBody @Valid UpdateFeedDto feedDto){
+        return feedService.update(feedId, feedDto);
     }
 }
