@@ -1,22 +1,10 @@
 package com.wss.webservicestudy.web.feed.repository;
 
 import com.wss.webservicestudy.web.feed.entity.Feed;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-
 @Repository
-public class FeedRepository {
+public interface FeedRepository extends JpaRepository<Feed, Long> {
 
-    @PersistenceContext
-    EntityManager em;
-
-    public Feed findOne(Long feedId) {
-        return em.find(Feed.class, feedId);
-    }
-
-    public void save(Feed feed) {
-        em.persist(feed);
-    }
 }
