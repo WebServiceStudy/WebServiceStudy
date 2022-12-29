@@ -60,7 +60,7 @@ public class FeedControllerTest {
                 .maxAge(maxAge)
                 .build();
 
-        String url = "http://localhost:" + port + "/feed/create";
+        String url = "http://localhost:" + port + "/feed";
 
         ResponseEntity<Long> responseEntity = restTemplate.postForEntity(url, requestDto, Long.class);
 
