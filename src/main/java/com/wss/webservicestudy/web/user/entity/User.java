@@ -1,5 +1,6 @@
 package com.wss.webservicestudy.web.user.entity;
 
+import com.wss.webservicestudy.web.feed.entity.Feed;
 import com.wss.webservicestudy.web.user.type.LoginType;
 import com.wss.webservicestudy.web.user.type.Role;
 import lombok.Builder;
@@ -7,6 +8,8 @@ import lombok.Getter;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 @Setter
@@ -31,6 +34,9 @@ public class User {
     private Role role;
 
     private String birthday;
+
+    @OneToMany(mappedBy = "writer")
+    private List<Feed> feeds = new ArrayList<>();
 
     @Builder
     public User(Long id, String name, String email, LoginType loginType, Role role) {
