@@ -1,5 +1,6 @@
 package com.wss.webservicestudy.web.feed.entity;
 
+import com.wss.webservicestudy.web.feed.dto.UpdateFeedDto;
 import com.wss.webservicestudy.web.feed.type.FeedStatus;
 import com.wss.webservicestudy.web.user.entity.User;
 import lombok.Builder;
@@ -90,4 +91,14 @@ public class Feed {
 
     // 여자참여수
     private int curFemale;
+
+    public void update(UpdateFeedDto updateFeedDto){
+        this.title = updateFeedDto.getTitle();
+        this.content = updateFeedDto.getContent();
+        this.addr = updateFeedDto.getAddr();
+        this.latitude = updateFeedDto.getLatitude();
+        this.longitude = updateFeedDto.getLongitude();
+        this.maxUser = updateFeedDto.getMaxUser();
+        this.minAge = updateFeedDto.getMinAge();
+    }
 }

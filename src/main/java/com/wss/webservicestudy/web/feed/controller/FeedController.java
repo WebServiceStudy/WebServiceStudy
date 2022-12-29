@@ -5,6 +5,7 @@ import com.wss.webservicestudy.web.feed.dto.UpdateFeedDto;
 import com.wss.webservicestudy.web.feed.service.FeedService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
@@ -27,13 +28,19 @@ public class FeedController {
 
     @ApiOperation(value = "피드 생성", notes = "피드 생성")
     @PostMapping("")
-    public Long create(@RequestBody @Valid CreateFeedDto feedDto){
+    public Long create(@RequestBody @Valid CreateFeedDto feedDto, BindingResult bindingResult){
+        if(bindingResult.hasErrors()){
+            return null;
+        }
         return feedService.create(feedDto);
     }
 
     @ApiOperation(value = "피드 수정", notes = "피드 수정")
     @PutMapping("/{feed}")
-    public Long update(@PathVariable(name="feed") Long feedId, @RequestBody @Valid UpdateFeedDto feedDto){
+    public Long update(@PathVariable(name="feed")final Long feedId, @RequestBody @Valid UpdateFeedDto feedDto, BindingResult bindingResult){
+        if(bindingResult.hasErrors()){
+            return null;
+        }
         return feedService.update(feedId, feedDto);
     }
 }
