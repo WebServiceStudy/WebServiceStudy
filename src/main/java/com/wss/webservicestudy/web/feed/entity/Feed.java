@@ -5,15 +5,12 @@ import com.wss.webservicestudy.web.user.entity.User;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.ToString;
-import net.minidev.json.annotate.JsonIgnore;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 @Getter
@@ -21,6 +18,7 @@ import java.util.List;
 @NoArgsConstructor
 @EntityListeners(AuditingEntityListener.class)
 public class Feed {
+
     @Builder
     public Feed(User writer, String title, String content, FeedStatus status, String addr, String latitude, String longitude, int maxUser, int minAge, int maxAge) {
         this.writer = writer;
@@ -90,4 +88,9 @@ public class Feed {
 
     // 여자참여수
     private int curFemale;
+
+    public void addFeedMeet(FeedMeet feedMeet) {
+        this.feedMeets.add(feedMeet);
+        feedMeet.setFeed(this);
+    }
 }

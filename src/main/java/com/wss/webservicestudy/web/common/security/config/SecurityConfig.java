@@ -20,9 +20,6 @@ public class SecurityConfig{
 
     private final CustomOauthService customOauthService;
 
-    // 스프링 버전 올라가면서 extends WebSecurityConfigurerAdapter 안씀
-//    @Override
-//    protected void configure(HttpSecurity http) throws Exception {
 
     public SecurityConfig(CustomOauthService customOauthService) {
         this.customOauthService = customOauthService;
