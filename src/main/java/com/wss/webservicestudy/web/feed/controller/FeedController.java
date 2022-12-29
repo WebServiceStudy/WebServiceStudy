@@ -35,7 +35,7 @@ public class FeedController {
     }
 
     @ApiOperation(value = "피드 생성", notes = "피드 생성")
-    @PostMapping("/")
+    @PostMapping("")
     public Long create(@RequestBody @Valid CreateFeedDto feedDto){
         return feedService.create(feedDto);
     }
