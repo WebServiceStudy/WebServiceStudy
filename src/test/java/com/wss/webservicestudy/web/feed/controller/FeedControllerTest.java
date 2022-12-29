@@ -5,7 +5,6 @@ import com.wss.webservicestudy.web.feed.dto.CreateFeedDto;
 import com.wss.webservicestudy.web.feed.entity.Feed;
 import com.wss.webservicestudy.web.feed.repository.FeedRepository;
 import com.wss.webservicestudy.web.user.repository.UserRepository;
-import org.junit.After;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -61,7 +60,7 @@ public class FeedControllerTest {
                 .maxAge(maxAge)
                 .build();
 
-        String url = "http://localhost:"+port+"/feed";
+        String url = "http://localhost:" + port + "/feed";
 
         ResponseEntity<Long> responseEntity = restTemplate.postForEntity(url, requestDto, Long.class);
 

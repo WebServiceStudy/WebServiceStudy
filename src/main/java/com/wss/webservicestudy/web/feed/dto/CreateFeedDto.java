@@ -1,25 +1,18 @@
 package com.wss.webservicestudy.web.feed.dto;
 
-import com.wss.webservicestudy.web.common.security.domain.PrincipalDetail;
 import com.wss.webservicestudy.web.feed.entity.Feed;
 import com.wss.webservicestudy.web.feed.type.FeedStatus;
 import com.wss.webservicestudy.web.user.entity.User;
-import com.wss.webservicestudy.web.user.repository.UserRepository;
 import lombok.*;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 
-import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Positive;
 import javax.validation.constraints.PositiveOrZero;
 
 @Getter
 @Setter
 @ToString
 public class CreateFeedDto {
+
     @Builder
     public CreateFeedDto(String title, String content, String addr, String latitude, String longitude, int maxUser, int minAge, int maxAge) {
         this.title = title;

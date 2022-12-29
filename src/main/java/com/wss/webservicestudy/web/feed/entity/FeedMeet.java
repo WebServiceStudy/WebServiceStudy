@@ -24,5 +24,15 @@ public class FeedMeet {
     @JoinColumn(name = "ID")
     private User user;
 
+    public static FeedMeet createFeedMeet(Feed feed) {
+        FeedMeet feedMeet = new FeedMeet();
+        feedMeet.setFeed(feed);
+        feed.addFeedMeet(feedMeet);
+        return feedMeet;
+    }
 
+    public void setFeed(Feed feed) {
+        this.feed = feed;
+        feed.getFeedMeets().add(this);
+    }
 }

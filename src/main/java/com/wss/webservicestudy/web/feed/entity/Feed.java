@@ -22,6 +22,7 @@ import java.util.List;
 @NoArgsConstructor
 @EntityListeners(AuditingEntityListener.class)
 public class Feed {
+
     @Builder
     public Feed(User writer, String title, String content, FeedStatus status, String addr, String latitude, String longitude, int maxUser, int minAge, int maxAge) {
         this.writer = writer;
@@ -91,6 +92,11 @@ public class Feed {
 
     // 여자참여수
     private int curFemale;
+
+    public void addFeedMeet(FeedMeet feedMeet) {
+        this.feedMeets.add(feedMeet);
+        feedMeet.setFeed(this);
+    }
 
     public void update(UpdateFeedDto updateFeedDto){
         this.title = updateFeedDto.getTitle();
