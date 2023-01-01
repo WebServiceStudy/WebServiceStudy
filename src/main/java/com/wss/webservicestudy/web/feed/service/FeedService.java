@@ -26,7 +26,8 @@ public class FeedService {
     }
 
     public Feed findOne(Long feedId) {
-        return feedRepository.findById(feedId).get();
+        Optional<Feed> optionalFeed = feedRepository.findById(feedId);
+        return optionalFeed.orElseThrow(()->new IllegalArgumentException("해당 게시글이 없습니다. id=" + feedId));
     }
 
     @Transactional
@@ -37,8 +38,7 @@ public class FeedService {
 
     @Transactional
     public Long update(final Long feedId, UpdateFeedDto feedDto) {
-        Optional<Feed> optionalFeed = feedRepository.findById(feedId);
-        Feed feed = optionalFeed.orElseThrow(()->new IllegalArgumentException("해당 게시글이 없습니다. id=" + feedId));
+        Feed feed = findOne(feedId);
         feed.update(feedDto);
         return feedId;
     }
