@@ -6,7 +6,9 @@ import com.wss.webservicestudy.web.user.entity.User;
 import lombok.*;
 
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.PositiveOrZero;
+import java.time.LocalDateTime;
 
 @Getter
 @Setter
@@ -14,9 +16,10 @@ import javax.validation.constraints.PositiveOrZero;
 public class CreateFeedDto {
 
     @Builder
-    public CreateFeedDto(String title, String content, String addr, String latitude, String longitude, int maxUser, int minAge, int maxAge) {
+    public CreateFeedDto(String title, String content, LocalDateTime date, String addr, String latitude, String longitude, int maxUser, int minAge, int maxAge) {
         this.title = title;
         this.content = content;
+        this.date = date;
         this.addr = addr;
         this.latitude = latitude;
         this.longitude = longitude;
@@ -35,6 +38,10 @@ public class CreateFeedDto {
     // 내용
     @NotBlank(message = "내용은 필수 입력값입니다.")
     private String content;
+
+    // 모집일
+    @NotNull(message = "모집일은 필수 입력값입니다.")
+    private LocalDateTime date;
 
     // 모집 장소
     @NotBlank(message = "주소는 필수 입력값입니다.")
@@ -62,6 +69,7 @@ public class CreateFeedDto {
                 .title(title)
                 .content(content)
                 .status(FeedStatus.RECRUITING)
+                .date(date)
                 .addr(addr)
                 .latitude(latitude)
                 .longitude(longitude)
