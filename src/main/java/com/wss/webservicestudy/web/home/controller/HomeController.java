@@ -31,6 +31,11 @@ public class HomeController {
         this.homeService = homeService;
     }
 
+    @GetMapping("")
+    public ApiResponse<String> hello() {
+        return ApiResponse.ok("wss home api");
+    }
+
 //    @GetMapping("/")
 //    public String home() {
 //        return "index";
@@ -71,11 +76,11 @@ public class HomeController {
     @GetMapping("/test/ex-map")
     public ApiResponse<Map<String, String>> exMap() {
         Map<String, String> ex = new HashMap<String, String>();
-            ex.put("팀원", "유미");
-            ex.put("팀원", "우진");
-            ex.put("팀원", "지은");
-            ex.put("팀원", "상현");
-            ex.put("팀원", "진홍");
+            ex.put("1", "유미");
+            ex.put("2", "우진");
+            ex.put("3", "지은");
+            ex.put("4", "상현");
+            ex.put("", "진홍");
 
         return ApiResponse.ok(ex);
     }

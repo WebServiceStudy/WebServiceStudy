@@ -8,7 +8,7 @@ public class Constants {
     /* front */
     public static String FRONT_URL;
     /* accessToken TTL */
-    public static final Long ACCESS_TOKEN_TTL = 30L;
+//    public static final Long ACCESS_TOKEN_TTL = 30L;
     @Value("${config.cors.front-url}")
     public void setFrontUrl(String url){
         Constants.FRONT_URL = url;
