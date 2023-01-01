@@ -20,12 +20,7 @@ import javax.validation.Valid;
 @RequiredArgsConstructor
 @RequestMapping("/feed")
 public class FeedController {
-
     private final FeedService feedService;
-
-    FeedController(FeedService feedService){
-        this.feedService = feedService;
-    }
 
     @ApiOperation(value="게시판 페이지 테스트", notes="게시판 페이지 테스트를 하기위한 내용을 적용한다.")
     @RequestMapping("")
