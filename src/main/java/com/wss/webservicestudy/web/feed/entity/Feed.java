@@ -24,11 +24,12 @@ import java.util.List;
 public class Feed {
 
     @Builder
-    public Feed(User writer, String title, String content, FeedStatus status, String addr, String latitude, String longitude, int maxUser, int minAge, int maxAge) {
+    public Feed(User writer, String title, String content, FeedStatus status, LocalDateTime date, String addr, String latitude, String longitude, int maxUser, int minAge, int maxAge) {
         this.writer = writer;
         this.title = title;
         this.content = content;
         this.status = status;
+        this.date = date;
         this.addr = addr;
         this.latitude = latitude;
         this.longitude = longitude;
@@ -66,8 +67,7 @@ public class Feed {
     private FeedStatus status;
 
     // 모집일
-//    @Column(nullable = false)
-    @CreatedDate
+    @Column(nullable = false)
     private LocalDateTime date;
 
     // 모임 장소
@@ -93,6 +93,11 @@ public class Feed {
     // 여자참여수
     private int curFemale;
 
+    // 개설일
+    @Column(nullable = false)
+    @CreatedDate
+    private LocalDateTime createdDate;
+
     public void addFeedMeet(FeedMeet feedMeet) {
         this.feedMeets.add(feedMeet);
         feedMeet.setFeed(this);
@@ -101,6 +106,7 @@ public class Feed {
     public void update(UpdateFeedDto updateFeedDto){
         this.title = updateFeedDto.getTitle();
         this.content = updateFeedDto.getContent();
+        this.date = updateFeedDto.getDate();
         this.addr = updateFeedDto.getAddr();
         this.latitude = updateFeedDto.getLatitude();
         this.longitude = updateFeedDto.getLongitude();
