@@ -34,6 +34,7 @@ public class FeedController {
         Feed feed = feedService.findOne(feedId);
         mv.addObject("feed", feed);
         return "feed/feed";
+//        return feedService.findOne(feedId);
     }
 
     @ApiOperation(value = "피드 생성", notes = "피드 생성")
@@ -42,7 +43,7 @@ public class FeedController {
         if(bindingResult.hasErrors()){
             return null;
         }
-        return feedService.create(feedDto);
+        return feedService.create(feedDto).getId();
     }
 
     @ApiOperation(value = "피드 수정", notes = "피드 수정")
@@ -51,7 +52,7 @@ public class FeedController {
         if(bindingResult.hasErrors()){
             return null;
         }
-        return feedService.update(feedId, feedDto);
+        return feedService.update(feedId, feedDto).getId();
     }
 }
 
