@@ -1,9 +1,9 @@
 package com.wss.webservicestudy.web.user.entity;
 
 import com.wss.webservicestudy.web.common.entity.BaseEntity;
+import com.wss.webservicestudy.web.feed.entity.Feed;
 import com.wss.webservicestudy.web.user.dto.UserRespDto;
 import com.wss.webservicestudy.web.user.type.Gender;
-import com.wss.webservicestudy.web.feed.entity.Feed;
 import com.wss.webservicestudy.web.user.type.LoginType;
 import com.wss.webservicestudy.web.user.type.Role;
 import lombok.Builder;
@@ -25,7 +25,7 @@ public class User extends BaseEntity {
     @Column(nullable = false)
     private String name;
 
-    @Column(nullable = false, unique = true)
+    @Column(nullable = false)
     private String email;
 
     private String password;
@@ -43,8 +43,6 @@ public class User extends BaseEntity {
 
     @Enumerated(EnumType.STRING)
     private Gender gender;
-
-    private String birthday;
 
     private String tel1;
 
