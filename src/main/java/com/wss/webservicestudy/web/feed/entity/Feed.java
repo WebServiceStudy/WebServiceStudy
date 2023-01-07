@@ -1,5 +1,6 @@
 package com.wss.webservicestudy.web.feed.entity;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.wss.webservicestudy.web.feed.dto.UpdateFeedDto;
 import com.wss.webservicestudy.web.feed.type.FeedStatus;
 import com.wss.webservicestudy.web.user.entity.User;
@@ -9,6 +10,7 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 import net.minidev.json.annotate.JsonIgnore;
 import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
@@ -22,22 +24,6 @@ import java.util.List;
 @NoArgsConstructor
 @EntityListeners(AuditingEntityListener.class)
 public class Feed {
-
-    @Builder
-    public Feed(User writer, String title, String content, FeedStatus status, LocalDateTime date, String addr, String latitude, String longitude, int maxUser, int minAge, int maxAge) {
-        this.writer = writer;
-        this.title = title;
-        this.content = content;
-        this.status = status;
-        this.date = date;
-        this.addr = addr;
-        this.latitude = latitude;
-        this.longitude = longitude;
-        this.maxUser = maxUser;
-        this.minAge = minAge;
-        this.maxAge = maxAge;
-    }
-
     // 피드 식별값
     @Id
     @Column(name = "FEED_ID")
@@ -45,6 +31,7 @@ public class Feed {
     private Long id;
 
     // 작성자 식별값
+//    @JsonBackReference // 참조가 되는 뒷부분을 의미하며, 직렬화를 수행하지 않는다.
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "writer", referencedColumnName = "id")
     private User writer;
@@ -98,12 +85,21 @@ public class Feed {
     @CreatedDate
     private LocalDateTime createdDate;
 
-    public void addFeedMeet(FeedMeet feedMeet) {
-        this.feedMeets.add(feedMeet);
-        feedMeet.setFeed(this);
+    @Column(nullable = false)
+    @LastModifiedDate
+    private LocalDateTime modifiedDate;
+
+//    public void addFeedMeet(FeedMeet feedMeet) {
+//        this.feedMeets.add(feedMeet);
+//        feedMeet.setFeed(this);
+//    }
+
+    public void setWriter(User user){
+        this.writer = user;
+        user.getFeeds().add(this);
     }
 
-    public void update(UpdateFeedDto updateFeedDto){
+    public Feed update(UpdateFeedDto updateFeedDto){
         this.title = updateFeedDto.getTitle();
         this.content = updateFeedDto.getContent();
         this.date = updateFeedDto.getDate();
@@ -112,5 +108,21 @@ public class Feed {
         this.longitude = updateFeedDto.getLongitude();
         this.maxUser = updateFeedDto.getMaxUser();
         this.minAge = updateFeedDto.getMinAge();
+        return this;
+    }
+
+    @Builder
+    public Feed(User writer, String title, String content, FeedStatus status, LocalDateTime date, String addr, String latitude, String longitude, int maxUser, int minAge, int maxAge) {
+        setWriter(writer);
+        this.title = title;
+        this.content = content;
+        this.status = status;
+        this.date = date;
+        this.addr = addr;
+        this.latitude = latitude;
+        this.longitude = longitude;
+        this.maxUser = maxUser;
+        this.minAge = minAge;
+        this.maxAge = maxAge;
     }
 }
