@@ -2,6 +2,7 @@ package com.wss.webservicestudy.web.common.exception;
 
 import com.wss.webservicestudy.web.common.ApiResponse;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -28,13 +29,19 @@ public class GlobalExceptionHandler {
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public ApiResponse<Void> expectedException(Exception e) {
         log.error("EXPECTED SERVER EXCEPTION >>>>> ", e);
-        return new ApiResponse<Void>(true, "400", "요청 처리 실패 (" + e.getMessage() + ")", () -> null);
+        return new ApiResponse<Void>(true, "400", "요청 처리 실패", () -> null);
     }
 
     @ExceptionHandler({NoHandlerFoundException.class})
     @ResponseStatus(HttpStatus.NOT_FOUND)
     public ApiResponse<Void> pageNotFoundException(NoHandlerFoundException e) {
         return PAGE_NOT_FOUND_RESPONSE;
+    }
+
+    @ExceptionHandler({DataIntegrityViolationException.class})
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ApiResponse<Void> dataException(Exception e) {
+        return new ApiResponse<Void>(true, "400", "요청 데이터를 확인해주세요", () -> null);
     }
 
 }
