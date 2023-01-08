@@ -1,13 +1,14 @@
 package com.wss.webservicestudy.web.common.security.oauth;
 
 import com.wss.webservicestudy.web.common.security.domain.PrincipalDetail;
-import com.wss.webservicestudy.web.common.security.domain.SessionUser;
 import com.wss.webservicestudy.web.common.security.oauth.userinfo.GoogleUserInfo;
+import com.wss.webservicestudy.web.common.security.domain.SessionUser;
 import com.wss.webservicestudy.web.common.security.oauth.userinfo.KakaoUserInfo;
 import com.wss.webservicestudy.web.common.security.oauth.userinfo.OAuthUserInfo;
 import com.wss.webservicestudy.web.user.entity.User;
 import com.wss.webservicestudy.web.user.repository.UserRepository;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -18,6 +19,7 @@ import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpSession;
+import java.security.Principal;
 import java.util.Map;
 
 @Slf4j
@@ -43,15 +45,14 @@ public class CustomOauthService extends DefaultOAuth2UserService {
         Map<String, Object> attributes = oAuth2User.getAttributes();
         String provider = oAuth2UserRequest.getClientRegistration().getRegistrationId();
         OAuthUserInfo oauthUserInfo = getOauthUserInfo(provider, attributes);
-        String accessToken = oAuth2UserRequest.getAccessToken().getTokenValue();
 
-        if (oauthUserInfo == null) {
-            throw new AssertionError();
-        }
+        if (oauthUserInfo == null) throw new AssertionError();
+
         User user = getUserEntityByOauthUserInfo(oauthUserInfo);
         log.info("login user ==========="+ user.getName());
 
-        httpSession.setAttribute("user", new SessionUser(user));
+//
+//        httpSession.setAttribute("user", new SessionUser(user));
 
         return new PrincipalDetail(user, attributes);
     }
@@ -77,3 +78,4 @@ public class CustomOauthService extends DefaultOAuth2UserService {
         return userRepository.findByEmail(email);
     }
 }
+
