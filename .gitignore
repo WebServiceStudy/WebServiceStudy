@@ -35,5 +35,7 @@ out/
 
 ### VS Code ###
 .vscode/
+
 !/${LOGS_PATH}/
-/${LOGS_PATH_MAC}/
+./${LOGS_PATH_MAC}/
+./${LOGS_PATH_MAC}/**
