@@ -25,7 +25,7 @@ public class CreateFeedDto {
         this.longitude = longitude;
         this.maxUser = maxUser;
         this.minAge = minAge;
-        this.maxAge = maxAge; // ?_? minAge <= maxAge Exception?
+        this.maxAge = maxAge; // ?:: minAge <= maxAge Exception?
     }
 
     // 제목
@@ -62,20 +62,4 @@ public class CreateFeedDto {
     private int minAge;
     @PositiveOrZero(message = "최대 나이는 음수가 될 수 없습니다.")
     private int maxAge;
-
-    public Feed toEntity(){
-        return Feed.builder()
-                .writer(writer)// ?_? 현재 로그인한 사람으로 바꿔야함
-                .title(title)
-                .content(content)
-                .status(FeedStatus.RECRUITING)
-                .date(date)
-                .addr(addr)
-                .latitude(latitude)
-                .longitude(longitude)
-                .maxUser(maxUser)
-                .minAge(minAge)
-                .maxAge(maxAge)
-                .build();
-    }
 }
