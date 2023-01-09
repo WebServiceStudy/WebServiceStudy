@@ -1,25 +1,55 @@
 package com.wss.webservicestudy.web.feed.service;
 
-import com.wss.webservicestudy.WebservicestudyApplication;
 import com.wss.webservicestudy.web.feed.dto.CreateFeedDto;
+import com.wss.webservicestudy.web.feed.dto.FeedRespDto;
 import com.wss.webservicestudy.web.feed.dto.UpdateFeedDto;
 import com.wss.webservicestudy.web.feed.entity.Feed;
 import org.junit.Test;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.*;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class FeedServiceTest {
     @Autowired
     private FeedService feedService;
+
+    @Test
+    public void readFeedById() {
+        List<FeedRespDto> feedRespDtos = feedService.findAllDesc();
+        FeedRespDto lastFeed = feedRespDtos.get(feedRespDtos.size() - 1);
+        FeedRespDto result = feedService.findRespById((long) feedRespDtos.size());
+
+        assertThat(result.getTitle()).isEqualTo(lastFeed.getTitle());
+        assertThat(result.getWriterId()).isEqualTo(lastFeed.getWriterId());
+        assertThat(result.getFeedMeets().size()).isEqualTo(lastFeed.getFeedMeets().size());
+        assertThat(result.getFeedMeets().get(0).getUserId()).isEqualTo(result.getWriterId()); // 작성자 = 최초 참여 인원
+    }
+
+    @DisplayName("잘못된 feedId 요청 시 IllegalArgumentException 발생 확인")
+    @Test
+    public void readFeedException() {
+        List<FeedRespDto> feedRespDtos = feedService.findAllDesc();
+        Long nonFeedId = Long.valueOf(feedRespDtos.size() + 1);
+        assertThatIllegalArgumentException().isThrownBy(()
+                -> feedService.findOne(nonFeedId))
+                .withMessageMatching("feed 없음. id = " + nonFeedId);
+
+    }
+
+    @Test
+    public void readFeed() {
+        Feed feed = feedService.findOne((long)29);
+        assertThat(feed.getAddr()).isEqualTo("강남 스터디룸");
+    }
 
     @Test
     public void createFeed(){
@@ -46,13 +76,6 @@ public class FeedServiceTest {
                 .build();
         Feed feed = feedService.create(requestDto);
         assertThat(feed.getAddr()).isEqualTo("강남1");
-    }
-
-
-    @Test
-    public void readFeed(){
-        Feed feed = feedService.findOne((long)29);
-        assertThat(feed.getAddr()).isEqualTo("강남 스터디룸");
     }
 
     @Test

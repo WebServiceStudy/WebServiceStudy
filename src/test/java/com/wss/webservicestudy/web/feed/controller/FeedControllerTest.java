@@ -54,7 +54,7 @@ public class FeedControllerTest {
 
         String url = URL + port + "/" + feed.getId();
         ResponseEntity<FeedRespDto> respDto = restTemplate.getForEntity(url, FeedRespDto.class);
-        //assertThat(new FeedRespDto(feed)).isEqualTo(respDto.getBody());
+        //assertThat(new FeedRespDto(feed).getTitle()).isEqualTo(respDto.getBody().getTitle());
     }
 
     @Test
