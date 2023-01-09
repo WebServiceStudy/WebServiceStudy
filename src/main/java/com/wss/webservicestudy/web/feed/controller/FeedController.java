@@ -1,19 +1,18 @@
 package com.wss.webservicestudy.web.feed.controller;
 
 import com.wss.webservicestudy.web.feed.dto.CreateFeedDto;
+import com.wss.webservicestudy.web.feed.dto.FeedRespDto;
 import com.wss.webservicestudy.web.feed.dto.UpdateFeedDto;
-import com.wss.webservicestudy.web.feed.entity.Feed;
 import com.wss.webservicestudy.web.feed.service.FeedService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @Api(tags="게시판")
 @RestController
@@ -22,19 +21,16 @@ import javax.validation.Valid;
 public class FeedController {
     private final FeedService feedService;
 
-    @ApiOperation(value="게시판 페이지 테스트", notes="게시판 페이지 테스트를 하기위한 내용을 적용한다.")
-    @RequestMapping("")
-    public String home() {
-        return "move feed";
+    @ApiOperation(value = "피드 목록 조회", notes = "피드 목록 조회")
+    @GetMapping("")
+    public List<FeedRespDto> feeds() {
+        return feedService.findAllDesc();
     }
 
     @ApiOperation(value = "피드 조회", notes = "피드 조회")
-    @GetMapping("/detail/{feedId}")
-    public String read(@PathVariable("feedId") Long feedId, ModelAndView mv) {
-        Feed feed = feedService.findOne(feedId);
-        mv.addObject("feed", feed);
-        return "feed/feed";
-//        return feedService.findOne(feedId);
+    @GetMapping("/{feed}")
+    public FeedRespDto read(@PathVariable("feed") Long feedId) {
+        return feedService.findRespById(feedId);
     }
 
     @ApiOperation(value = "피드 생성", notes = "피드 생성")
