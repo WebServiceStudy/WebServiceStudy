@@ -2,12 +2,11 @@ package com.wss.webservicestudy.web.feed.controller;
 
 import com.wss.webservicestudy.WebservicestudyApplication;
 import com.wss.webservicestudy.web.feed.dto.CreateFeedDto;
+import com.wss.webservicestudy.web.feed.dto.FeedRespDto;
 import com.wss.webservicestudy.web.feed.dto.UpdateFeedDto;
 import com.wss.webservicestudy.web.feed.entity.Feed;
 import com.wss.webservicestudy.web.feed.repository.FeedRepository;
-import com.wss.webservicestudy.web.user.entity.User;
 import com.wss.webservicestudy.web.user.repository.UserRepository;
-import org.junit.After;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +18,7 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -38,10 +38,24 @@ public class FeedControllerTest {
     @Autowired
     private UserRepository userRepository;
 
-//    @After
+    private final String URL = "http://localhost:";
+
+    //    @After
 //    public void tearDown() throws Exception{
 //        feedRepository.deleteAll();
 //    }
+
+
+    @Transactional
+    @Test
+    public void readFeed() {
+        // User accessToken 필요
+        Feed feed = feedRepository.findAll().get(0);
+
+        String url = URL + port + "/" + feed.getId();
+        ResponseEntity<FeedRespDto> respDto = restTemplate.getForEntity(url, FeedRespDto.class);
+        //assertThat(new FeedRespDto(feed)).isEqualTo(respDto.getBody());
+    }
 
     @Test
     public void createFeed() throws Exception{
