@@ -5,6 +5,7 @@ import com.wss.webservicestudy.web.feed.dto.CreateFeedDto;
 import com.wss.webservicestudy.web.feed.dto.FeedRespDto;
 import com.wss.webservicestudy.web.feed.dto.UpdateFeedDto;
 import com.wss.webservicestudy.web.feed.entity.Feed;
+import com.wss.webservicestudy.web.feed.repository.FeedMeetRepository;
 import com.wss.webservicestudy.web.feed.repository.FeedRepository;
 import com.wss.webservicestudy.web.user.repository.UserRepository;
 import org.junit.Test;
@@ -38,6 +39,9 @@ public class FeedControllerTest {
     @Autowired
     private UserRepository userRepository;
 
+    @Autowired
+    private FeedMeetRepository feedMeetRepository;
+
     private final String URL = "http://localhost:";
 
     //    @After
@@ -50,7 +54,7 @@ public class FeedControllerTest {
     @Test
     public void readFeed() {
         // User accessToken 필요
-        Feed feed = feedRepository.findAll().get(0);
+        Feed feed = feedRepository.findTop1ByOrderByIdDesc();
 
         String url = URL + port + "/" + feed.getId();
         ResponseEntity<FeedRespDto> respDto = restTemplate.getForEntity(url, FeedRespDto.class);
@@ -123,5 +127,18 @@ public class FeedControllerTest {
         ResponseEntity<Feed> responseEntity = restTemplate.exchange(url, HttpMethod.PUT, requestEntity, Feed.class);
 
         assertThat(feedRepository.findById(updatedFeedId).get().getTitle()).isEqualTo(title);
+    }
+
+    @Test
+    public void deleteFeed() {
+        Feed lastFeed = feedRepository.findTop1ByOrderByIdDesc();
+        Long lastFeedId = lastFeed.getId();
+
+        String url = URL + port + "/" + lastFeedId;
+        ResponseEntity<Long> responseEntity = restTemplate.exchange(url, HttpMethod.DELETE, HttpEntity.EMPTY, Long.class);
+
+        assertThat(responseEntity.getBody()).isEqualTo(lastFeedId);
+        assertThat(feedRepository.findById(lastFeedId)).isNull();
+        assertThat(feedMeetRepository.countByFeedId(lastFeedId)).isEqualTo(0L);
     }
 }

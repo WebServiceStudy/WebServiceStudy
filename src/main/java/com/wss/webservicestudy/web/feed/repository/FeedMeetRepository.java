@@ -6,4 +6,6 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface FeedMeetRepository extends JpaRepository<FeedMeet, Long> {
+
+    Long countByFeedId(Long feedId);
 }

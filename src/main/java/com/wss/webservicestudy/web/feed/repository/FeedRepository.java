@@ -10,4 +10,6 @@ import java.util.List;
 public interface FeedRepository extends JpaRepository<Feed, Long> {
 
     List<Feed> findAllByOrderByIdDesc();
+
+    Feed findTop1ByOrderByIdDesc();
 }
