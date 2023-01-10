@@ -55,4 +55,10 @@ public class FeedService {
 //        if(feed.getWriter().getId() != 로그인유저Id) //?::작성자만 수정이 가능합니다.
         return feed.update(feedDto);
     }
+
+    @Transactional
+    public Long delete(Long feedId) {
+        feedRepository.deleteById(feedId);
+        return feedId;
+    }
 }

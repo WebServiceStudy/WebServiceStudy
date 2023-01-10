@@ -50,6 +50,10 @@ public class FeedController {
         }
         return feedService.update(feedId, feedDto).getId();
     }
+
+    @ApiOperation(value = "피드 삭제", notes = "피드 삭제")
+    @DeleteMapping("/{feed}")
+    public Long delete(@PathVariable(name = "feed") Long feedId) {
+        return feedService.delete(feedId);
+    }
 }
-
-
