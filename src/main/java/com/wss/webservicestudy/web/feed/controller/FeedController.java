@@ -1,5 +1,6 @@
 package com.wss.webservicestudy.web.feed.controller;
 
+import com.wss.webservicestudy.web.common.ApiResponse;
 import com.wss.webservicestudy.web.feed.dto.CreateFeedDto;
 import com.wss.webservicestudy.web.feed.dto.FeedRespDto;
 import com.wss.webservicestudy.web.feed.dto.UpdateFeedDto;
@@ -23,14 +24,14 @@ public class FeedController {
 
     @ApiOperation(value = "피드 목록 조회", notes = "피드 목록 조회")
     @GetMapping("")
-    public List<FeedRespDto> feeds() {
-        return feedService.findAllDesc();
+    public ApiResponse<List<FeedRespDto>> feeds() {
+        return ApiResponse.ok(feedService.findAllDesc());
     }
 
     @ApiOperation(value = "피드 조회", notes = "피드 조회")
     @GetMapping("/{feed}")
-    public FeedRespDto read(@PathVariable("feed") Long feedId) {
-        return feedService.findRespById(feedId);
+    public ApiResponse<FeedRespDto> read(@PathVariable("feed") Long feedId) {
+        return ApiResponse.ok(feedService.findRespById(feedId));
     }
 
     @ApiOperation(value = "피드 생성", notes = "피드 생성")
@@ -53,7 +54,7 @@ public class FeedController {
 
     @ApiOperation(value = "피드 삭제", notes = "피드 삭제")
     @DeleteMapping("/{feed}")
-    public Long delete(@PathVariable(name = "feed") Long feedId) {
-        return feedService.delete(feedId);
+    public ApiResponse<Long> delete(@PathVariable(name = "feed") Long feedId) {
+        return ApiResponse.ok(feedService.delete(feedId));
     }
 }
