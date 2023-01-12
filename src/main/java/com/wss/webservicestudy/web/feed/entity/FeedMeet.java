@@ -46,11 +46,15 @@ public class FeedMeet {
         return this;
     }
 
+    public FeedMeet cancel() {
+        this.status = ParticipantStatus.CANCEL;
+        return this;
+    }
+
     @Builder
     public FeedMeet(Feed feed, User user) {
         setFeed(feed);
         setUser(user);
         this.status = ParticipantStatus.APPLYING;
     }
-
 }
