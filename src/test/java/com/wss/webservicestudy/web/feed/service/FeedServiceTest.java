@@ -4,6 +4,7 @@ import com.wss.webservicestudy.web.feed.dto.CreateFeedDto;
 import com.wss.webservicestudy.web.feed.dto.FeedRespDto;
 import com.wss.webservicestudy.web.feed.dto.UpdateFeedDto;
 import com.wss.webservicestudy.web.feed.entity.Feed;
+import com.wss.webservicestudy.web.feed.repository.FeedRepository;
 import org.junit.Test;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.runner.RunWith;
@@ -21,6 +22,9 @@ import static org.assertj.core.api.Assertions.*;
 public class FeedServiceTest {
     @Autowired
     private FeedService feedService;
+
+    @Autowired
+    private FeedRepository feedRepository;
 
     @Test
     public void readFeedById() {
@@ -42,14 +46,21 @@ public class FeedServiceTest {
         assertThatIllegalArgumentException().isThrownBy(()
                 -> feedService.findOne(nonFeedId))
                 .withMessageMatching("feed 없음. id = " + nonFeedId);
-
     }
 
     @Test
     public void readFeed() {
+        Feed lastFeed = feedRepository.findTop1ByOrderByIdDesc();
+        FeedRespDto result = feedService.findRespById(lastFeed.getId());
+        assertThat(result.getTitle()).isEqualTo(lastFeed.getTitle());
+        assertThat(result.getWriterId()).isEqualTo(lastFeed.getWriter().getId());
+    }
+
+    /*@Test
+    public void readFeed() {
         Feed feed = feedService.findOne((long)29);
         assertThat(feed.getAddr()).isEqualTo("강남 스터디룸");
-    }
+    }*/
 
     @Test
     public void createFeed(){
