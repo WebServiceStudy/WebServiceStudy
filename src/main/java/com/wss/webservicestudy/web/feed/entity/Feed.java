@@ -3,6 +3,7 @@ package com.wss.webservicestudy.web.feed.entity;
 import com.wss.webservicestudy.web.feed.dto.UpdateFeedDto;
 import com.wss.webservicestudy.web.feed.type.FeedStatus;
 import com.wss.webservicestudy.web.user.entity.User;
+import com.wss.webservicestudy.web.user.type.Gender;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -86,6 +87,23 @@ public class Feed {
     public void setWriter(User user){
         this.writer = user;
         user.getFeeds().add(this);
+        setCur(user.getGender());
+    }
+
+    public void setCur(Gender gender) {
+        if (Gender.MALE.equals(gender)) {
+            addCurMale();
+            return;
+        }
+        addCurFemale();
+    }
+
+    public void addCurMale() {
+        this.curMale++;
+    }
+
+    public void addCurFemale() {
+        this.curFemale++;
     }
 
     public Feed update(UpdateFeedDto updateFeedDto){
@@ -98,6 +116,13 @@ public class Feed {
         this.maxUser = updateFeedDto.getMaxUser();
         this.minAge = updateFeedDto.getMinAge();
         return this;
+    }
+
+    public boolean checkWriter(Long userId) {
+        if (!this.writer.getId().equals(userId)) {
+            throw new IllegalArgumentException("작성자 아님");
+        }
+        return true;
     }
 
     @Builder
