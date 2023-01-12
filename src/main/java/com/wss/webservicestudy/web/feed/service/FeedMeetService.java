@@ -20,19 +20,11 @@ public class FeedMeetService {
 
     private final FeedRepository feedRepository;
 
-    /*@Transactional
-    public FeedMeet create(final Long feedId) {
-        return feedMeetRepository.save(FeedMeet.builder()
-     //           .feed(feedService.findOne(feedId))
-                .user(userRepository.findByEmail("jieun0502@gmail.com"))//?:: 로그인user
-                .build());
-    }*/
-
     @Transactional
     public FeedMeet create(final Long feedId) {
         return feedMeetRepository.save(FeedMeet.builder()
                 .feed(feedRepository.findById(feedId).get())
-                .user(userRepository.findByEmail("han@email.com"))
+                .user(userRepository.findByEmail("jieun0502@gmail.com"))//?:: 로그인user
                 .build());
     }
 
