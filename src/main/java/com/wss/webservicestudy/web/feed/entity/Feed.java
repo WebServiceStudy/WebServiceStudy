@@ -1,5 +1,6 @@
 package com.wss.webservicestudy.web.feed.entity;
 
+import com.wss.webservicestudy.web.common.entity.BaseEntity;
 import com.wss.webservicestudy.web.feed.dto.UpdateFeedDto;
 import com.wss.webservicestudy.web.feed.type.FeedStatus;
 import com.wss.webservicestudy.web.user.entity.User;
@@ -7,8 +8,6 @@ import com.wss.webservicestudy.web.user.type.Gender;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
@@ -20,7 +19,7 @@ import java.util.List;
 @Entity
 @NoArgsConstructor
 @EntityListeners(AuditingEntityListener.class)
-public class Feed {
+public class Feed extends BaseEntity {
     // 피드 식별값
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -74,15 +73,6 @@ public class Feed {
 
     // 여자참여수
     private int curFemale;
-
-    // 개설일
-    @Column(nullable = false)
-    @CreatedDate
-    private LocalDateTime createdDate;
-
-    @Column(nullable = false)
-    @LastModifiedDate
-    private LocalDateTime modifiedDate;
 
     public void setWriter(User user){
         this.writer = user;
