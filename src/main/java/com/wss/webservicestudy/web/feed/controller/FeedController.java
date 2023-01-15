@@ -21,7 +21,7 @@ import java.util.List;
 @Api(tags="게시판")
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/feed")
+@RequestMapping("/api/feed")
 public class FeedController {
     private final FeedService feedService;
 

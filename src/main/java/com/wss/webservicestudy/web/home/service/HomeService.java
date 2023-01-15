@@ -1,10 +1,8 @@
 package com.wss.webservicestudy.web.home.service;
 
-import com.wss.webservicestudy.web.home.controller.HomeController;
 import com.wss.webservicestudy.web.home.entity.TestEntity;
-import com.wss.webservicestudy.web.home.repository.TestdataRepository;
+import com.wss.webservicestudy.web.user.repository.TestdataRepository;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.ArrayList;
 import java.util.List;
