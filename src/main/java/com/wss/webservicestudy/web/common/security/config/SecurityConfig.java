@@ -61,7 +61,7 @@ public class SecurityConfig {
                 .authorizeRequests()
                 .antMatchers("/api/user/**").permitAll()
                 .antMatchers("/api/home/**").permitAll()
-                .antMatchers("/feed/**").permitAll()
+                .antMatchers("/api/feed/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
