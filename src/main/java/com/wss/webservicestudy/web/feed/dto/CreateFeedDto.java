@@ -1,7 +1,6 @@
 package com.wss.webservicestudy.web.feed.dto;
 
-import com.wss.webservicestudy.web.feed.entity.Feed;
-import com.wss.webservicestudy.web.feed.type.FeedStatus;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.wss.webservicestudy.web.user.entity.User;
 import lombok.*;
 
@@ -13,6 +12,7 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 @ToString
+@NoArgsConstructor
 public class CreateFeedDto {
 
     @Builder
@@ -40,6 +40,7 @@ public class CreateFeedDto {
     private String content;
 
     // 모집일
+    @JsonFormat(pattern = "yyyy-MM-dd kk:mm")
     @NotNull(message = "모집일은 필수 입력값입니다.")
     private LocalDateTime date;
 

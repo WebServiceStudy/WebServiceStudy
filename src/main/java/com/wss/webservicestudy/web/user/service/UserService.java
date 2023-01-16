@@ -103,4 +103,8 @@ public class UserService {
         User user = userRepository.findByEmail(email);
         return user.toDto();
     }
+
+    public Long findUserIdByEmail(String email){
+        return userRepository.findByEmail(email).getId();
+    }
 }

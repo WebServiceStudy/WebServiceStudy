@@ -1,19 +1,22 @@
 package com.wss.webservicestudy.web.feed.controller;
 
+import com.wss.webservicestudy.web.common.ApiResponse;
 import com.wss.webservicestudy.web.feed.dto.CreateFeedDto;
+import com.wss.webservicestudy.web.feed.dto.FeedRespDto;
 import com.wss.webservicestudy.web.feed.dto.UpdateFeedDto;
-import com.wss.webservicestudy.web.feed.entity.Feed;
 import com.wss.webservicestudy.web.feed.service.FeedService;
+import com.wss.webservicestudy.web.user.service.UserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @Api(tags="게시판")
 @RestController
@@ -22,38 +25,51 @@ import javax.validation.Valid;
 public class FeedController {
     private final FeedService feedService;
 
-    @ApiOperation(value="게시판 페이지 테스트", notes="게시판 페이지 테스트를 하기위한 내용을 적용한다.")
-    @RequestMapping("")
-    public String home() {
-        return "move feed";
+    private final UserService userService;
+
+    @ApiOperation(value = "피드 목록 조회", notes = "피드 목록 조회")
+    @GetMapping("")
+    public ApiResponse<List<FeedRespDto>> feeds() {
+        return ApiResponse.ok(feedService.findAllDesc());
     }
 
     @ApiOperation(value = "피드 조회", notes = "피드 조회")
-    @GetMapping("/detail/{feedId}")
-    public String read(@PathVariable("feedId") Long feedId, ModelAndView mv) {
-        Feed feed = feedService.findOne(feedId);
-        mv.addObject("feed", feed);
-        return "feed/feed";
-//        return feedService.findOne(feedId);
+    @GetMapping("/{feed}")
+    public ApiResponse<FeedRespDto> read(@PathVariable("feed") Long feedId) {
+        return ApiResponse.ok(feedService.findRespById(feedId));
     }
 
     @ApiOperation(value = "피드 생성", notes = "피드 생성")
     @PostMapping("")
-    public Long create(@RequestBody @Valid CreateFeedDto feedDto, BindingResult bindingResult){
+    public ApiResponse<Long> create(@RequestBody @Valid CreateFeedDto feedDto,
+                                    BindingResult bindingResult,
+                                    @AuthenticationPrincipal User userAuth){
         if(bindingResult.hasErrors()){
             return null;
         }
-        return feedService.create(feedDto).getId();
+        return ApiResponse.ok(feedService.create(feedDto, userAuth.getUsername()).getId());
+        //return ApiResponse.ok(feedService.create(feedDto).getId());
     }
 
     @ApiOperation(value = "피드 수정", notes = "피드 수정")
     @PutMapping("/{feed}")
-    public Long update(@PathVariable(name="feed")final Long feedId, @RequestBody @Valid UpdateFeedDto feedDto, BindingResult bindingResult){
+    public ApiResponse<Long> update(@PathVariable(name="feed")final Long feedId,
+                                    @RequestBody @Valid UpdateFeedDto feedDto,
+                                    BindingResult bindingResult,
+                                    @AuthenticationPrincipal User userAuth){
         if(bindingResult.hasErrors()){
             return null;
         }
-        return feedService.update(feedId, feedDto).getId();
+        Long userId = userService.findUserIdByEmail(userAuth.getUsername());
+        return ApiResponse.ok(feedService.update(feedId, feedDto, userId).getId());
+        //return ApiResponse.ok(feedService.update(feedId, feedDto).getId());
+    }
+
+    @ApiOperation(value = "피드 삭제", notes = "피드 삭제")
+    @DeleteMapping("/{feed}")
+    public ApiResponse<Long> delete(@PathVariable(name = "feed") Long feedId,
+                                    @AuthenticationPrincipal User userAuth) {
+        Long userId = userService.findUserIdByEmail(userAuth.getUsername());
+        return ApiResponse.ok(feedService.delete(feedId, userId));
     }
 }
-
-
