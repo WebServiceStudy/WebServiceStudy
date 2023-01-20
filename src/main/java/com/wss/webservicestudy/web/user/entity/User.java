@@ -71,6 +71,8 @@ public class User extends BaseEntity {
         this.tel3 = tel3;
     }
 
+    public User() {}
+
     public UserRespDto toDto() {
         return UserRespDto.builder()
                 .id(this.getId())
