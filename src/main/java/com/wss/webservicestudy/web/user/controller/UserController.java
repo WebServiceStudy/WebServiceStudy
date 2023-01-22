@@ -48,5 +48,4 @@ public class UserController {
     public ApiResponse<TokenInfo> reissue(@RequestBody TokenRequestDto tokenRequestDto) {
         return ApiResponse.ok(userService.reissue(tokenRequestDto));
     }
-
 }

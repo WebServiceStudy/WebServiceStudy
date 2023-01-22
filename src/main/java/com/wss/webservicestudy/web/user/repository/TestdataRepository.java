@@ -1,4 +1,4 @@
-package com.wss.webservicestudy.web.home.repository;
+package com.wss.webservicestudy.web.user.repository;
 
 import com.wss.webservicestudy.web.home.entity.TestEntity;
 import org.springframework.data.jpa.repository.JpaRepository;

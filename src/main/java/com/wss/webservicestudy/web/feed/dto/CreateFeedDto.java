@@ -1,7 +1,6 @@
 package com.wss.webservicestudy.web.feed.dto;
 
-import com.wss.webservicestudy.web.feed.entity.Feed;
-import com.wss.webservicestudy.web.feed.type.FeedStatus;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.wss.webservicestudy.web.user.entity.User;
 import lombok.*;
 
@@ -13,6 +12,7 @@ import java.time.LocalDateTime;
 @Getter
 @Setter
 @ToString
+@NoArgsConstructor
 public class CreateFeedDto {
 
     @Builder
@@ -25,7 +25,7 @@ public class CreateFeedDto {
         this.longitude = longitude;
         this.maxUser = maxUser;
         this.minAge = minAge;
-        this.maxAge = maxAge; // ?_? minAge <= maxAge Exception?
+        this.maxAge = maxAge; // ?:: minAge <= maxAge Exception?
     }
 
     // 제목
@@ -40,6 +40,7 @@ public class CreateFeedDto {
     private String content;
 
     // 모집일
+    @JsonFormat(pattern = "yyyy-MM-dd kk:mm")
     @NotNull(message = "모집일은 필수 입력값입니다.")
     private LocalDateTime date;
 
@@ -62,20 +63,4 @@ public class CreateFeedDto {
     private int minAge;
     @PositiveOrZero(message = "최대 나이는 음수가 될 수 없습니다.")
     private int maxAge;
-
-    public Feed toEntity(){
-        return Feed.builder()
-                .writer(writer)// ?_? 현재 로그인한 사람으로 바꿔야함
-                .title(title)
-                .content(content)
-                .status(FeedStatus.RECRUITING)
-                .date(date)
-                .addr(addr)
-                .latitude(latitude)
-                .longitude(longitude)
-                .maxUser(maxUser)
-                .minAge(minAge)
-                .maxAge(maxAge)
-                .build();
-    }
 }

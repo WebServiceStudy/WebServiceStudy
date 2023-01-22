@@ -1,11 +1,8 @@
 package com.wss.webservicestudy.web.home.dto;
 
 import com.wss.webservicestudy.web.home.entity.TestEntity;
-import com.wss.webservicestudy.web.home.repository.TestdataRepository;
 import lombok.Builder;
 import lombok.Data;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 
 @Data
 public class TestDto {

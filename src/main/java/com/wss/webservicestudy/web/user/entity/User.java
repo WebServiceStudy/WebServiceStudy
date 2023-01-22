@@ -1,13 +1,15 @@
 package com.wss.webservicestudy.web.user.entity;
 
-import com.wss.webservicestudy.web.common.entity.BaseEntity;
 import com.wss.webservicestudy.web.feed.entity.Feed;
+import com.wss.webservicestudy.web.feed.entity.FeedMeet;
+import com.wss.webservicestudy.web.common.entity.BaseEntity;
 import com.wss.webservicestudy.web.user.dto.UserRespDto;
 import com.wss.webservicestudy.web.user.type.Gender;
 import com.wss.webservicestudy.web.user.type.LoginType;
 import com.wss.webservicestudy.web.user.type.Role;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
@@ -38,8 +40,12 @@ public class User extends BaseEntity {
 
     private String birthday;
 
+//    @JsonManagedReference //참조가 되는 앞부분을 의미하며, 정상적으로 직렬화를 수행한다.
     @OneToMany(mappedBy = "writer")
     private List<Feed> feeds = new ArrayList<>();
+
+    @OneToMany(mappedBy = "user")
+    private List<FeedMeet> feedMeets = new ArrayList<>();
 
     @Enumerated(EnumType.STRING)
     private Gender gender;
@@ -64,8 +70,6 @@ public class User extends BaseEntity {
         this.tel2 = tel2;
         this.tel3 = tel3;
     }
-
-    public User() {}
 
     public UserRespDto toDto() {
         return UserRespDto.builder()
