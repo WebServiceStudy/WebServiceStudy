@@ -32,21 +32,20 @@ public class UserController {
         return "hello World";
     }
 
+    @ApiOperation(value = "회원 가입", notes = "email, password 기반으로 회원가입")
     @PostMapping("signup")
     public ApiResponse<UserRespDto> signup(@RequestBody UserLoginReqDto reqDto) {
-        log.info("============sign up============");
         return ApiResponse.ok(userService.signup(reqDto));
     }
-
+    @ApiOperation(value = "로그인", notes = "email, password를 통한 로그인")
     @PostMapping("login")
     public ApiResponse<TokenInfo> login(@RequestBody UserLoginReqDto reqDto) {
-        log.info("============login============");
         return ApiResponse.ok(userService.login(reqDto));
     }
 
+    @ApiOperation(value = "jwt 토큰 재발급", notes = "토큰 재발급")
     @PostMapping("reissue")
     public ApiResponse<TokenInfo> reissue(@RequestBody TokenRequestDto tokenRequestDto) {
-        log.info("============재발급============");
         return ApiResponse.ok(userService.reissue(tokenRequestDto));
     }
 
