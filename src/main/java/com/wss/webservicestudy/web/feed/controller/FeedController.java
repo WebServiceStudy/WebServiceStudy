@@ -44,12 +44,11 @@ public class FeedController {
     @ApiOperation(value = "피드 생성", notes = "피드 생성")
     @PostMapping("")
     public ApiResponse<Long> create(@RequestBody @Valid CreateFeedDto feedDto,
-                                    BindingResult bindingResult,
-                                    @AuthenticationPrincipal User userAuth){
+                                    BindingResult bindingResult){
         if(bindingResult.hasErrors()){
             return null;
         }
-        return ApiResponse.ok(feedService.create(feedDto, userAuth.getUsername()).getId());
+        return ApiResponse.ok(feedService.create(feedDto).getId());
         //return ApiResponse.ok(feedService.create(feedDto).getId());
     }
 
@@ -63,15 +62,13 @@ public class FeedController {
             return null;
         }
         Long userId = userService.findUserIdByEmail(userAuth.getUsername());
-        return ApiResponse.ok(feedService.update(feedId, feedDto, userId).getId());
-        //return ApiResponse.ok(feedService.update(feedId, feedDto).getId());
+//        return ApiResponse.ok(feedService.update(feedId, feedDto, userId).getId());
+        return ApiResponse.ok(feedService.update(feedId, feedDto).getId());
     }
 
     @ApiOperation(value = "피드 삭제", notes = "피드 삭제")
     @DeleteMapping("/{feed}")
-    public ApiResponse<Long> delete(@PathVariable(name = "feed") Long feedId,
-                                    @AuthenticationPrincipal User userAuth) {
-        Long userId = userService.findUserIdByEmail(userAuth.getUsername());
-        return ApiResponse.ok(feedService.delete(feedId, userId));
+    public ApiResponse<Long> delete(@PathVariable(name = "feed") Long feedId) {
+        return ApiResponse.ok(feedService.delete(feedId));
     }
 }
