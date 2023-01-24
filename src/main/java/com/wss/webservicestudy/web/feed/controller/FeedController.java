@@ -56,13 +56,10 @@ public class FeedController {
     @PutMapping("/{feed}")
     public ApiResponse<Long> update(@PathVariable(name="feed")final Long feedId,
                                     @RequestBody @Valid UpdateFeedDto feedDto,
-                                    BindingResult bindingResult,
-                                    @AuthenticationPrincipal User userAuth){
+                                    BindingResult bindingResult){
         if(bindingResult.hasErrors()){
             return null;
         }
-        Long userId = userService.findUserIdByEmail(userAuth.getUsername());
-//        return ApiResponse.ok(feedService.update(feedId, feedDto, userId).getId());
         return ApiResponse.ok(feedService.update(feedId, feedDto).getId());
     }
 
