@@ -1,23 +1,16 @@
 package com.wss.webservicestudy.web.home.controller;
 
 import com.wss.webservicestudy.web.common.ApiResponse;
-import com.wss.webservicestudy.web.common.security.domain.SessionUser;
-import io.swagger.annotations.Api;
 import com.wss.webservicestudy.web.home.service.HomeService;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpSession;
-import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.ArrayList;
-import java.util.List;
 
 @RestController
 @RequestMapping("/api/home")
