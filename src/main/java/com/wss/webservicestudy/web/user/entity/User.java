@@ -1,10 +1,8 @@
 package com.wss.webservicestudy.web.user.entity;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.wss.webservicestudy.web.feed.entity.Feed;
 import com.wss.webservicestudy.web.feed.entity.FeedMeet;
 import com.wss.webservicestudy.web.common.entity.BaseEntity;
-import com.wss.webservicestudy.web.feed.entity.Feed;
 import com.wss.webservicestudy.web.user.dto.UserRespDto;
 import com.wss.webservicestudy.web.user.type.Gender;
 import com.wss.webservicestudy.web.user.type.LoginType;

@@ -31,7 +31,7 @@ public class FeedMeetControllerTest {
     @Autowired private FeedMeetRepository feedMeetRepository;
 
     String getUrl(){
-        return "http://localhost:" + port + "/feedmeet";
+        return "http://localhost:" + port + "/api/feed/feedmeet";
     }
 
     @Test

@@ -1,37 +1,31 @@
 package com.wss.webservicestudy.web.feed.entity;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.wss.webservicestudy.web.common.entity.BaseEntity;
 import com.wss.webservicestudy.web.feed.dto.UpdateFeedDto;
 import com.wss.webservicestudy.web.feed.type.FeedStatus;
 import com.wss.webservicestudy.web.user.entity.User;
+import com.wss.webservicestudy.web.user.type.Gender;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import lombok.ToString;
-import net.minidev.json.annotate.JsonIgnore;
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 @Getter
 @Entity
 @NoArgsConstructor
 @EntityListeners(AuditingEntityListener.class)
-public class Feed {
+public class Feed extends BaseEntity {
     // 피드 식별값
     @Id
-    @Column(name = "FEED_ID")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     // 작성자 식별값
-//    @JsonBackReference // 참조가 되는 뒷부분을 의미하며, 직렬화를 수행하지 않는다.
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "writer", referencedColumnName = "id")
     private User writer;
@@ -80,23 +74,26 @@ public class Feed {
     // 여자참여수
     private int curFemale;
 
-    // 개설일
-    @Column(nullable = false)
-    @CreatedDate
-    private LocalDateTime createdDate;
-
-    @Column(nullable = false)
-    @LastModifiedDate
-    private LocalDateTime modifiedDate;
-
-//    public void addFeedMeet(FeedMeet feedMeet) {
-//        this.feedMeets.add(feedMeet);
-//        feedMeet.setFeed(this);
-//    }
-
     public void setWriter(User user){
         this.writer = user;
         user.getFeeds().add(this);
+        setCur(user.getGender());
+    }
+
+    public void setCur(Gender gender) {
+        if (Gender.MALE.equals(gender)) {
+            addCurMale();
+            return;
+        }
+        addCurFemale();
+    }
+
+    public void addCurMale() {
+        this.curMale++;
+    }
+
+    public void addCurFemale() {
+        this.curFemale++;
     }
 
     public Feed update(UpdateFeedDto updateFeedDto){
@@ -109,6 +106,13 @@ public class Feed {
         this.maxUser = updateFeedDto.getMaxUser();
         this.minAge = updateFeedDto.getMinAge();
         return this;
+    }
+
+    public boolean checkWriter(Long userId) {
+        if (!this.writer.getId().equals(userId)) {
+            throw new IllegalArgumentException("작성자 아님");
+        }
+        return true;
     }
 
     @Builder
