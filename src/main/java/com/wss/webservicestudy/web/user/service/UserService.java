@@ -5,6 +5,7 @@ import com.wss.webservicestudy.web.common.entity.token.RefreshTokenRepository;
 import com.wss.webservicestudy.web.common.security.jwt.dto.TokenRequestDto;
 import com.wss.webservicestudy.web.common.security.jwt.JwtTokenProvider;
 import com.wss.webservicestudy.web.common.security.jwt.dto.TokenInfo;
+import com.wss.webservicestudy.web.common.util.SecurityUtil;
 import com.wss.webservicestudy.web.user.dto.UserLoginReqDto;
 import com.wss.webservicestudy.web.user.dto.UserRespDto;
 import com.wss.webservicestudy.web.user.entity.User;
@@ -15,6 +16,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -102,5 +104,13 @@ public class UserService {
     public UserRespDto findUserByEmail(String email){
         User user = userRepository.findByEmail(email);
         return user.toDto();
+    }
+
+    public User findCurrentUser(){
+        User user = userRepository.findByEmail(SecurityUtil.getCurrentMember());
+        if (user == null) {
+            throw new UsernameNotFoundException("사용자를 찾을 수 없습니다");
+        }
+        return user;
     }
 }

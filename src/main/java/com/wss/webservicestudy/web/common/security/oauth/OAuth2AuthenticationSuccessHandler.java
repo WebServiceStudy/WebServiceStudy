@@ -15,6 +15,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import javax.servlet.ServletException;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -27,9 +28,9 @@ public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationS
 
     RefreshTokenRepository refreshTokenRepository;
 
-
-    public OAuth2AuthenticationSuccessHandler(JwtTokenProvider jwtTokenUtil) {
+    public OAuth2AuthenticationSuccessHandler(JwtTokenProvider jwtTokenUtil, RefreshTokenRepository refreshTokenRepository) {
         this.jwtTokenUtil = jwtTokenUtil;
+        this.refreshTokenRepository = refreshTokenRepository;
     }
 
     @Override
@@ -46,10 +47,14 @@ public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationS
 
         refreshTokenRepository.save(rfToken);
 
+        Cookie cookie = new Cookie("rt", createToken.getRefreshToken());
+//        cookie.setHttpOnly(true);
+//        cookie.setSecure(true);
+
+        response.addCookie(cookie);
+
         String url = makeRedirectUrl(createToken.getAccessToken());
         getRedirectStrategy().sendRedirect(request, response, url);
-
-
     }
 
     //
@@ -74,7 +79,7 @@ public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationS
 //
 //    }
     private String makeRedirectUrl(String token) {
-        return UriComponentsBuilder.fromUriString(Constants.FRONT_URL+"/oauth2/redirect/"+token)
+        return UriComponentsBuilder.fromUriString(Constants.FRONT_URL+"/user/oauth2/redirect/"+token)
                 .build().toUriString();
     }
 }

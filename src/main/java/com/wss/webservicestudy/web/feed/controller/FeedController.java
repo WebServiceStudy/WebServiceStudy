@@ -1,5 +1,7 @@
 package com.wss.webservicestudy.web.feed.controller;
 
+import com.wss.webservicestudy.web.common.ApiResponse;
+import com.wss.webservicestudy.web.common.util.SecurityUtil;
 import com.wss.webservicestudy.web.feed.dto.CreateFeedDto;
 import com.wss.webservicestudy.web.feed.dto.UpdateFeedDto;
 import com.wss.webservicestudy.web.feed.entity.Feed;
