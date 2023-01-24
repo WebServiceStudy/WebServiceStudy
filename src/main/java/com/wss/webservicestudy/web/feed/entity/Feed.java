@@ -118,7 +118,7 @@ public class Feed extends BaseEntity {
     }
     public boolean checkWriter(Long userId) {
         if (!this.writer.getId().equals(userId)) {
-            throw new IllegalArgumentException("작성자 아님");
+            throw new IllegalArgumentException("해당 게시글의 작성자가 아닙니다.");
         }
         return true;
     }
