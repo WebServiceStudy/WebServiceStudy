@@ -105,6 +105,14 @@ public class Feed extends BaseEntity {
         this.curFemale++;
     }
 
+    public Long getWriterId(){
+        return this.writer.getId();
+    }
+
+    public String getWriterName(){
+        return this.writer.getName();
+    }
+
     public Feed update(UpdateFeedDto updateFeedDto){
         this.title = updateFeedDto.getTitle();
         this.content = updateFeedDto.getContent();
@@ -143,5 +151,4 @@ public class Feed extends BaseEntity {
         this.minAge = minAge;
         this.maxAge = maxAge;
     }
-
 }
