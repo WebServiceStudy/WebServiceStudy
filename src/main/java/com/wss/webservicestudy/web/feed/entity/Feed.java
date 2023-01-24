@@ -93,6 +93,10 @@ public class Feed extends BaseEntity {
         addCurFemale();
     }
 
+    public void setStatus(FeedStatus status) {
+        this.status = status;
+    }
+
     public void setDeleteYn(FeedDeleteYn feedDeleteYn) {
         this.deleteYn = feedDeleteYn;
     }

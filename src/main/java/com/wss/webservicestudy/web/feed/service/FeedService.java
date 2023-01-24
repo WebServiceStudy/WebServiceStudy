@@ -8,12 +8,12 @@ import com.wss.webservicestudy.web.feed.entity.FeedMeet;
 import com.wss.webservicestudy.web.feed.mapper.FeedMapper;
 import com.wss.webservicestudy.web.feed.repository.FeedRepository;
 import com.wss.webservicestudy.web.feed.type.FeedDeleteYn;
+import com.wss.webservicestudy.web.feed.type.FeedStatus;
 import com.wss.webservicestudy.web.user.entity.User;
 import com.wss.webservicestudy.web.user.service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
-import com.wss.webservicestudy.web.user.repository.UserRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -65,6 +65,16 @@ public class FeedService {
         Feed feed = findOne(feedId);
         feed.checkWriter(userService.findCurrentUser().getId());
         return feed.update(feedDto);
+    }
+    @Transactional
+    public FeedRespDto updateStatus(Long feedId, FeedStatus feedStatus) {
+        Feed feed = findOne(feedId);
+        feed.checkWriter(userService.findCurrentUser().getId());
+        if(!feed.existsParticipant()){
+            throw new IllegalArgumentException("참가자가 2명이상은 되어야합니다.");
+        }
+        feed.setStatus(feedStatus);
+        return FeedMapper.INSTANCE.toFeedRespDto(feed);
     }
 
     @Transactional
