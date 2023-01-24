@@ -7,6 +7,7 @@ import com.wss.webservicestudy.web.feed.entity.Feed;
 import com.wss.webservicestudy.web.feed.entity.FeedMeet;
 import com.wss.webservicestudy.web.feed.mapper.FeedMapper;
 import com.wss.webservicestudy.web.feed.repository.FeedRepository;
+import com.wss.webservicestudy.web.feed.type.FeedDeleteYn;
 import com.wss.webservicestudy.web.user.entity.User;
 import com.wss.webservicestudy.web.user.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -23,10 +24,7 @@ import java.util.stream.Collectors;
 @Service
 @RequiredArgsConstructor
 public class FeedService {
-
     private final FeedRepository feedRepository;
-    private final UserRepository userRepository;
-
     private final FeedMeetService feedMeetService;
     private final UserService userService;
 
@@ -51,14 +49,7 @@ public class FeedService {
 
     @Transactional
     public Feed create(CreateFeedDto feedDto) {
-        feedDto.setWriter(userRepository.findByEmail("jieun0502@gmail.com")); //?::로그인 user
-        return feedRepository.save(FeedMapper.INSTANCE.toFeed(feedDto));
-
-    }
-
-    @Transactional
-    public Feed create(CreateFeedDto feedDto, String userEmail) {
-        User user = userRepository.findByEmail(userEmail);
+        User user = userService.findCurrentUser();
         feedDto.setWriter(user);
         Feed feed = FeedMapper.INSTANCE.toFeed(feedDto);
         feedRepository.save(feed);
@@ -71,20 +62,21 @@ public class FeedService {
     @Transactional
     public Feed update(final Long feedId, UpdateFeedDto feedDto) {
         Feed feed = findOne(feedId);
-//        if(feed.getWriter().getId() != 로그인유저Id) //?::작성자만 수정이 가능합니다.
+        feed.checkWriter(userService.findCurrentUser().getId());
         return feed.update(feedDto);
     }
 
     @Transactional
-    public Feed update(final Long feedId, UpdateFeedDto feedDto, Long userId) {
+    public Long delete(Long feedId) {
         Feed feed = findOne(feedId);
-        feed.checkWriter(userId);
-        return feed.update(feedDto);
-    }
 
-    @Transactional
-    public Long delete(Long feedId, Long userId) {
-        findOne(feedId).checkWriter(userId);
+        feed.checkWriter(userService.findCurrentUser().getId());
+
+        if(feed.existsParticipant()){
+            feed.setDeleteYn(FeedDeleteYn.DELETED);
+            return feedId;
+        }
+
         feedRepository.deleteById(feedId);
         return feedId;
     }
