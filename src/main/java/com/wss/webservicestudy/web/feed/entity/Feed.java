@@ -2,6 +2,7 @@ package com.wss.webservicestudy.web.feed.entity;
 
 import com.wss.webservicestudy.web.common.entity.BaseEntity;
 import com.wss.webservicestudy.web.feed.dto.UpdateFeedDto;
+import com.wss.webservicestudy.web.feed.type.FeedDeleteYn;
 import com.wss.webservicestudy.web.feed.type.FeedStatus;
 import com.wss.webservicestudy.web.user.entity.User;
 import com.wss.webservicestudy.web.user.type.Gender;
@@ -74,6 +75,10 @@ public class Feed extends BaseEntity {
     // 여자참여수
     private int curFemale;
 
+    // 삭제여부
+    @Enumerated(EnumType.STRING)
+    private FeedDeleteYn deleteYn;
+
     public void setWriter(User user){
         this.writer = user;
         user.getFeeds().add(this);
@@ -86,6 +91,10 @@ public class Feed extends BaseEntity {
             return;
         }
         addCurFemale();
+    }
+
+    public void setDeleteYn(FeedDeleteYn feedDeleteYn) {
+        this.deleteYn = feedDeleteYn;
     }
 
     public void addCurMale() {
@@ -107,12 +116,17 @@ public class Feed extends BaseEntity {
         this.minAge = updateFeedDto.getMinAge();
         return this;
     }
-
     public boolean checkWriter(Long userId) {
         if (!this.writer.getId().equals(userId)) {
             throw new IllegalArgumentException("작성자 아님");
         }
         return true;
+    }
+    public boolean existsParticipant() {
+        if(this.curFemale + this.curMale > 1){ // 작성자 제외
+            return true;
+        }
+        return false;
     }
 
     @Builder
@@ -129,4 +143,5 @@ public class Feed extends BaseEntity {
         this.minAge = minAge;
         this.maxAge = maxAge;
     }
+
 }
