@@ -56,7 +56,7 @@ public class FeedService {
         feedRepository.save(feed);
 
         FeedMeet feedMeet = feedMeetService.create(feed, user);
-        feedMeetService.update(feedMeet.getId());
+        feedMeetService.approve(feedMeet.getId());
         return feed;
     }
 

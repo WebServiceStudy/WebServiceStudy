@@ -6,6 +6,7 @@ import com.wss.webservicestudy.web.feed.repository.FeedMeetRepository;
 import com.wss.webservicestudy.web.feed.repository.FeedRepository;
 import com.wss.webservicestudy.web.user.entity.User;
 import com.wss.webservicestudy.web.user.repository.UserRepository;
+import com.wss.webservicestudy.web.user.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -19,6 +20,8 @@ public class FeedMeetService {
     private final UserRepository userRepository;
 
     private final FeedRepository feedRepository;
+
+    private final UserService userService;
 
     @Transactional
     public FeedMeet create(final Long feedId) {
@@ -62,21 +65,27 @@ public class FeedMeetService {
     }
 
     @Transactional
-    public FeedMeet update(final Long feedMeetId) {
-//        if(feedMeet.getFeed().getWriter().getId() != 로그인유저id) // ?:: 작성자만 승인 가능
-        return read(feedMeetId).approve();
+    public FeedMeet approve(final Long feedMeetId) {
+        FeedMeet feedMeet = read(feedMeetId);
+        return feedMeet.approveByWriter(userService.findCurrentUser());
     }
 
     @Transactional
-    public FeedMeet update(final Long feedMeetId, Long userId) {
+    public FeedMeet cancel(final Long feedMeetId) {
         FeedMeet feedMeet = read(feedMeetId);
-        feedMeet.getFeed().checkWriter(userId);
-        return feedMeet.approve();
+        return feedMeet.cancelByParticipant(userService.findCurrentUser());
+    }
+
+    @Transactional
+    public FeedMeet refusal(final Long feedMeetId) {
+        FeedMeet feedMeet = read(feedMeetId);
+        return feedMeet.refusalByWriter(userService.findCurrentUser());
     }
 
     @Transactional
     public void delete(final Long feedMeetId) {
-//        if(feedMeet.getFeed().getWriter().getId() != 로그인유저id) // ?:: 작성자만 거절 가능
+        FeedMeet feedMeet = read(feedMeetId);
+        feedMeet.getFeed().checkWriter(userService.findCurrentUser().getId());
         feedMeetRepository.delete(read(feedMeetId));
     }
 

@@ -42,14 +42,34 @@ public class FeedMeet extends BaseEntity {
         user.getFeedMeets().add(this);
     }
 
-    public FeedMeet approve() {
+    public FeedMeet approveByWriter(User writer) {
+        Feed feed = this.getFeed();
+        feed.checkWriter(writer.getId());
         this.status = ParticipantStatus.PARTICIPATING;
+        feed.addParticipant(this.user);
         return this;
     }
 
-    public FeedMeet cancel() {
+    public FeedMeet cancelByParticipant(User participant) {
+        checkParticipant(participant);
         this.status = ParticipantStatus.CANCEL;
         return this;
+    }
+
+    public FeedMeet refusalByWriter(User writer){
+        this.getFeed().checkWriter(writer.getId());
+        this.status = ParticipantStatus.REFUSAL;
+        return this;
+    }
+
+    public boolean checkParticipant(User user){
+        if(!isParticipant(user)) {
+            throw new IllegalArgumentException("해당 게시글의 참여자가 아닙니다.");
+        }
+        return true;
+    }
+    private boolean isParticipant(User user){
+        return this.user.getId().equals(user.getId());
     }
 
     @Builder

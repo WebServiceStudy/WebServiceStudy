@@ -82,15 +82,23 @@ public class Feed extends BaseEntity {
     public void setWriter(User user){
         this.writer = user;
         user.getFeeds().add(this);
-        setCur(user.getGender());
+        addParticipant(user);
     }
 
-    public void setCur(Gender gender) {
-        if (Gender.MALE.equals(gender)) {
+    public void addParticipant(User user) {
+        if (user.getGender().equals(Gender.MALE)) {
             addCurMale();
             return;
         }
         addCurFemale();
+    }
+
+    public void deductParticipant(User user){
+        if (user.getGender().equals(Gender.MALE)) {
+            deductCurMale();
+            return;
+        }
+        deductCurFemale();
     }
 
     public void setStatus(FeedStatus status) {
@@ -107,6 +115,12 @@ public class Feed extends BaseEntity {
 
     public void addCurFemale() {
         this.curFemale++;
+    }
+
+    public void deductCurMale(){ this.curMale--;}
+
+    public void deductCurFemale() {
+        this.curFemale--;
     }
 
     public Long getWriterId(){
