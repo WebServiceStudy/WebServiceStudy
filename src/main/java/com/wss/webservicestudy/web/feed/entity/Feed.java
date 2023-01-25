@@ -108,7 +108,14 @@ public class Feed extends BaseEntity {
         return this;
     }
 
-    public boolean checkWriter(Long userId) {
+    public boolean checkWriter(User user) {
+        if (user == null) {
+            throw new IllegalArgumentException("유저 정보 없음");
+        }
+        return isFeedWriter(user.getId());
+    }
+
+    private boolean isFeedWriter(Long userId) {
         if (!this.writer.getId().equals(userId)) {
             throw new IllegalArgumentException("작성자 아님");
         }

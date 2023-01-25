@@ -1,19 +1,14 @@
 package com.wss.webservicestudy.web.feed.controller;
 
 import com.wss.webservicestudy.web.common.ApiResponse;
-import com.wss.webservicestudy.web.common.ApiResponse;
-import com.wss.webservicestudy.web.common.util.SecurityUtil;
 import com.wss.webservicestudy.web.feed.dto.CreateFeedDto;
 import com.wss.webservicestudy.web.feed.dto.FeedRespDto;
 import com.wss.webservicestudy.web.feed.dto.UpdateFeedDto;
 import com.wss.webservicestudy.web.feed.service.FeedService;
-import com.wss.webservicestudy.web.user.service.UserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.validation.BindingResult;
 
@@ -26,8 +21,6 @@ import java.util.List;
 @RequestMapping("/api/feed")
 public class FeedController {
     private final FeedService feedService;
-
-    private final UserService userService;
 
     @ApiOperation(value = "피드 목록 조회", notes = "피드 목록 조회")
     @GetMapping("")
@@ -44,34 +37,27 @@ public class FeedController {
     @ApiOperation(value = "피드 생성", notes = "피드 생성")
     @PostMapping("")
     public ApiResponse<Long> create(@RequestBody @Valid CreateFeedDto feedDto,
-                                    BindingResult bindingResult,
-                                    @AuthenticationPrincipal User userAuth){
+                                    BindingResult bindingResult){
         if(bindingResult.hasErrors()){
             return null;
         }
-        return ApiResponse.ok(feedService.create(feedDto, userAuth.getUsername()).getId());
-        //return ApiResponse.ok(feedService.create(feedDto).getId());
+        return ApiResponse.ok(feedService.create(feedDto).getId());
     }
 
     @ApiOperation(value = "피드 수정", notes = "피드 수정")
     @PutMapping("/{feed}")
     public ApiResponse<Long> update(@PathVariable(name="feed")final Long feedId,
                                     @RequestBody @Valid UpdateFeedDto feedDto,
-                                    BindingResult bindingResult,
-                                    @AuthenticationPrincipal User userAuth){
+                                    BindingResult bindingResult){
         if(bindingResult.hasErrors()){
             return null;
         }
-        Long userId = userService.findUserIdByEmail(userAuth.getUsername());
-        return ApiResponse.ok(feedService.update(feedId, feedDto, userId).getId());
-        //return ApiResponse.ok(feedService.update(feedId, feedDto).getId());
+        return ApiResponse.ok(feedService.update(feedId, feedDto).getId());
     }
 
     @ApiOperation(value = "피드 삭제", notes = "피드 삭제")
     @DeleteMapping("/{feed}")
-    public ApiResponse<Long> delete(@PathVariable(name = "feed") Long feedId,
-                                    @AuthenticationPrincipal User userAuth) {
-        Long userId = userService.findUserIdByEmail(userAuth.getUsername());
-        return ApiResponse.ok(feedService.delete(feedId, userId));
+    public ApiResponse<Long> delete(@PathVariable(name = "feed") Long feedId) {
+        return ApiResponse.ok(feedService.delete(feedId));
     }
 }

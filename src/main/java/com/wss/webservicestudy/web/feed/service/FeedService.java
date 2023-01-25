@@ -8,10 +8,10 @@ import com.wss.webservicestudy.web.feed.entity.FeedMeet;
 import com.wss.webservicestudy.web.feed.mapper.FeedMapper;
 import com.wss.webservicestudy.web.feed.repository.FeedRepository;
 import com.wss.webservicestudy.web.user.entity.User;
+import com.wss.webservicestudy.web.user.service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
-import com.wss.webservicestudy.web.user.repository.UserRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -24,9 +24,9 @@ import java.util.stream.Collectors;
 public class FeedService {
 
     private final FeedRepository feedRepository;
-    private final UserRepository userRepository;
 
     private final FeedMeetService feedMeetService;
+    private final UserService userService;
 
     @Transactional(readOnly = true)
     public List<FeedRespDto> findAllDesc() {
@@ -48,8 +48,8 @@ public class FeedService {
     }
 
     @Transactional
-    public Feed create(CreateFeedDto feedDto, String userEmail) {
-        User user = userRepository.findByEmail(userEmail);
+    public Feed create(CreateFeedDto feedDto) {
+        User user = userService.findCurrentUser();
         feedDto.setWriter(user);
         Feed feed = FeedMapper.INSTANCE.toFeed(feedDto);
         feedRepository.save(feed);
@@ -60,15 +60,15 @@ public class FeedService {
     }
 
     @Transactional
-    public Feed update(final Long feedId, UpdateFeedDto feedDto, Long userId) {
+    public Feed update(final Long feedId, UpdateFeedDto feedDto) {
         Feed feed = findOne(feedId);
-        feed.checkWriter(userId);
+        feed.checkWriter(userService.findCurrentUser());
         return feed.update(feedDto);
     }
 
     @Transactional
-    public Long delete(Long feedId, Long userId) {
-        findOne(feedId).checkWriter(userId);
+    public Long delete(Long feedId) {
+        findOne(feedId).checkWriter(userService.findCurrentUser());
         feedRepository.deleteById(feedId);
         return feedId;
     }
