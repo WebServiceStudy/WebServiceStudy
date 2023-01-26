@@ -5,6 +5,7 @@ public enum ParticipantStatus {
     PARTICIPATING("참여중"),
     APPLYING("참여 요청"),
     CANCEL("참여 취소"),
+    EXIT("피드 나가기"),
     REFUSAL("작성자 거절");
 
     private final String name;
