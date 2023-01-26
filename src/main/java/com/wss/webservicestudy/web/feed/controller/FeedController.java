@@ -1,20 +1,15 @@
 package com.wss.webservicestudy.web.feed.controller;
 
 import com.wss.webservicestudy.web.common.ApiResponse;
-import com.wss.webservicestudy.web.common.ApiResponse;
-import com.wss.webservicestudy.web.common.util.SecurityUtil;
 import com.wss.webservicestudy.web.feed.dto.CreateFeedDto;
 import com.wss.webservicestudy.web.feed.dto.FeedRespDto;
 import com.wss.webservicestudy.web.feed.dto.UpdateFeedDto;
 import com.wss.webservicestudy.web.feed.service.FeedService;
 import com.wss.webservicestudy.web.feed.type.FeedStatus;
-import com.wss.webservicestudy.web.user.service.UserService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.userdetails.User;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.validation.BindingResult;
 
@@ -27,8 +22,6 @@ import java.util.List;
 @RequestMapping("/api/feed")
 public class FeedController {
     private final FeedService feedService;
-
-    private final UserService userService;
 
     @ApiOperation(value = "피드 목록 조회", notes = "피드 목록 조회")
     @GetMapping("")
@@ -50,7 +43,6 @@ public class FeedController {
             return null;
         }
         return ApiResponse.ok(feedService.create(feedDto).getId());
-        //return ApiResponse.ok(feedService.create(feedDto).getId());
     }
 
     @ApiOperation(value = "피드 수정", notes = "피드 수정")

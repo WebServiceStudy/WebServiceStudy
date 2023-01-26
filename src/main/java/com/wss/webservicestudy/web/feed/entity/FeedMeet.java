@@ -44,21 +44,27 @@ public class FeedMeet extends BaseEntity {
 
     public FeedMeet approveByWriter(User writer) {
         Feed feed = this.getFeed();
-        feed.checkWriter(writer.getId());
+        feed.checkWriter(writer);
+        feed.availableToAdd();
+        availableToApprove();
+
         this.status = ParticipantStatus.PARTICIPATING;
-        feed.addParticipant(this.user);
+        this.feed.addParticipant(this.user);
         return this;
     }
 
     public FeedMeet cancelByParticipant(User participant) {
         checkParticipant(participant);
         this.status = ParticipantStatus.CANCEL;
+        deductParticipant(participant);
         return this;
     }
 
     public FeedMeet refusalByWriter(User writer){
-        this.getFeed().checkWriter(writer.getId());
+        this.getFeed().checkWriter(writer);
+        checkWriterSelfCancel(writer);
         this.status = ParticipantStatus.REFUSAL;
+        deductParticipant(this.user);
         return this;
     }
 
@@ -66,10 +72,31 @@ public class FeedMeet extends BaseEntity {
         if(!isParticipant(user)) {
             throw new IllegalArgumentException("해당 게시글의 참여자가 아닙니다.");
         }
-        return true;
+        return checkWriterSelfCancel(user);
     }
+
     private boolean isParticipant(User user){
         return this.user.getId().equals(user.getId());
+    }
+
+    public boolean checkWriterSelfCancel(User user) {
+        if(user.getId().equals(this.feed.getWriterId())) {
+            throw new IllegalArgumentException("게시글의 작성자는 항상 참여상태여야 합니다.");
+        }
+        return true;
+    }
+
+    private void deductParticipant(User user) {
+        if (this.status.equals(ParticipantStatus.PARTICIPATING)) {
+            this.feed.deductParticipant(user);
+        }
+    }
+
+    private boolean availableToApprove() {
+        if (this.status.equals(ParticipantStatus.APPLYING) || this.status.equals(ParticipantStatus.REFUSAL)) {
+            return true;
+        }
+        throw new IllegalArgumentException("승인할 수 없는 상태입니다. 상태 = " + this.status.getName());
     }
 
     @Builder

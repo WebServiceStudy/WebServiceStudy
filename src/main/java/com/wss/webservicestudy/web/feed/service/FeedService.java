@@ -24,7 +24,9 @@ import java.util.stream.Collectors;
 @Service
 @RequiredArgsConstructor
 public class FeedService {
+
     private final FeedRepository feedRepository;
+
     private final FeedMeetService feedMeetService;
     private final UserService userService;
 
@@ -63,13 +65,13 @@ public class FeedService {
     @Transactional
     public Feed update(final Long feedId, UpdateFeedDto feedDto) {
         Feed feed = findOne(feedId);
-        feed.checkWriter(userService.findCurrentUser().getId());
+        feed.checkWriter(userService.findCurrentUser());
         return feed.update(feedDto);
     }
     @Transactional
     public FeedRespDto updateStatus(Long feedId, FeedStatus feedStatus) {
         Feed feed = findOne(feedId);
-        feed.checkWriter(userService.findCurrentUser().getId());
+        feed.checkWriter(userService.findCurrentUser());
         if(!feed.existsParticipant()){
             throw new IllegalArgumentException("참가자가 2명이상은 되어야합니다.");
         }
@@ -81,7 +83,7 @@ public class FeedService {
     public Long delete(Long feedId) {
         Feed feed = findOne(feedId);
 
-        feed.checkWriter(userService.findCurrentUser().getId());
+        feed.checkWriter(userService.findCurrentUser());
 
         if(feed.existsParticipant()){
             feed.setDeleteYn(FeedDeleteYn.DELETED);
