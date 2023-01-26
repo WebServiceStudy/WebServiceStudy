@@ -49,11 +49,21 @@ public class FeedMeetService {
     }
 
     @Transactional
-    public FeedMeet update(final Long feedMeetId) {
+    public FeedMeet approve(final Long feedMeetId) {
         FeedMeet feedMeet = read(feedMeetId);
-        feedMeet.getFeed().checkWriter(userService.findCurrentUser());
-        feedMeet.getFeed().availableToAdd();
-        return feedMeet.approve(userService.findCurrentUser().getGender());
+        return feedMeet.approveByWriter(userService.findCurrentUser());
+    }
+
+    @Transactional
+    public FeedMeet cancel(final Long feedMeetId) {
+        FeedMeet feedMeet = read(feedMeetId);
+        return feedMeet.cancelByParticipant(userService.findCurrentUser());
+    }
+
+    @Transactional
+    public FeedMeet refusal(final Long feedMeetId) {
+        FeedMeet feedMeet = read(feedMeetId);
+        return feedMeet.refusalByWriter(userService.findCurrentUser());
     }
 
     @Transactional

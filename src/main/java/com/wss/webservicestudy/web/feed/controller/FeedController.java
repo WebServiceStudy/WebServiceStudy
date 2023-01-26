@@ -5,6 +5,7 @@ import com.wss.webservicestudy.web.feed.dto.CreateFeedDto;
 import com.wss.webservicestudy.web.feed.dto.FeedRespDto;
 import com.wss.webservicestudy.web.feed.dto.UpdateFeedDto;
 import com.wss.webservicestudy.web.feed.service.FeedService;
+import com.wss.webservicestudy.web.feed.type.FeedStatus;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
@@ -53,6 +54,12 @@ public class FeedController {
             return null;
         }
         return ApiResponse.ok(feedService.update(feedId, feedDto).getId());
+    }
+
+    @ApiOperation(value = "피드 상태 수정", notes = "작성자가 feed status 상태를 바꾼다.")
+    @PutMapping("/{feed}/status")
+    public ApiResponse<Long> update(@PathVariable(name = "feed")final Long feedId, @RequestBody FeedStatus feedStatus){
+        return ApiResponse.ok(feedService.updateStatus(feedId, feedStatus).getId());
     }
 
     @ApiOperation(value = "피드 삭제", notes = "피드 삭제")

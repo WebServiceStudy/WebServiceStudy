@@ -7,6 +7,8 @@ import com.wss.webservicestudy.web.feed.entity.Feed;
 import com.wss.webservicestudy.web.feed.entity.FeedMeet;
 import com.wss.webservicestudy.web.feed.mapper.FeedMapper;
 import com.wss.webservicestudy.web.feed.repository.FeedRepository;
+import com.wss.webservicestudy.web.feed.type.FeedDeleteYn;
+import com.wss.webservicestudy.web.feed.type.FeedStatus;
 import com.wss.webservicestudy.web.user.entity.User;
 import com.wss.webservicestudy.web.user.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -38,7 +40,8 @@ public class FeedService {
 
     @Transactional(readOnly = true)
     public FeedRespDto findRespById(Long feedId) {
-        return new FeedRespDto(findOne(feedId));
+        return FeedMapper.INSTANCE.toFeedRespDto(findOne(feedId));
+//        return new FeedRespDto(findOne(feedId));
     }
 
     @Transactional(readOnly = true)
@@ -55,7 +58,7 @@ public class FeedService {
         feedRepository.save(feed);
 
         FeedMeet feedMeet = feedMeetService.create(feed, user);
-        feedMeetService.update(feedMeet.getId());
+        feedMeetService.approve(feedMeet.getId());
         return feed;
     }
 
@@ -65,10 +68,28 @@ public class FeedService {
         feed.checkWriter(userService.findCurrentUser());
         return feed.update(feedDto);
     }
+    @Transactional
+    public FeedRespDto updateStatus(Long feedId, FeedStatus feedStatus) {
+        Feed feed = findOne(feedId);
+        feed.checkWriter(userService.findCurrentUser());
+        if(!feed.existsParticipant()){
+            throw new IllegalArgumentException("참가자가 2명이상은 되어야합니다.");
+        }
+        feed.setStatus(feedStatus);
+        return FeedMapper.INSTANCE.toFeedRespDto(feed);
+    }
 
     @Transactional
     public Long delete(Long feedId) {
-        findOne(feedId).checkWriter(userService.findCurrentUser());
+        Feed feed = findOne(feedId);
+
+        feed.checkWriter(userService.findCurrentUser());
+
+        if(feed.existsParticipant()){
+            feed.setDeleteYn(FeedDeleteYn.DELETED);
+            return feedId;
+        }
+
         feedRepository.deleteById(feedId);
         return feedId;
     }
