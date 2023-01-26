@@ -22,9 +22,13 @@ public class FeedMeetService {
 
     @Transactional
     public FeedMeet create(final Long feedId) {
+        Feed feed = feedRepository.findById(feedId).get();
+        User user = userService.findCurrentUser();
+        feed.checkAge(user.getAge());
+
         FeedMeet feedMeet = feedMeetRepository.save(FeedMeet.builder()
-                .feed(feedRepository.findById(feedId).get())
-                .user(userService.findCurrentUser())
+                .feed(feed)
+                .user(user)
                 .build());
         return feedMeet;
     }
@@ -48,7 +52,8 @@ public class FeedMeetService {
     public FeedMeet update(final Long feedMeetId) {
         FeedMeet feedMeet = read(feedMeetId);
         feedMeet.getFeed().checkWriter(userService.findCurrentUser());
-        return feedMeet.approve();
+        feedMeet.getFeed().availableToAdd();
+        return feedMeet.approve(userService.findCurrentUser().getGender());
     }
 
     @Transactional

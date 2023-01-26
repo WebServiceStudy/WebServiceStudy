@@ -3,6 +3,7 @@ package com.wss.webservicestudy.web.feed.entity;
 import com.wss.webservicestudy.web.common.entity.BaseEntity;
 import com.wss.webservicestudy.web.feed.type.ParticipantStatus;
 import com.wss.webservicestudy.web.user.entity.User;
+import com.wss.webservicestudy.web.user.type.Gender;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -42,13 +43,15 @@ public class FeedMeet extends BaseEntity {
         user.getFeedMeets().add(this);
     }
 
-    public FeedMeet approve() {
+    public FeedMeet approve(Gender gender) {
         this.status = ParticipantStatus.PARTICIPATING;
+        this.getFeed().addCur(gender);
         return this;
     }
 
-    public FeedMeet cancel() {
+    public FeedMeet cancel(Gender gender) {
         this.status = ParticipantStatus.CANCEL;
+        this.getFeed().subtractCur(gender);
         return this;
     }
 
