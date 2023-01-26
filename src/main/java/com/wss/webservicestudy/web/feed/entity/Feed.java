@@ -77,23 +77,23 @@ public class Feed extends BaseEntity {
     public void setWriter(User user){
         this.writer = user;
         user.getFeeds().add(this);
-        setCur(user.getGender());
+        addCur(user.getGender());
     }
 
-    public void setCur(Gender gender) {
+    public void addCur(Gender gender) {
         if (Gender.MALE.equals(gender)) {
-            addCurMale();
+            this.curMale++;
             return;
         }
-        addCurFemale();
-    }
-
-    public void addCurMale() {
-        this.curMale++;
-    }
-
-    public void addCurFemale() {
         this.curFemale++;
+    }
+
+    public void subtractCur(Gender gender) {
+        if (Gender.MALE.equals(gender)) {
+            this.curMale--;
+            return;
+        }
+        this.curFemale--;
     }
 
     public Feed update(UpdateFeedDto updateFeedDto){
@@ -108,11 +108,11 @@ public class Feed extends BaseEntity {
         return this;
     }
 
-    public boolean checkWriter(User user) {
+    public void checkWriter(User user) {
         if (user == null) {
             throw new IllegalArgumentException("유저 정보 없음");
         }
-        return isFeedWriter(user.getId());
+        isFeedWriter(user.getId());
     }
 
     private boolean isFeedWriter(Long userId) {
@@ -120,6 +120,20 @@ public class Feed extends BaseEntity {
             throw new IllegalArgumentException("작성자 아님");
         }
         return true;
+    }
+
+    public void availableToAdd() {
+        // 정원 체크
+        if (this.maxUser == curMale + curFemale) {
+            throw new IllegalArgumentException("정원 다 참");
+        }
+    }
+
+    public void checkAge(int userAge) {
+        // 나이체크
+        if (this.minAge > userAge || this.maxAge < userAge) {
+            throw new IllegalArgumentException("요구하는 나이와 다름");
+        }
     }
 
     @Builder
