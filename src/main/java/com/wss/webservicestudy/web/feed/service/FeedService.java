@@ -7,12 +7,13 @@ import com.wss.webservicestudy.web.feed.entity.Feed;
 import com.wss.webservicestudy.web.feed.entity.FeedMeet;
 import com.wss.webservicestudy.web.feed.mapper.FeedMapper;
 import com.wss.webservicestudy.web.feed.repository.FeedRepository;
+import com.wss.webservicestudy.web.feed.type.FeedDeleteYn;
+import com.wss.webservicestudy.web.feed.type.FeedStatus;
 import com.wss.webservicestudy.web.user.entity.User;
 import com.wss.webservicestudy.web.user.service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
-import com.wss.webservicestudy.web.user.repository.UserRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -23,10 +24,7 @@ import java.util.stream.Collectors;
 @Service
 @RequiredArgsConstructor
 public class FeedService {
-
     private final FeedRepository feedRepository;
-    private final UserRepository userRepository;
-
     private final FeedMeetService feedMeetService;
     private final UserService userService;
 
@@ -40,7 +38,8 @@ public class FeedService {
 
     @Transactional(readOnly = true)
     public FeedRespDto findRespById(Long feedId) {
-        return new FeedRespDto(findOne(feedId));
+        return FeedMapper.INSTANCE.toFeedRespDto(findOne(feedId));
+//        return new FeedRespDto(findOne(feedId));
     }
 
     @Transactional(readOnly = true)
@@ -51,40 +50,44 @@ public class FeedService {
 
     @Transactional
     public Feed create(CreateFeedDto feedDto) {
-        feedDto.setWriter(userRepository.findByEmail("jieun0502@gmail.com")); //?::로그인 user
-        return feedRepository.save(FeedMapper.INSTANCE.toFeed(feedDto));
-
-    }
-
-    @Transactional
-    public Feed create(CreateFeedDto feedDto, String userEmail) {
-        User user = userRepository.findByEmail(userEmail);
+        User user = userService.findCurrentUser();
         feedDto.setWriter(user);
         Feed feed = FeedMapper.INSTANCE.toFeed(feedDto);
         feedRepository.save(feed);
 
         FeedMeet feedMeet = feedMeetService.create(feed, user);
-        feedMeetService.update(feedMeet.getId());
+        feedMeetService.approve(feedMeet.getId());
         return feed;
     }
 
     @Transactional
     public Feed update(final Long feedId, UpdateFeedDto feedDto) {
         Feed feed = findOne(feedId);
-//        if(feed.getWriter().getId() != 로그인유저Id) //?::작성자만 수정이 가능합니다.
+        feed.checkWriter(userService.findCurrentUser().getId());
         return feed.update(feedDto);
     }
-
     @Transactional
-    public Feed update(final Long feedId, UpdateFeedDto feedDto, Long userId) {
+    public FeedRespDto updateStatus(Long feedId, FeedStatus feedStatus) {
         Feed feed = findOne(feedId);
-        feed.checkWriter(userId);
-        return feed.update(feedDto);
+        feed.checkWriter(userService.findCurrentUser().getId());
+        if(!feed.existsParticipant()){
+            throw new IllegalArgumentException("참가자가 2명이상은 되어야합니다.");
+        }
+        feed.setStatus(feedStatus);
+        return FeedMapper.INSTANCE.toFeedRespDto(feed);
     }
 
     @Transactional
-    public Long delete(Long feedId, Long userId) {
-        findOne(feedId).checkWriter(userId);
+    public Long delete(Long feedId) {
+        Feed feed = findOne(feedId);
+
+        feed.checkWriter(userService.findCurrentUser().getId());
+
+        if(feed.existsParticipant()){
+            feed.setDeleteYn(FeedDeleteYn.DELETED);
+            return feedId;
+        }
+
         feedRepository.deleteById(feedId);
         return feedId;
     }

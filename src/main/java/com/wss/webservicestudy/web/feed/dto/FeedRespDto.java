@@ -1,6 +1,7 @@
 package com.wss.webservicestudy.web.feed.dto;
 
 import com.wss.webservicestudy.web.feed.entity.Feed;
+import com.wss.webservicestudy.web.feed.entity.FeedMeet;
 import com.wss.webservicestudy.web.feed.type.FeedStatus;
 import lombok.Builder;
 import lombok.Getter;
@@ -50,6 +51,28 @@ public class FeedRespDto {
     private int curFemale;
 
     @Builder
+    public FeedRespDto(Long id, Long writerId, String writerName, List<FeedMeet> feedMeets, String title, String content, FeedStatus status, LocalDateTime date, String addr, String latitude, String longitude, int maxUser, int minAge, int maxAge, int curMale, int curFemale) {
+        this.id = id;
+        this.writerId = writerId;
+        this.writerName = writerName;
+        this.feedMeets = feedMeets
+                .stream()
+                .map(FeedMeetRespDto::new)
+                .collect(Collectors.toList());
+        this.title = title;
+        this.content = content;
+        this.status = status;
+        this.date = date;
+        this.addr = addr;
+        this.latitude = latitude;
+        this.longitude = longitude;
+        this.maxUser = maxUser;
+        this.minAge = minAge;
+        this.maxAge = maxAge;
+        this.curMale = curMale;
+        this.curFemale = curFemale;
+    }
+
     public FeedRespDto(Feed feed) {
         this.id = feed.getId();
         this.writerId = feed.getWriter().getId();
