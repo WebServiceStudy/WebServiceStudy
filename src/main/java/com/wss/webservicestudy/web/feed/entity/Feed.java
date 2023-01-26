@@ -2,6 +2,7 @@ package com.wss.webservicestudy.web.feed.entity;
 
 import com.wss.webservicestudy.web.common.entity.BaseEntity;
 import com.wss.webservicestudy.web.feed.dto.UpdateFeedDto;
+import com.wss.webservicestudy.web.feed.type.FeedDeleteYn;
 import com.wss.webservicestudy.web.feed.type.FeedStatus;
 import com.wss.webservicestudy.web.user.entity.User;
 import com.wss.webservicestudy.web.user.type.Gender;
@@ -74,26 +75,60 @@ public class Feed extends BaseEntity {
     // 여자참여수
     private int curFemale;
 
+    // 삭제여부
+    @Enumerated(EnumType.STRING)
+    private FeedDeleteYn deleteYn;
+
     public void setWriter(User user){
         this.writer = user;
         user.getFeeds().add(this);
-        addCur(user.getGender());
+        addParticipant(user);
     }
 
-    public void addCur(Gender gender) {
-        if (Gender.MALE.equals(gender)) {
-            this.curMale++;
+    public void addParticipant(User user) {
+        if (user.getGender().equals(Gender.MALE)) {
+            addCurMale();
             return;
         }
+        addCurFemale();
+    }
+
+    public void deductParticipant(User user){
+        if (user.getGender().equals(Gender.MALE)) {
+            deductCurMale();
+            return;
+        }
+        deductCurFemale();
+    }
+
+    public void setStatus(FeedStatus status) {
+        this.status = status;
+    }
+
+    public void setDeleteYn(FeedDeleteYn feedDeleteYn) {
+        this.deleteYn = feedDeleteYn;
+    }
+
+    public void addCurMale() {
+        this.curMale++;
+    }
+
+    public void addCurFemale() {
         this.curFemale++;
     }
 
-    public void subtractCur(Gender gender) {
-        if (Gender.MALE.equals(gender)) {
-            this.curMale--;
-            return;
-        }
+    public void deductCurMale(){ this.curMale--;}
+
+    public void deductCurFemale() {
         this.curFemale--;
+    }
+
+    public Long getWriterId(){
+        return this.writer.getId();
+    }
+
+    public String getWriterName(){
+        return this.writer.getName();
     }
 
     public Feed update(UpdateFeedDto updateFeedDto){
@@ -115,11 +150,18 @@ public class Feed extends BaseEntity {
         isFeedWriter(user.getId());
     }
 
-    private boolean isFeedWriter(Long userId) {
+    public boolean isFeedWriter(Long userId) {
         if (!this.writer.getId().equals(userId)) {
-            throw new IllegalArgumentException("작성자 아님");
+            throw new IllegalArgumentException("해당 게시글의 작성자가 아닙니다.");
         }
         return true;
+    }
+
+    public boolean existsParticipant() {
+        if(this.curFemale + this.curMale > 1){ // 작성자 제외
+            return true;
+        }
+        return false;
     }
 
     public void availableToAdd() {

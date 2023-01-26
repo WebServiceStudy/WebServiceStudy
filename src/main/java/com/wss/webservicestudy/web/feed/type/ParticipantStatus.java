@@ -12,4 +12,8 @@ public enum ParticipantStatus {
     ParticipantStatus(String name) {
         this.name = name;
     }
+
+    public String getName() {
+        return name;
+    }
 }
