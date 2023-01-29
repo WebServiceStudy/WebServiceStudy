@@ -29,7 +29,7 @@ public class GlobalExceptionHandler {
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public ApiResponse<Void> expectedException(Exception e) {
         log.error("EXPECTED SERVER EXCEPTION >>>>> ", e);
-        return new ApiResponse<Void>(true, "400", "요청 처리 실패", () -> null);
+        return new ApiResponse<Void>(false, "400", "요청 처리 실패", () -> null);
     }
 
     @ExceptionHandler({NoHandlerFoundException.class})
