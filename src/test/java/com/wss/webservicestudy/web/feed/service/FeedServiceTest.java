@@ -56,12 +56,6 @@ public class FeedServiceTest {
         assertThat(result.getWriterId()).isEqualTo(lastFeed.getWriter().getId());
     }
 
-    /*@Test
-    public void readFeed() {
-        Feed feed = feedService.findOne((long)29);
-        assertThat(feed.getAddr()).isEqualTo("강남 스터디룸");
-    }*/
-
     @Test
     public void createFeed(){
         String title = "WebServiceStudy";
