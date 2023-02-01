@@ -76,7 +76,7 @@ public class FeedRespDto {
     public FeedRespDto(Feed feed) {
         this.id = feed.getId();
         this.writerId = feed.getWriter().getId();
-        this.writerName = feed.getWriter().getName();
+        this.writerName = feed.getWriter().getNickname();
         this.feedMeets = feed.getFeedMeets()
                 .stream()
                 .map(FeedMeetRespDto::new)
