@@ -23,12 +23,6 @@ import java.util.List;
 public class FeedController {
     private final FeedService feedService;
 
-    @ApiOperation(value = "피드 목록 조회", notes = "피드 목록 조회")
-    @GetMapping("")
-    public ApiResponse<List<FeedRespDto>> feeds() {
-        return ApiResponse.ok(feedService.findAllDesc());
-    }
-
     @ApiOperation(value = "피드 조회", notes = "피드 조회")
     @GetMapping("/{feed}")
     public ApiResponse<FeedRespDto> read(@PathVariable("feed") Long feedId) {
