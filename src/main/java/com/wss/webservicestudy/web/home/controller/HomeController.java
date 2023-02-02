@@ -1,7 +1,7 @@
 package com.wss.webservicestudy.web.home.controller;
 
 import com.wss.webservicestudy.web.common.ApiResponse;
-import com.wss.webservicestudy.web.feed.dto.FeedRespDto;
+import com.wss.webservicestudy.web.feed.dto.FeedsRespDto;
 import com.wss.webservicestudy.web.feed.service.FeedService;
 import com.wss.webservicestudy.web.home.service.HomeService;
 import io.swagger.annotations.ApiOperation;
@@ -31,14 +31,10 @@ public class HomeController {
 
     @ApiOperation(value = "피드 목록 조회", notes = "피드 목록 조회")
     @GetMapping("")
-    public ApiResponse<List<FeedRespDto>> feeds() {
+    public ApiResponse<List<FeedsRespDto>> feeds() {
         return ApiResponse.ok(feedService.findAllDesc());
     }
 
-//    @GetMapping("/")
-//    public String home() {
-//        return "index";
-//    }
 //    @GetMapping("/success")
 //    public String oauthSuccess(ModelAndView mv) {
 //        SessionUser user = (SessionUser) httpSession.getAttribute("user");

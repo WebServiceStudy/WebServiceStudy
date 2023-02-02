@@ -2,6 +2,7 @@ package com.wss.webservicestudy.web.feed.service;
 
 import com.wss.webservicestudy.web.feed.dto.CreateFeedDto;
 import com.wss.webservicestudy.web.feed.dto.FeedRespDto;
+import com.wss.webservicestudy.web.feed.dto.FeedsRespDto;
 import com.wss.webservicestudy.web.feed.dto.UpdateFeedDto;
 import com.wss.webservicestudy.web.feed.entity.Feed;
 import com.wss.webservicestudy.web.feed.entity.FeedMeet;
@@ -31,10 +32,10 @@ public class FeedService {
     private final UserService userService;
 
     @Transactional(readOnly = true)
-    public List<FeedRespDto> findAllDesc() {
+    public List<FeedsRespDto> findAllDesc() {
         return feedRepository.findAllByOrderByIdDesc()
                 .stream()
-                .map(FeedRespDto::new)
+                .map(FeedsRespDto::new)
                 .collect(Collectors.toList());
     }
 

@@ -2,6 +2,7 @@ package com.wss.webservicestudy.web.feed.service;
 
 import com.wss.webservicestudy.web.feed.dto.CreateFeedDto;
 import com.wss.webservicestudy.web.feed.dto.FeedRespDto;
+import com.wss.webservicestudy.web.feed.dto.FeedsRespDto;
 import com.wss.webservicestudy.web.feed.dto.UpdateFeedDto;
 import com.wss.webservicestudy.web.feed.entity.Feed;
 import com.wss.webservicestudy.web.feed.repository.FeedRepository;
@@ -28,20 +29,18 @@ public class FeedServiceTest {
 
     @Test
     public void readFeedById() {
-        List<FeedRespDto> feedRespDtos = feedService.findAllDesc();
-        FeedRespDto lastFeed = feedRespDtos.get(feedRespDtos.size() - 1);
+        List<FeedsRespDto> feedRespDtos = feedService.findAllDesc();
+        FeedsRespDto lastFeed = feedRespDtos.get(feedRespDtos.size() - 1);
         FeedRespDto result = feedService.findRespById((long) feedRespDtos.size());
 
         assertThat(result.getTitle()).isEqualTo(lastFeed.getTitle());
-        assertThat(result.getWriterId()).isEqualTo(lastFeed.getWriterId());
-        assertThat(result.getFeedMeets().size()).isEqualTo(lastFeed.getFeedMeets().size());
-        assertThat(result.getFeedMeets().get(0).getUserId()).isEqualTo(result.getWriterId()); // 작성자 = 최초 참여 인원
+        assertThat(result.getWriterName()).isEqualTo(lastFeed.getWriterName());
     }
 
     @DisplayName("잘못된 feedId 요청 시 IllegalArgumentException 발생 확인")
     @Test
     public void readFeedException() {
-        List<FeedRespDto> feedRespDtos = feedService.findAllDesc();
+        List<FeedsRespDto> feedRespDtos = feedService.findAllDesc();
         Long nonFeedId = Long.valueOf(feedRespDtos.size() + 1);
         assertThatIllegalArgumentException().isThrownBy(()
                 -> feedService.findOne(nonFeedId))
