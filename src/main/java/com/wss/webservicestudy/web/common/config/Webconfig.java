@@ -11,6 +11,10 @@ public class Webconfig implements WebMvcConfigurer {
 
     @Override
     public void addCorsMappings(CorsRegistry registry) {
-        registry.addMapping("/**").allowedOrigins(Constants.FRONT_URL).allowCredentials(true);
+        System.out.println(Constants.FRONT_URL);
+        registry.addMapping("/**")
+                .allowedOrigins(Constants.FRONT_URL)
+                .allowCredentials(true)
+                .allowedMethods("POST", "GET");
     }
 }
