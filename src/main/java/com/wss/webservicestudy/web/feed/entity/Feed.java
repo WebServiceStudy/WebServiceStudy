@@ -82,7 +82,6 @@ public class Feed extends BaseEntity {
     public void setWriter(User user){
         this.writer = user;
         user.getFeeds().add(this);
-        addParticipant(user);
     }
 
     public void addParticipant(User user) {
