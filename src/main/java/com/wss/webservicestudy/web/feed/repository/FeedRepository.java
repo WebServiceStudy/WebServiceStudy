@@ -14,5 +14,7 @@ public interface FeedRepository extends JpaRepository<Feed, Long> {
 
     List<Feed> findAllByWriter(User writer);
 
+    List<Feed> findAllByFeedMeets_User(User user);
+
     Feed findTop1ByOrderByIdDesc();
 }

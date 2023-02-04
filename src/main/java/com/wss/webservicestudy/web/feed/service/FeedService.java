@@ -40,9 +40,15 @@ public class FeedService {
 
     @Transactional
     public List<FeedsRespDto> findUserFeeds() {
-        User user = userService.findCurrentUser();
+        return feedRepository.findAllByWriter(userService.findCurrentUser())
+                .stream()
+                .map(FeedsRespDto::new)
+                .collect(Collectors.toList());
+    }
 
-        return feedRepository.findAllByWriter(user)
+    @Transactional
+    public List<FeedsRespDto> findUserAppliedFeeds() {
+        return feedRepository.findAllByFeedMeets_User(userService.findCurrentUser())
                 .stream()
                 .map(FeedsRespDto::new)
                 .collect(Collectors.toList());

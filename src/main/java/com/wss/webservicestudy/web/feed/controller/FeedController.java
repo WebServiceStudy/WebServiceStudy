@@ -27,8 +27,13 @@ public class FeedController {
     @ApiOperation(value = "사용자 작성 피드 조회", notes = "사용자 작성 피드 조회")
     @GetMapping("/writer")
     public ApiResponse<List<FeedsRespDto>> userFeeds() {
-        List<FeedsRespDto> feeds = feedService.findUserFeeds();
-        return ApiResponse.ok(feeds);
+        return ApiResponse.ok(feedService.findUserFeeds());
+    }
+
+    @ApiOperation(value = "사용자 참여 요청 피드 조회", notes = "사용자 참여 요청 피드 조회")
+    @GetMapping("/applied")
+    public ApiResponse<List<FeedsRespDto>> userAppliedFeeds() {
+        return ApiResponse.ok(feedService.findUserAppliedFeeds());
     }
 
     @ApiOperation(value = "피드 조회", notes = "피드 조회")
