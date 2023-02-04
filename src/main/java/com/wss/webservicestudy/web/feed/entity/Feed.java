@@ -128,7 +128,7 @@ public class Feed extends BaseEntity {
     }
 
     public String getWriterName(){
-        return this.writer.getName();
+        return this.writer.getNickname();
     }
 
     public Feed update(UpdateFeedDto updateFeedDto){
