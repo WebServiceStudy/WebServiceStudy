@@ -32,7 +32,7 @@ public class GoogleUserInfo implements OAuthUserInfo {
     @Override
     public User toUser() {
         return User.builder()
-                .name(this.getName())
+                .nickname(this.getName())
                 .email(this.getEmail())
                 .role(Role.USER)
                 .loginType(this.getLoginType())

@@ -12,7 +12,7 @@ import lombok.Setter;
 public class UserRespDto {
     private Long id;
 
-    private String name;
+    private String nickname;
 
     private String email;
 
@@ -31,9 +31,9 @@ public class UserRespDto {
     private String tel3;
 
     @Builder
-    public UserRespDto(Long id, String name, String email, LoginType loginType, Role role, Gender gender, String birthday, String tel1, String tel2, String tel3) {
+    public UserRespDto(Long id, String nickname, String email, LoginType loginType, Role role, Gender gender, String birthday, String tel1, String tel2, String tel3) {
         this.id = id;
-        this.name = name;
+        this.nickname = nickname;
         this.email = email;
         this.loginType = loginType;
         this.role = role;

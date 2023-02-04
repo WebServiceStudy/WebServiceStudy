@@ -9,7 +9,7 @@ public class SessionUser {
     private String email;
 
     public SessionUser(User user) {
-        this.name = user.getName();
+        this.name = user.getNickname();
         this.email = user.getEmail();
     }
 }
