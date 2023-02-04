@@ -25,10 +25,10 @@ public class User extends BaseEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false)
-    private String name;
+    @Column(nullable = false, unique = true)
+    private String nickname;
 
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private String email;
 
     private String password;
@@ -58,9 +58,9 @@ public class User extends BaseEntity {
     private String tel3;
 
     @Builder
-    public User(Long id, String name, String email, String password, LoginType loginType, Role role, Gender gender, String birthday, String tel1, String tel2, String tel3) {
+    public User(Long id, String nickname, String email, String password, LoginType loginType, Role role, Gender gender, String birthday, String tel1, String tel2, String tel3) {
         this.id = id;
-        this.name = name;
+        this.nickname = nickname;
         this.email = email;
         this.password = password;
         this.loginType = loginType;
@@ -78,6 +78,7 @@ public class User extends BaseEntity {
         return UserRespDto.builder()
                 .id(this.getId())
                 .email(this.getEmail())
+                .nickname(this.getNickname())
                 .birthday(this.getBirthday())
                 .loginType(this.getLoginType())
                 .tel1(this.getTel1())

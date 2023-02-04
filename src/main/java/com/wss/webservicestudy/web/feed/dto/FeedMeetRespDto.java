@@ -25,7 +25,7 @@ public class FeedMeetRespDto {
         this.id = feedMeet.getId();
         this.feedId = feedMeet.getFeed().getId();
         this.userId = feedMeet.getUser().getId();
-        this.userName = feedMeet.getUser().getName();
+        this.userName = feedMeet.getUser().getNickname();
         this.gender = feedMeet.getUser().getGender();
         this.status = feedMeet.getStatus();
     }

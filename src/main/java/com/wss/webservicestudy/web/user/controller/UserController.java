@@ -24,7 +24,7 @@ public class UserController {
         this.userService = userService;
     }
 
-    @GetMapping("/info")
+    @PostMapping("/info")
     public ApiResponse<UserRespDto> getUserInfo() {
         return ApiResponse.ok(userService.findUserByEmail(SecurityUtil.getCurrentMember()));
     }

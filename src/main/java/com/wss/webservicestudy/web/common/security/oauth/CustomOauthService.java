@@ -49,7 +49,7 @@ public class CustomOauthService extends DefaultOAuth2UserService {
         if (oauthUserInfo == null) throw new AssertionError();
 
         User user = getUserEntityByOauthUserInfo(oauthUserInfo);
-        log.info("login user ==========="+ user.getName());
+        log.info("login user ==========="+ user.getNickname());
 
 //
 //        httpSession.setAttribute("user", new SessionUser(user));
