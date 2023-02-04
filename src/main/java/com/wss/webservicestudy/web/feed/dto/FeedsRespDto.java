@@ -39,7 +39,7 @@ public class FeedsRespDto {
         this.date = feed.getDate();
         this.addr = feed.getAddr();
         this.maxUser = feed.getMaxUser();
-        this.minAge = feed.getMaxUser();
-        this.maxAge = feed.getMinAge();
+        this.minAge = feed.getMinAge();
+        this.maxAge = feed.getMaxAge();
     }
 }

@@ -3,6 +3,7 @@ package com.wss.webservicestudy.web.feed.controller;
 import com.wss.webservicestudy.web.common.ApiResponse;
 import com.wss.webservicestudy.web.feed.dto.CreateFeedDto;
 import com.wss.webservicestudy.web.feed.dto.FeedRespDto;
+import com.wss.webservicestudy.web.feed.dto.FeedsRespDto;
 import com.wss.webservicestudy.web.feed.dto.UpdateFeedDto;
 import com.wss.webservicestudy.web.feed.service.FeedService;
 import com.wss.webservicestudy.web.feed.type.FeedStatus;
@@ -22,6 +23,13 @@ import java.util.List;
 @RequestMapping("/api/feed")
 public class FeedController {
     private final FeedService feedService;
+
+    @ApiOperation(value = "사용자 작성 피드 조회", notes = "사용자 작성 피드 조회")
+    @GetMapping("/writer")
+    public ApiResponse<List<FeedsRespDto>> userFeeds() {
+        List<FeedsRespDto> feeds = feedService.findUserFeeds();
+        return ApiResponse.ok(feeds);
+    }
 
     @ApiOperation(value = "피드 조회", notes = "피드 조회")
     @GetMapping("/{feed}")

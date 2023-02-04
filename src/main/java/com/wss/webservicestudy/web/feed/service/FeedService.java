@@ -27,13 +27,22 @@ import java.util.stream.Collectors;
 public class FeedService {
 
     private final FeedRepository feedRepository;
-
     private final FeedMeetService feedMeetService;
     private final UserService userService;
 
     @Transactional(readOnly = true)
     public List<FeedsRespDto> findAllDesc() {
         return feedRepository.findAllByOrderByIdDesc()
+                .stream()
+                .map(FeedsRespDto::new)
+                .collect(Collectors.toList());
+    }
+
+    @Transactional
+    public List<FeedsRespDto> findUserFeeds() {
+        User user = userService.findCurrentUser();
+
+        return feedRepository.findAllByWriter(user)
                 .stream()
                 .map(FeedsRespDto::new)
                 .collect(Collectors.toList());
