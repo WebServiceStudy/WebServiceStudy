@@ -9,10 +9,11 @@ import com.wss.webservicestudy.web.user.type.LoginType;
 import com.wss.webservicestudy.web.user.type.Role;
 import lombok.Builder;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -71,6 +72,8 @@ public class User extends BaseEntity {
         this.tel3 = tel3;
     }
 
+    public User() {}
+
     public UserRespDto toDto() {
         return UserRespDto.builder()
                 .id(this.getId())
@@ -82,5 +85,15 @@ public class User extends BaseEntity {
                 .tel3(this.getTel3())
                 .role(this.getRole())
                 .build();
+    }
+
+    public int getAge() {
+        LocalDate now = LocalDate.now();
+        LocalDate birthDate = LocalDate.parse(this.birthday, DateTimeFormatter.ofPattern("yyyyMMdd"));
+        int age = now.minusYears(birthDate.getYear()).getYear();
+        if (birthDate.plusYears(age).isAfter(now)) {
+            return age - 1;
+        }
+        return age;
     }
 }

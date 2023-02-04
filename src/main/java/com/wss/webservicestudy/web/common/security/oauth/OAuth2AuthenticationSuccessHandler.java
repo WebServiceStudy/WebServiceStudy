@@ -7,12 +7,12 @@ import com.wss.webservicestudy.web.common.security.domain.PrincipalDetail;
 import com.wss.webservicestudy.web.common.security.jwt.JwtTokenProvider;
 import com.wss.webservicestudy.web.common.security.jwt.dto.TokenInfo;
 import com.wss.webservicestudy.web.user.dto.UserRespDto;
-import com.wss.webservicestudy.web.user.service.UserService;
+
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.ResponseCookie;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.web.authentication.SimpleUrlAuthenticationSuccessHandler;
 import org.springframework.stereotype.Component;
-import org.springframework.web.util.UriComponentsBuilder;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -27,9 +27,9 @@ public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationS
 
     RefreshTokenRepository refreshTokenRepository;
 
-
-    public OAuth2AuthenticationSuccessHandler(JwtTokenProvider jwtTokenUtil) {
+    public OAuth2AuthenticationSuccessHandler(JwtTokenProvider jwtTokenUtil, RefreshTokenRepository refreshTokenRepository) {
         this.jwtTokenUtil = jwtTokenUtil;
+        this.refreshTokenRepository = refreshTokenRepository;
     }
 
     @Override
@@ -44,37 +44,17 @@ public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationS
                 .value(createToken.getRefreshToken())
                 .build();
 
+        ResponseCookie cookie = ResponseCookie.from("rf", createToken.getRefreshToken())
+                .sameSite("None")
+                .httpOnly(true)
+                .secure(true)
+                .path("/")
+                .maxAge(1000L * 60 * 60 * 24 * 14)
+                .build();
+        response.addHeader("Set-Cookie", cookie.toString());
+
         refreshTokenRepository.save(rfToken);
 
-        String url = makeRedirectUrl(createToken.getAccessToken());
-        getRedirectStrategy().sendRedirect(request, response, url);
-
-
-    }
-
-    //
-//    @Override
-//    public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response,
-//                                        Authentication authentication) throws IOException {
-//        PrincipalDetails principalDetails = (PrincipalDetails) authentication.getPrincipal();
-//        UserResponse userResponse = UserResponse.from(principalDetails.getUser());
-//
-//        String createdAccessToken = jwtTokenUtil.createAccessToken(userResponse);
-//        String refreshToken = jwtTokenUtil.createRefreshToken();
-//
-//        AccessToken accessToken = AccessToken.builder()
-//                .email(userResponse.getEmail())
-//                .accessToken(createdAccessToken)
-//                .build();
-//
-//        userCommandService.saveAccessToken(accessToken);
-//        userCommandService.updateRefreshTokenByUserId(userResponse.getEmail(), refreshToken);
-//        String url = makeRedirectUrl(createdAccessToken);
-//        getRedirectStrategy().sendRedirect(request, response, url);
-//
-//    }
-    private String makeRedirectUrl(String token) {
-        return UriComponentsBuilder.fromUriString(Constants.FRONT_URL+"/oauth2/redirect/"+token)
-                .build().toUriString();
+        response.sendRedirect(Constants.FRONT_URL+"/user/oauth2/redirect?ac="+createToken.getAccessToken());
     }
 }

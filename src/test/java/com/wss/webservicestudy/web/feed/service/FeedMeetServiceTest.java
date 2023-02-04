@@ -38,7 +38,7 @@ public class FeedMeetServiceTest {
     @Test
     public void update(){
         int index = feedMeetRepository.findAll().size() - 1;
-        feedMeetService.update(feedMeetRepository.findAll().get(index).getId());
+        feedMeetService.approve(feedMeetRepository.findAll().get(index).getId());
     }
 
     @Test
