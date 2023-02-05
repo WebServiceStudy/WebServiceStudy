@@ -22,6 +22,7 @@ public class HomeController {
 
     private final HomeService homeService;
     private final FeedService feedService;
+    private final HttpSession httpSession;
 
     public HomeController(HttpSession httpSession, HomeService homeService, FeedService feedService) {
         this.httpSession = httpSession;

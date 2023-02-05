@@ -35,7 +35,7 @@ public class UserAuthController {
 
     @ApiOperation(value = "토큰 재발급", notes = "acToken, rfToken 재발급")
     @PostMapping("/reissue")
-    public ApiResponse<TokenInfo> reissue(@RequestBody TokenRequestDto tokenRequestDto, HttpServletRequest request) {
-        return ApiResponse.ok(userService.reissue(tokenRequestDto, request));
+    public ApiResponse<TokenInfo> reissue(@RequestBody TokenRequestDto tokenRequestDto, HttpServletRequest request, HttpServletResponse response) {
+        return ApiResponse.ok(userService.reissue(tokenRequestDto, request, response));
     }
 }
