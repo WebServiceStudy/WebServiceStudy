@@ -27,6 +27,8 @@ public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationS
 
     RefreshTokenRepository refreshTokenRepository;
 
+    final long refreshTokenValidTime = 1000L * 60 * 60 * 24 * 30;
+
     public OAuth2AuthenticationSuccessHandler(JwtTokenProvider jwtTokenUtil, RefreshTokenRepository refreshTokenRepository) {
         this.jwtTokenUtil = jwtTokenUtil;
         this.refreshTokenRepository = refreshTokenRepository;
@@ -45,11 +47,12 @@ public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationS
                 .build();
 
         ResponseCookie cookie = ResponseCookie.from("rf", createToken.getRefreshToken())
-                .sameSite("None")
+                .domain("localhost")
+                .sameSite("Lax")
                 .httpOnly(true)
-                .secure(true)
+                .secure(false)
                 .path("/")
-                .maxAge(1000L * 60 * 60 * 24 * 14)
+                .maxAge(refreshTokenValidTime)
                 .build();
         response.addHeader("Set-Cookie", cookie.toString());
 

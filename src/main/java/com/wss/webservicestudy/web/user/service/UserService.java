@@ -65,10 +65,13 @@ public class UserService {
         //    authenticate 메서드가 실행이 될 때 CustomUserDetailsService 에서 만들었던 loadUserByUsername 메서드가 실행됨
         Authentication authentication = authenticationManagerBuilder.getObject().authenticate(authenticationToken);
 
+        log.info(authentication.getAuthorities().toString());
+
         // 3. 인증 정보를 기반으로 JWT 토큰 생성
         TokenInfo tokenDto = tokenProvider.createToken(authentication);
         ResponseCookie cookie = ResponseCookie.from("rf", tokenDto.getRefreshToken())
-                .sameSite("None")
+                .domain("localhost")
+                .sameSite("Lax")
                 .httpOnly(true)
                 .secure(false)
                 .path("/")
@@ -90,7 +93,7 @@ public class UserService {
     }
 
     @Transactional
-    public TokenInfo reissue(TokenRequestDto tokenRequestDto, HttpServletRequest request) {
+    public TokenInfo reissue(TokenRequestDto tokenRequestDto, HttpServletRequest request, HttpServletResponse response) {
 
         Cookie[] cookies = request.getCookies();
 
@@ -132,6 +135,16 @@ public class UserService {
         // 6. 저장소 정보 업데이트
         RefreshToken newRefreshToken = rfToken.updateValue(tokenDto.getRefreshToken());
         refreshTokenRepository.save(newRefreshToken);
+
+        ResponseCookie cookie = ResponseCookie.from("rf", tokenDto.getRefreshToken())
+                .domain("localhost")
+                .sameSite("Lax")
+                .httpOnly(true)
+                .secure(false)
+                .path("/")
+                .maxAge(refreshTokenValidTime)
+                .build();
+        response.addHeader("Set-Cookie", cookie.toString());
 
         // 토큰 발급
         return tokenDto;

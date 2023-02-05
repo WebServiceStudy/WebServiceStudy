@@ -39,7 +39,6 @@ public class CustomUserDetailsService implements UserDetailsService {
         log.info("===============login service===============");
         GrantedAuthority grantedAuthority = new SimpleGrantedAuthority(user.getRole().getRole());
 
-        log.info(grantedAuthority.getAuthority());
         return new User(
             user.getEmail(),
             user.getPassword(),
