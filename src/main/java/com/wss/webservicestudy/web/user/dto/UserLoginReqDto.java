@@ -19,7 +19,7 @@ public class UserLoginReqDto {
                 .email(email)
                 .nickname(name)
                 .password(passwordEncoder.encode(password))
-                .role(Role.USER)
+                .role(Role.ROLE_USER)
                 .build();
     }
 

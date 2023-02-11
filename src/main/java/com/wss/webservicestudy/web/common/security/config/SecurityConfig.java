@@ -35,49 +35,33 @@ public class SecurityConfig {
         this.oAuth2AuthenticationSuccessHandler = oAuth2AuthenticationSuccessHandler;
     }
 
-    //    @Bean
-//    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-//        http.csrf().disable();
-//        http.authorizeRequests()
-//                .anyRequest().permitAll()
-////			  .antMatchers("/**").authenticated() // 인가된 사용자만 접근 가능하도록 설정
-////			  .antMatchers("게시물등").hasRole(Role.USER.name()) // 특정 ROLE을 가진 사용자만 접근 가능하도록 설정
-//                .and()
-//                .logout()
-//                .logoutSuccessUrl("/")
-//                .and()
-//                .oauth2Login()
-//                .defaultSuccessUrl("/success")
-//                .userInfoEndpoint()
-//                .userService(customOauthService);
-//
-//        return http.build();
-//    }
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.csrf().disable();
         http.httpBasic().disable()
                 .formLogin().disable()
                 .authorizeRequests()
-                .antMatchers("/api/home/**").permitAll()
-                .antMatchers("/api/auth/**").permitAll()
-                .antMatchers("/api/user/**").hasRole("USER")
-                .antMatchers("/api/feed/**").hasRole("USER")
+                    .antMatchers("/api/home/**").permitAll()
+                    .antMatchers("/api/auth/**").permitAll()
+                    .antMatchers("/api/user/**").hasRole("USER")
+                    .antMatchers("/api/feed/**").hasRole("USER")
 //                .antMatchers("/api/feed/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
-                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                    .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                .and()
+                    .cors()
                 .and()
                 .exceptionHandling()
-                .authenticationEntryPoint(jwtAuthenticationEntryPoint)
-                .accessDeniedHandler(jwtAccessDeniedHandler)
+                    .authenticationEntryPoint(jwtAuthenticationEntryPoint)
+                    .accessDeniedHandler(jwtAccessDeniedHandler)
                 .and()
-                .apply(new JwtSecurityConfig(tokenProvider))
+                    .apply(new JwtSecurityConfig(tokenProvider))
                 .and()
-                .oauth2Login()
-                .successHandler(oAuth2AuthenticationSuccessHandler)
-                .userInfoEndpoint()
-                .userService(customOauthService);
+                    .oauth2Login()
+                    .successHandler(oAuth2AuthenticationSuccessHandler)
+                    .userInfoEndpoint()
+                    .userService(customOauthService);
 
         return http.build();
     }
