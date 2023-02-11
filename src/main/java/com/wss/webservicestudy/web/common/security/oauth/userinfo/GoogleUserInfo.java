@@ -34,7 +34,7 @@ public class GoogleUserInfo implements OAuthUserInfo {
         return User.builder()
                 .nickname(this.getName())
                 .email(this.getEmail())
-                .role(Role.USER)
+                .role(Role.ROLE_USER)
                 .loginType(this.getLoginType())
                 .build();
     }

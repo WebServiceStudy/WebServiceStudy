@@ -40,6 +40,7 @@ public class OAuth2AuthenticationSuccessHandler extends SimpleUrlAuthenticationS
         UserRespDto userRespDto = principalDetails.getUser().toDto();
 
         TokenInfo createToken = jwtTokenUtil.createToken(authentication);
+        
 
         RefreshToken rfToken = RefreshToken.builder()
                 .key(userRespDto.getEmail())

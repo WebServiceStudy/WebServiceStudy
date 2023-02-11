@@ -1,11 +1,13 @@
 package com.wss.webservicestudy.web.home.controller;
 
 import com.wss.webservicestudy.web.common.ApiResponse;
+import com.wss.webservicestudy.web.common.util.SecurityUtil;
 import com.wss.webservicestudy.web.feed.dto.FeedsRespDto;
 import com.wss.webservicestudy.web.feed.service.FeedService;
 import com.wss.webservicestudy.web.feed.dto.FeedRespDto;
 import com.wss.webservicestudy.web.home.service.HomeService;
 import io.swagger.annotations.ApiOperation;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -16,6 +18,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+@Slf4j
 @RestController
 @RequestMapping("/api/home")
 public class HomeController {
@@ -31,8 +34,10 @@ public class HomeController {
     }
 
     @ApiOperation(value = "피드 목록 조회", notes = "피드 목록 조회")
-    @GetMapping("")
+    @GetMapping("/feeds")
     public ApiResponse<List<FeedsRespDto>> feeds() {
+
+        log.info("==================="+SecurityUtil.getCurrentMember());
         return ApiResponse.ok(feedService.findAllDesc());
     }
 }
