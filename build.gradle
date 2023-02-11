@@ -84,6 +84,9 @@ dependencies {
 	implementation "org.mapstruct:mapstruct:${mapstructVersion}"
 	annotationProcessor "org.mapstruct:mapstruct-processor:${mapstructVersion}"
 
+	// Web socket
+	implementation 'org.springframework.boot:spring-boot-starter-websocket'
+
 	// If you are using mapstruct in test code
 //	testAnnotationProcessor "org.mapstruct:mapstruct-processor:${mapstructVersion}"
 }
