@@ -150,8 +150,10 @@ public class UserService {
         return tokenDto;
     }
 
-    public UserRespDto findUserByEmail(String email){
+
+    public UserRespDto getUserInfo(String email){
         User user = userRepository.findByEmail(email);
+
         return user.toDto();
     }
 

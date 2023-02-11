@@ -37,7 +37,7 @@ public class CustomUserDetailsService implements UserDetailsService {
     // DB 에 User 값이 존재한다면 UserDetails 객체로 만들어서 리턴
     private UserDetails createUserDetails(com.wss.webservicestudy.web.user.entity.User user) {
         log.info("===============login service===============");
-        GrantedAuthority grantedAuthority = new SimpleGrantedAuthority(user.getRole().getRole());
+        GrantedAuthority grantedAuthority = new SimpleGrantedAuthority(user.getRole().name());
 
         return new User(
             user.getEmail(),
