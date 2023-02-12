@@ -57,6 +57,8 @@ public class User extends BaseEntity {
 
     private String tel3;
 
+    private boolean isInfo;
+
     @Builder
     public User(Long id, String nickname, String email, String password, LoginType loginType, Role role, Gender gender, String birthday, String tel1, String tel2, String tel3) {
         this.id = id;
