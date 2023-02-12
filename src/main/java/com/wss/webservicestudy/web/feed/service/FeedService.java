@@ -68,12 +68,13 @@ public class FeedService {
 
     @Transactional
     public Feed create(CreateFeedDto feedDto) {
-        User user = userService.findCurrentUser();
-        feedDto.setWriter(user);
+        User currentUser = userService.findCurrentUser();
+        currentUser.checkIsWritable();
+        feedDto.setWriter(currentUser);
         Feed feed = FeedMapper.INSTANCE.toFeed(feedDto);
         feedRepository.save(feed);
 
-        FeedMeet feedMeet = feedMeetService.create(feed, user);
+        FeedMeet feedMeet = feedMeetService.create(feed.getId());
         feedMeetService.approve(feedMeet.getId());
         return feed;
     }
@@ -81,13 +82,21 @@ public class FeedService {
     @Transactional
     public Feed update(final Long feedId, UpdateFeedDto feedDto) {
         Feed feed = findOne(feedId);
-        feed.checkWriter(userService.findCurrentUser());
+
+        User currentUser = userService.findCurrentUser();
+        currentUser.checkIsWritable();
+
+        feed.checkWriter(currentUser);
         return feed.update(feedDto);
     }
     @Transactional
     public FeedRespDto updateStatus(Long feedId, FeedStatus feedStatus) {
         Feed feed = findOne(feedId);
-        feed.checkWriter(userService.findCurrentUser());
+
+        User currentUser = userService.findCurrentUser();
+        currentUser.checkIsWritable();
+        feed.checkWriter(currentUser);
+
         if(!feed.existsParticipant()){
             throw new IllegalArgumentException("참가자가 2명이상은 되어야합니다.");
         }
@@ -99,7 +108,9 @@ public class FeedService {
     public Long delete(Long feedId) {
         Feed feed = findOne(feedId);
 
-        feed.checkWriter(userService.findCurrentUser());
+        User currentUser = userService.findCurrentUser();
+        currentUser.checkIsWritable();
+        feed.checkWriter(currentUser);
 
         if(feed.existsParticipant()){
             feed.setDeleteYn(FeedDeleteYn.DELETED);
