@@ -24,13 +24,8 @@ public class FeedMeetService {
     public FeedMeet create(final Long feedId) {
         Feed feed = feedRepository.findById(feedId).get();
         User user = userService.findCurrentUser();
-        feed.checkAge(user.getAge());
 
-        FeedMeet feedMeet = feedMeetRepository.save(FeedMeet.builder()
-                .feed(feed)
-                .user(user)
-                .build());
-        return feedMeet;
+        return create(feed, user);
     }
 
     @Transactional
