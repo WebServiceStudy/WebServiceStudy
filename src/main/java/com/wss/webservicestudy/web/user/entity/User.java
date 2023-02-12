@@ -57,8 +57,10 @@ public class User extends BaseEntity {
 
     private String tel3;
 
+    private String isWritable; //nickname, birthday, gender 필수
+
     @Builder
-    public User(Long id, String nickname, String email, String password, LoginType loginType, Role role, Gender gender, String birthday, String tel1, String tel2, String tel3) {
+    public User(Long id, String nickname, String email, String password, LoginType loginType, Role role, Gender gender, String birthday, String tel1, String tel2, String tel3, String isWritable) {
         this.id = id;
         this.nickname = nickname;
         this.email = email;
@@ -70,6 +72,7 @@ public class User extends BaseEntity {
         this.tel1 = tel1;
         this.tel2 = tel2;
         this.tel3 = tel3;
+        this.isWritable = isWritable;
     }
 
     public User() {}
@@ -96,5 +99,13 @@ public class User extends BaseEntity {
             return age - 1;
         }
         return age;
+    }
+
+    public void checkIsWritable(){
+        if(!isWritable()) throw new IllegalArgumentException("쓰기 권한 없음");
+    }
+
+    public boolean isWritable(){
+        return this.isWritable.equals("y");
     }
 }

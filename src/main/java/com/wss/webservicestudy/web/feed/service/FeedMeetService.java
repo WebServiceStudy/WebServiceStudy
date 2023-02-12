@@ -16,25 +16,22 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class FeedMeetService {
     private final FeedMeetRepository feedMeetRepository;
-    private final FeedRepository feedRepository;
+
+    private final FeedService feedService;
 
     private final UserService userService;
 
     @Transactional
     public FeedMeet create(final Long feedId) {
-        Feed feed = feedRepository.findById(feedId).get();
+        Feed feed = feedService.findOne(feedId);
         User user = userService.findCurrentUser();
-        feed.checkAge(user.getAge());
 
-        FeedMeet feedMeet = feedMeetRepository.save(FeedMeet.builder()
-                .feed(feed)
-                .user(user)
-                .build());
-        return feedMeet;
+        return create(feed, user);
     }
 
-    @Transactional
-    public FeedMeet create(Feed feed, User user) {
+    private FeedMeet create(Feed feed, User user) {
+        user.checkIsWritable();
+        feed.checkAge(user.getAge());
         return feedMeetRepository.save(FeedMeet.builder()
                 .feed(feed)
                 .user(user)
@@ -51,7 +48,9 @@ public class FeedMeetService {
     @Transactional
     public FeedMeet approve(final Long feedMeetId) {
         FeedMeet feedMeet = read(feedMeetId);
-        return feedMeet.approveByWriter(userService.findCurrentUser());
+        User currentUser = userService.findCurrentUser();
+        currentUser.checkIsWritable();
+        return feedMeet.approveByWriter(currentUser);
     }
 
     @Transactional
