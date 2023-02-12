@@ -28,8 +28,9 @@ public class FeedMeetService {
         return create(feed, user);
     }
 
-    @Transactional
-    public FeedMeet create(Feed feed, User user) {
+    private FeedMeet create(Feed feed, User user) {
+        user.checkIsWritable();
+        feed.checkAge(user.getAge());
         return feedMeetRepository.save(FeedMeet.builder()
                 .feed(feed)
                 .user(user)
@@ -46,7 +47,9 @@ public class FeedMeetService {
     @Transactional
     public FeedMeet approve(final Long feedMeetId) {
         FeedMeet feedMeet = read(feedMeetId);
-        return feedMeet.approveByWriter(userService.findCurrentUser());
+        User currentUser = userService.findCurrentUser();
+        currentUser.checkIsWritable();
+        return feedMeet.approveByWriter(currentUser);
     }
 
     @Transactional
