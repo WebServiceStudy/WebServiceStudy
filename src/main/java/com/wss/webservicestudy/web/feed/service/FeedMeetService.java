@@ -16,13 +16,14 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class FeedMeetService {
     private final FeedMeetRepository feedMeetRepository;
-    private final FeedRepository feedRepository;
+
+    private final FeedService feedService;
 
     private final UserService userService;
 
     @Transactional
     public FeedMeet create(final Long feedId) {
-        Feed feed = feedRepository.findById(feedId).get();
+        Feed feed = feedService.findOne(feedId);
         User user = userService.findCurrentUser();
 
         return create(feed, user);
