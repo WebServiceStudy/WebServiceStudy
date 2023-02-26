@@ -36,8 +36,6 @@ public class HomeController {
     @ApiOperation(value = "피드 목록 조회", notes = "피드 목록 조회")
     @GetMapping("/feeds")
     public ApiResponse<List<FeedsRespDto>> feeds() {
-
-        log.info("==================="+SecurityUtil.getCurrentMember());
         return ApiResponse.ok(feedService.findAllDesc());
     }
 }

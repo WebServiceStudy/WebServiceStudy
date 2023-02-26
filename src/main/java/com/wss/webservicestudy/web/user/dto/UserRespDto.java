@@ -30,8 +30,10 @@ public class UserRespDto {
 
     private String tel3;
 
+    private boolean isInfo;
+
     @Builder
-    public UserRespDto(Long id, String nickname, String email, LoginType loginType, Role role, Gender gender, String birthday, String tel1, String tel2, String tel3) {
+    public UserRespDto(Long id, String nickname, String email, LoginType loginType, Role role, Gender gender, String birthday, String tel1, String tel2, String tel3, boolean isInfo) {
         this.id = id;
         this.nickname = nickname;
         this.email = email;
@@ -42,6 +44,6 @@ public class UserRespDto {
         this.tel1 = tel1;
         this.tel2 = tel2;
         this.tel3 = tel3;
+        this.isInfo = isInfo;
     }
-
 }

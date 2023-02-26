@@ -44,4 +44,9 @@ public class GlobalExceptionHandler {
         return new ApiResponse<Void>(true, "400", "요청 데이터를 확인해주세요", () -> null);
     }
 
+    @ExceptionHandler({BizException.class})
+    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    public ApiResponse<Void> bizException(Exception e) {
+        return new ApiResponse<Void>(false, "400", e.getMessage() ,() -> null);
+    }
 }

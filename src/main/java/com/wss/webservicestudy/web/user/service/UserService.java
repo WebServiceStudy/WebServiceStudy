@@ -2,10 +2,13 @@ package com.wss.webservicestudy.web.user.service;
 
 import com.wss.webservicestudy.web.common.entity.token.RefreshToken;
 import com.wss.webservicestudy.web.common.entity.token.RefreshTokenRepository;
+import com.wss.webservicestudy.web.common.exception.BizException;
 import com.wss.webservicestudy.web.common.security.jwt.dto.TokenRequestDto;
 import com.wss.webservicestudy.web.common.security.jwt.JwtTokenProvider;
 import com.wss.webservicestudy.web.common.security.jwt.dto.TokenInfo;
 import com.wss.webservicestudy.web.common.util.SecurityUtil;
+import com.wss.webservicestudy.web.common.util.StringUtil;
+import com.wss.webservicestudy.web.user.dto.SignUpReqDto;
 import com.wss.webservicestudy.web.user.dto.UserLoginReqDto;
 import com.wss.webservicestudy.web.user.dto.UserRespDto;
 import com.wss.webservicestudy.web.user.entity.User;
@@ -48,12 +51,34 @@ public class UserService {
     }
 
     @Transactional
-    public UserRespDto signup(UserLoginReqDto reqDto) {
+    public UserRespDto signup(SignUpReqDto reqDto) {
         if (userRepository.existsByEmail(reqDto.getEmail())) {
             throw AlreadyExistUserException.getInstance();
         }
-        User user = reqDto.toUser(passwordEncoder);
-        return userRepository.save(user).toDto();
+
+        UserRespDto result = null;
+
+        /**
+         * TODO: 핸드폰 번호 AES256 암호화
+         */
+        if (validSignUp(reqDto)) {
+            User user = reqDto.toUser(passwordEncoder);
+            result = userRepository.save(user).toDto();
+        }
+        return result;
+    }
+
+    private boolean validSignUp(SignUpReqDto reqDto) {
+        if (!StringUtil.isValidEmail(reqDto.getEmail()) || reqDto.getEmail().isEmpty()) {
+            throw new BizException("올바르지 않은 이메일 형식입니다.");
+        }
+        if (!StringUtil.validPwd(reqDto.getPassword())) {
+            throw new BizException("패스워드는 영문, 숫자, 특수문자 조합 8자리 이상으로 구성되어야 합니다.");
+        }
+        if (!StringUtil.validPhone(reqDto.getTel1(), reqDto.getTel2(), reqDto.getTel3())) {
+            throw new BizException("올바르지 않은 전화번호 형식입니다");
+        }
+        return true;
     }
 
     @Transactional
@@ -85,8 +110,6 @@ public class UserService {
                 .build();
 
         refreshTokenRepository.save(refreshToken);
-
-        log.info(SecurityUtil.getCurrentMember());
 
         // 5. 토큰 발급
         return tokenDto;

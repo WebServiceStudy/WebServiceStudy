@@ -10,6 +10,7 @@ import com.wss.webservicestudy.web.user.type.Role;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.DynamicUpdate;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -18,7 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Getter
-@Setter
+@DynamicUpdate
 @Entity
 public class User extends BaseEntity {
     @Id
@@ -59,20 +60,25 @@ public class User extends BaseEntity {
 
     private String isWritable; //nickname, birthday, gender 필수
 
+    private boolean isInfo;
+
     @Builder
-    public User(Long id, String nickname, String email, String password, LoginType loginType, Role role, Gender gender, String birthday, String tel1, String tel2, String tel3, String isWritable) {
+    public User(Long id, String nickname, String email, String password, LoginType loginType, Role role, String birthday, List<Feed> feeds, List<FeedMeet> feedMeets, Gender gender, String tel1, String tel2, String tel3, String isWritable, boolean isInfo) {
         this.id = id;
         this.nickname = nickname;
         this.email = email;
         this.password = password;
         this.loginType = loginType;
         this.role = role;
-        this.gender = gender;
         this.birthday = birthday;
+        this.feeds = feeds;
+        this.feedMeets = feedMeets;
+        this.gender = gender;
         this.tel1 = tel1;
         this.tel2 = tel2;
         this.tel3 = tel3;
         this.isWritable = isWritable;
+        this.isInfo = isInfo;
     }
 
     public User() {}
@@ -88,6 +94,7 @@ public class User extends BaseEntity {
                 .tel2(this.getTel2())
                 .tel3(this.getTel3())
                 .role(this.getRole())
+                .isInfo(this.isInfo())
                 .build();
     }
 
@@ -107,5 +114,9 @@ public class User extends BaseEntity {
 
     public boolean isWritable(){
         return this.isWritable.equals("y");
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 }

@@ -3,6 +3,7 @@ package com.wss.webservicestudy.web.user.controller;
 import com.wss.webservicestudy.web.common.ApiResponse;
 import com.wss.webservicestudy.web.common.security.jwt.dto.TokenInfo;
 import com.wss.webservicestudy.web.common.security.jwt.dto.TokenRequestDto;
+import com.wss.webservicestudy.web.user.dto.SignUpReqDto;
 import com.wss.webservicestudy.web.user.dto.UserLoginReqDto;
 import com.wss.webservicestudy.web.user.dto.UserRespDto;
 import com.wss.webservicestudy.web.user.service.UserService;
@@ -23,7 +24,7 @@ public class UserAuthController {
 
     @ApiOperation(value = "회원가입", notes = "회원가입")
     @PostMapping("/signup")
-    public ApiResponse<UserRespDto> signup(@RequestBody UserLoginReqDto reqDto) {
+    public ApiResponse<UserRespDto> signup(@RequestBody SignUpReqDto reqDto) {
         return ApiResponse.ok(userService.signup(reqDto));
     }
 
