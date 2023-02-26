@@ -16,6 +16,7 @@ import org.springframework.validation.BindingResult;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.Map;
 
 @Api(tags="게시판")
 @RestController

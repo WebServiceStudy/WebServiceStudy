@@ -36,6 +36,7 @@ public class KakaoUserInfo implements OAuthUserInfo {
                 .email(this.getEmail())
                 .role(Role.ROLE_USER)
                 .loginType(this.getLoginType())
+                .isInfo(false)
                 .build();
     }
 }

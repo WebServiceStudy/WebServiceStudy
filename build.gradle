@@ -68,16 +68,13 @@ dependencies {
 	// https://mvnrepository.com/artifact/com.googlecode.json-simple/json-simple
 	implementation group: 'com.googlecode.json-simple', name: 'json-simple', version: '1.1.1'
 
-	// https://mvnrepository.com/artifact/org.webjars/jquery
-	implementation group: 'org.webjars', name: 'jquery', version: '3.5.1'
-
 	// Thymeleaf (뷰 템플릿 엔진)
 //	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
 
 	implementation 'io.jsonwebtoken:jjwt-api:0.11.2'
-	implementation 'io.jsonwebtoken:jjwt-jackson:0.11.2'
+	runtimeOnly('io.jsonwebtoken:jjwt-jackson:0.11.2')
+	runtimeOnly('io.jsonwebtoken:jjwt-impl:0.11.2')
 
-	runtimeOnly 'io.jsonwebtoken:jjwt-impl:0.11.2'
 	// https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-validation
 	implementation group: 'org.springframework.boot', name: 'spring-boot-starter-validation', version: '3.0.0'
 
