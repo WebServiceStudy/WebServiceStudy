@@ -5,10 +5,12 @@ import com.wss.webservicestudy.web.user.type.LoginType;
 import com.wss.webservicestudy.web.user.type.Role;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Getter
 @Setter
+@NoArgsConstructor
 public class UserRespDto {
     private Long id;
 
@@ -24,16 +26,10 @@ public class UserRespDto {
 
     private String birthday;
 
-    private String tel1;
-
-    private String tel2;
-
-    private String tel3;
-
     private boolean isInfo;
 
     @Builder
-    public UserRespDto(Long id, String nickname, String email, LoginType loginType, Role role, Gender gender, String birthday, String tel1, String tel2, String tel3, boolean isInfo) {
+    public UserRespDto(Long id, String nickname, String email, LoginType loginType, Role role, Gender gender, String birthday, boolean isInfo) {
         this.id = id;
         this.nickname = nickname;
         this.email = email;
@@ -41,9 +37,6 @@ public class UserRespDto {
         this.role = role;
         this.gender = gender;
         this.birthday = birthday;
-        this.tel1 = tel1;
-        this.tel2 = tel2;
-        this.tel3 = tel3;
         this.isInfo = isInfo;
     }
 }

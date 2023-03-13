@@ -10,6 +10,7 @@ import com.wss.webservicestudy.web.common.util.SecurityUtil;
 import com.wss.webservicestudy.web.common.util.StringUtil;
 import com.wss.webservicestudy.web.user.dto.SignUpReqDto;
 import com.wss.webservicestudy.web.user.dto.UserLoginReqDto;
+import com.wss.webservicestudy.web.user.dto.UserRequestDto;
 import com.wss.webservicestudy.web.user.dto.UserRespDto;
 import com.wss.webservicestudy.web.user.entity.User;
 import com.wss.webservicestudy.web.user.exception.AlreadyExistUserException;
@@ -69,14 +70,11 @@ public class UserService {
     }
 
     private boolean validSignUp(SignUpReqDto reqDto) {
-        if (!StringUtil.isValidEmail(reqDto.getEmail()) || reqDto.getEmail().isEmpty()) {
+        if (!StringUtil.isValidEmail(reqDto.getEmail())) {
             throw new BizException("올바르지 않은 이메일 형식입니다.");
         }
         if (!StringUtil.validPwd(reqDto.getPassword())) {
             throw new BizException("패스워드는 영문, 숫자, 특수문자 조합 8자리 이상으로 구성되어야 합니다.");
-        }
-        if (!StringUtil.validPhone(reqDto.getTel1(), reqDto.getTel2(), reqDto.getTel3())) {
-            throw new BizException("올바르지 않은 전화번호 형식입니다");
         }
         return true;
     }
@@ -190,5 +188,24 @@ public class UserService {
 
     public Long findUserIdByEmail(String email){
         return userRepository.findByEmail(email).getId();
+    }
+
+    /**
+     * 유저 정보 업데이트
+     */
+    public UserRespDto updateInfo(UserRequestDto req) {
+        UserRespDto response = null;
+
+        User updateUser = userRepository.findByEmail(req.getEmail());
+
+        if (updateUser == null) {
+            throw new UsernameNotFoundException("사용자를 찾을 수 없습니다");
+        }
+
+        updateUser = req.toUser();
+
+        response = userRepository.save(updateUser).toDto();
+
+        return response;
     }
 }
