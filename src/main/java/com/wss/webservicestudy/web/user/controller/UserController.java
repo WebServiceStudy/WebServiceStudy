@@ -5,6 +5,7 @@ import com.wss.webservicestudy.web.common.security.jwt.dto.TokenInfo;
 import com.wss.webservicestudy.web.common.security.jwt.dto.TokenRequestDto;
 import com.wss.webservicestudy.web.common.util.SecurityUtil;
 import com.wss.webservicestudy.web.user.dto.UserLoginReqDto;
+import com.wss.webservicestudy.web.user.dto.UserRequestDto;
 import com.wss.webservicestudy.web.user.dto.UserRespDto;
 import com.wss.webservicestudy.web.user.service.UserService;
 import io.swagger.annotations.Api;
@@ -28,4 +29,12 @@ public class UserController {
     public ApiResponse<UserRespDto> getCurrentUserInfo() {
         return ApiResponse.ok(userService.getUserInfo(SecurityUtil.getCurrentMember()));
     }
+
+    @PostMapping("/info")
+    public ApiResponse<UserRespDto> updateUserInfo(UserRequestDto updateInfo) {
+        UserRespDto result = null;
+        return ApiResponse.ok(result);
+    }
+
+
 }

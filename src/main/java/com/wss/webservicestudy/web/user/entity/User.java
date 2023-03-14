@@ -52,18 +52,12 @@ public class User extends BaseEntity {
     @Enumerated(EnumType.STRING)
     private Gender gender;
 
-    private String tel1;
-
-    private String tel2;
-
-    private String tel3;
-
     private String isWritable; //nickname, birthday, gender 필수
 
     private boolean isInfo;
 
     @Builder
-    public User(Long id, String nickname, String email, String password, LoginType loginType, Role role, String birthday, List<Feed> feeds, List<FeedMeet> feedMeets, Gender gender, String tel1, String tel2, String tel3, String isWritable, boolean isInfo) {
+    public User(Long id, String nickname, String email, String password, LoginType loginType, Role role, String birthday, List<Feed> feeds, List<FeedMeet> feedMeets, Gender gender, String isWritable, boolean isInfo) {
         this.id = id;
         this.nickname = nickname;
         this.email = email;
@@ -74,9 +68,6 @@ public class User extends BaseEntity {
         this.feeds = feeds;
         this.feedMeets = feedMeets;
         this.gender = gender;
-        this.tel1 = tel1;
-        this.tel2 = tel2;
-        this.tel3 = tel3;
         this.isWritable = isWritable;
         this.isInfo = isInfo;
     }
@@ -90,9 +81,6 @@ public class User extends BaseEntity {
                 .nickname(this.getNickname())
                 .birthday(this.getBirthday())
                 .loginType(this.getLoginType())
-                .tel1(this.getTel1())
-                .tel2(this.getTel2())
-                .tel3(this.getTel3())
                 .role(this.getRole())
                 .isInfo(this.isInfo())
                 .build();

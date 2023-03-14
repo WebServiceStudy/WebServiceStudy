@@ -68,7 +68,6 @@ public class Feed extends BaseEntity {
     // 나이제한
     private int minAge;
     private int maxAge;
-
     // 남자참여수
     private int curMale;
 
