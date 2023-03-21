@@ -127,17 +127,17 @@ public class UserService {
                 }
             }
         } else {
-            throw new ResponseStatusException(HttpStatus.FORBIDDEN);
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN,"로그인이 필요합니다.");
         }
 
 
         if (!tokenProvider.validExpired(tokenRequestDto.getRefreshToken())) {
-            throw new ResponseStatusException(HttpStatus.FORBIDDEN);
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN,"유효 기간 만료");
         }
 
         // 1. Refresh Token 검증
         if (!tokenProvider.validateToken(tokenRequestDto.getRefreshToken())) {
-            throw new ResponseStatusException(HttpStatus.FORBIDDEN);
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "로그인이 필요합니다.");
         }
 
         // 2. Access Token 에서 Member ID 가져오기
@@ -145,11 +145,11 @@ public class UserService {
 
         // 3. 저장소에서 Member ID 를 기반으로 Refresh Token 값 가져옴
         RefreshToken rfToken = refreshTokenRepository.findByKey(authentication.getName())
-                .orElseThrow(() -> new RuntimeException("로그인이 필요한 사용자입니다"));
+                .orElseThrow(() -> new RuntimeException("로그인이 필요합니다."));
 
         // 4. Refresh Token 일치하는지 검사
         if (!rfToken.getValue().equals(tokenRequestDto.getRefreshToken())) {
-            throw new ResponseStatusException(HttpStatus.FORBIDDEN);
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "로그인이 필요합니다.");
         }
 
         // 5. 새로운 토큰 생성
