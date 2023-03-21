@@ -8,6 +8,7 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.servlet.NoHandlerFoundException;
 
 import java.nio.file.AccessDeniedException;
@@ -48,5 +49,10 @@ public class GlobalExceptionHandler {
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ApiResponse<Void> bizException(Exception e) {
         return new ApiResponse<Void>(false, "400", e.getMessage() ,() -> null);
+    }
+
+    @ExceptionHandler({ResponseStatusException.class})
+    public ApiResponse<Void> statusException(ResponseStatusException e) {
+        return new ApiResponse<Void>(false, String.valueOf(e.getStatus().value()), e.getMessage(), () -> null);
     }
 }
