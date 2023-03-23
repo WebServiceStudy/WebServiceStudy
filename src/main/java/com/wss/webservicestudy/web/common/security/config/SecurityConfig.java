@@ -2,10 +2,12 @@ package com.wss.webservicestudy.web.common.security.config;
 
 import com.wss.webservicestudy.web.common.security.jwt.JwtAccessDeniedHandler;
 import com.wss.webservicestudy.web.common.security.jwt.JwtAuthenticationEntryPoint;
+import com.wss.webservicestudy.web.common.security.jwt.JwtFilter;
 import com.wss.webservicestudy.web.common.security.jwt.JwtTokenProvider;
 import com.wss.webservicestudy.web.common.security.oauth.CustomOauthService;
 import com.wss.webservicestudy.web.common.security.oauth.OAuth2AuthenticationSuccessHandler;
 import org.springframework.context.annotation.Bean;
+import org.springframework.security.config.annotation.web.WebSecurityConfigurer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -41,10 +43,8 @@ public class SecurityConfig {
         http.httpBasic().disable()
                 .formLogin().disable()
                 .authorizeRequests()
-                    .antMatchers("/api/home/**").permitAll()
-                    .antMatchers("/api/auth/**").permitAll()
-                    .antMatchers("/api/user/**").hasRole("USER")
-                    .antMatchers("/api/feed/**").hasRole("USER")
+                    .antMatchers("/api/home/**","/api/auth/**").permitAll()
+                    .antMatchers("/api/user/**", "/api/feed/**").hasRole("USER")
 //                .antMatchers("/api/feed/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
@@ -52,7 +52,7 @@ public class SecurityConfig {
                 .and()
                     .cors()
                 .and()
-                .exceptionHandling()
+                    .exceptionHandling()
                     .authenticationEntryPoint(jwtAuthenticationEntryPoint)
                     .accessDeniedHandler(jwtAccessDeniedHandler)
                 .and()
