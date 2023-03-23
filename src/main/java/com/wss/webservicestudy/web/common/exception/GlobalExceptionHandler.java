@@ -53,6 +53,6 @@ public class GlobalExceptionHandler {
 
     @ExceptionHandler({ResponseStatusException.class})
     public ApiResponse<Void> statusException(ResponseStatusException e) {
-        return new ApiResponse<Void>(false, String.valueOf(e.getStatus().value()), e.getMessage(), () -> null);
+        return new ApiResponse<Void>(false, String.valueOf(e.getStatus().value()), e.getReason(), () -> null);
     }
 }

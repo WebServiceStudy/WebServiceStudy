@@ -32,6 +32,7 @@ import org.springframework.web.server.ResponseStatusException;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.Arrays;
 
 
 @Slf4j
@@ -60,10 +61,6 @@ public class UserService {
         }
 
         UserRespDto result = null;
-
-        /**
-         * TODO: 핸드폰 번호 AES256 암호화
-         */
         if (validSignUp(reqDto)) {
             User user = reqDto.toUser(passwordEncoder);
             result = userRepository.save(user).toDto();
@@ -117,39 +114,29 @@ public class UserService {
 
     @Transactional
     public TokenInfo reissue(TokenRequestDto tokenRequestDto, HttpServletRequest request, HttpServletResponse response) {
+        Cookie refreshTokenCookie = Arrays.stream(request.getCookies())
+                .filter(cookie -> cookie.getName().equals("rf"))
+                .findFirst()
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.FORBIDDEN, "로그인이 필요합니다."));
 
-        Cookie[] cookies = request.getCookies();
-
-        if (cookies != null) {
-            for (Cookie cookie : cookies) {
-                if (cookie.getName().equals("rf")) {
-                    tokenRequestDto.setRefreshToken(cookie.getValue());
-                }
-            }
-        } else {
-            throw new ResponseStatusException(HttpStatus.FORBIDDEN);
-        }
-
-
-        if (!tokenProvider.validExpired(tokenRequestDto.getRefreshToken())) {
-            throw new ResponseStatusException(HttpStatus.FORBIDDEN);
-        }
+        tokenRequestDto.setRefreshToken(refreshTokenCookie.getValue());
 
         // 1. Refresh Token 검증
         if (!tokenProvider.validateToken(tokenRequestDto.getRefreshToken())) {
-            throw new ResponseStatusException(HttpStatus.FORBIDDEN);
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "로그인이 필요합니다.");
         }
 
         // 2. Access Token 에서 Member ID 가져오기
         Authentication authentication = tokenProvider.getAuthentication(tokenRequestDto.getAccessToken());
 
+        log.info(authentication.getName());
         // 3. 저장소에서 Member ID 를 기반으로 Refresh Token 값 가져옴
-        RefreshToken rfToken = refreshTokenRepository.findByKey(authentication.getName())
+        RefreshToken rfToken = refreshTokenRepository.findById(authentication.getName())
                 .orElseThrow(() -> new RuntimeException("로그인이 필요한 사용자입니다"));
 
         // 4. Refresh Token 일치하는지 검사
         if (!rfToken.getValue().equals(tokenRequestDto.getRefreshToken())) {
-            throw new ResponseStatusException(HttpStatus.FORBIDDEN);
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "로그인이 필요합니다.");
         }
 
         // 5. 새로운 토큰 생성

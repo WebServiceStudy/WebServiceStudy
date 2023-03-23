@@ -32,7 +32,7 @@ public class UserController {
 
     @PostMapping("/info")
     public ApiResponse<UserRespDto> updateUserInfo(UserRequestDto updateInfo) {
-        UserRespDto result = null;
+        UserRespDto result = userService.updateInfo(updateInfo);
         return ApiResponse.ok(result);
     }
 

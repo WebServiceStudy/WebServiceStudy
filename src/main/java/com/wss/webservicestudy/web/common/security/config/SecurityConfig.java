@@ -6,6 +6,7 @@ import com.wss.webservicestudy.web.common.security.jwt.JwtTokenProvider;
 import com.wss.webservicestudy.web.common.security.oauth.CustomOauthService;
 import com.wss.webservicestudy.web.common.security.oauth.OAuth2AuthenticationSuccessHandler;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -16,7 +17,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
-
+@Configuration
 @EnableWebSecurity
 public class SecurityConfig {
 
@@ -41,10 +42,8 @@ public class SecurityConfig {
         http.httpBasic().disable()
                 .formLogin().disable()
                 .authorizeRequests()
-                    .antMatchers("/api/home/**").permitAll()
-                    .antMatchers("/api/auth/**").permitAll()
-                    .antMatchers("/api/user/**").hasRole("USER")
-                    .antMatchers("/api/feed/**").hasRole("USER")
+                    .antMatchers("/api/home/**","/api/auth/**").permitAll()
+                    .antMatchers("/api/user/**", "/api/feed/**").hasRole("USER")
 //                .antMatchers("/api/feed/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
