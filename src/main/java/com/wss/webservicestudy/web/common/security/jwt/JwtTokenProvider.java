@@ -30,9 +30,9 @@ public class JwtTokenProvider {
     private static final String BEARER_TYPE = "Bearer";
     private static final String AUTHORITIES_KEY = "auth";
     // 토큰 유효시간 30분
-    static final long accessTokenValidTime = 1000L * 60;
+    static final long accessTokenValidTime = 60 * 30;
     // 토큰 유효시간 30일
-    static final long refreshTokenValidTime = 1000L * 60 * 60 * 24 * 30;
+    static final long refreshTokenValidTime = 60 * 60 * 24 * 14;
     private final Key key;
 
     // 객체 초기화, secretKey를 Base64로 인코딩한다.
@@ -54,9 +54,9 @@ public class JwtTokenProvider {
                 .map(GrantedAuthority::getAuthority)
                 .collect(Collectors.joining(","));
 
-        long now = (new Date()).getTime();
+        long now = new Date().getTime();
         // Access Token 생성
-        Date accessTokenExpiresIn = new Date(now + accessTokenValidTime);
+        Date accessTokenExpiresIn = new Date(System.currentTimeMillis() + (accessTokenValidTime * 1000));
         String accessToken = Jwts.builder()
                 .setSubject(authentication.getName())
                 .claim(AUTHORITIES_KEY, authorities)
@@ -66,7 +66,7 @@ public class JwtTokenProvider {
 
         // Refresh Token 생성
         String refreshToken = Jwts.builder()
-                .setExpiration(new Date(now + refreshTokenValidTime))
+                .setExpiration(new Date(System.currentTimeMillis() + (refreshTokenValidTime * 1000)))
                 .signWith(key, SignatureAlgorithm.HS256)
                 .compact();
 
@@ -128,15 +128,6 @@ public class JwtTokenProvider {
             return Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(accessToken).getBody();
         } catch (ExpiredJwtException e) {
             return e.getClaims();
-        }
-    }
-
-    public boolean validExpired(String token) {
-        try {
-            Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token);
-            return true;
-        } catch (ExpiredJwtException e) {
-            return false;
         }
     }
 }
