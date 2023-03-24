@@ -40,6 +40,8 @@ public class User extends BaseEntity {
     @Enumerated(EnumType.STRING)
     private Role role;
 
+    private String profile;
+
     private String birthday;
 
 //    @JsonManagedReference //참조가 되는 앞부분을 의미하며, 정상적으로 직렬화를 수행한다.
@@ -57,13 +59,14 @@ public class User extends BaseEntity {
     private boolean isInfo;
 
     @Builder
-    public User(Long id, String nickname, String email, String password, LoginType loginType, Role role, String birthday, List<Feed> feeds, List<FeedMeet> feedMeets, Gender gender, String isWritable, boolean isInfo) {
+    public User(Long id, String nickname, String email, String password, LoginType loginType, Role role, String profile, String birthday, List<Feed> feeds, List<FeedMeet> feedMeets, Gender gender, String isWritable, boolean isInfo) {
         this.id = id;
         this.nickname = nickname;
         this.email = email;
         this.password = password;
         this.loginType = loginType;
         this.role = role;
+        this.profile = profile;
         this.birthday = birthday;
         this.feeds = feeds;
         this.feedMeets = feedMeets;
@@ -71,6 +74,8 @@ public class User extends BaseEntity {
         this.isWritable = isWritable;
         this.isInfo = isInfo;
     }
+
+
 
     public User() {}
 
@@ -83,6 +88,7 @@ public class User extends BaseEntity {
                 .loginType(this.getLoginType())
                 .role(this.getRole())
                 .isInfo(this.isInfo())
+                .profile(this.getProfile())
                 .build();
     }
 
@@ -106,5 +112,9 @@ public class User extends BaseEntity {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public void setProfile(String imgurl) {
+        this.profile = imgurl;
     }
 }

@@ -26,10 +26,12 @@ public class UserRespDto {
 
     private String birthday;
 
+    private String profile;
+
     private boolean isInfo;
 
     @Builder
-    public UserRespDto(Long id, String nickname, String email, LoginType loginType, Role role, Gender gender, String birthday, boolean isInfo) {
+    public UserRespDto(Long id, String nickname, String email, LoginType loginType, Role role, Gender gender, String birthday, String profile, boolean isInfo) {
         this.id = id;
         this.nickname = nickname;
         this.email = email;
@@ -37,6 +39,7 @@ public class UserRespDto {
         this.role = role;
         this.gender = gender;
         this.birthday = birthday;
+        this.profile = profile;
         this.isInfo = isInfo;
     }
 }

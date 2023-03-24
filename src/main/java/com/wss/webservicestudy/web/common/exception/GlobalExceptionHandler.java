@@ -23,7 +23,7 @@ public class GlobalExceptionHandler {
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public ApiResponse<Void> unexpectedException(Exception e) {
         log.error("UNEXPECTED SERVER EXCEPTION >>>>> ", e);
-        return new ApiResponse<Void>(false, "500", "서버 오류가 발생했습니다 (" + e.getMessage() + ")", () -> null);
+        return new ApiResponse<Void>(false, "500", "서버 오류가 발생했습니다.", () -> null);
     }
 
     @ExceptionHandler(RuntimeException.class)
