@@ -6,6 +6,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.web.multipart.MultipartFile;
 
 @Getter
 @Setter
@@ -19,7 +20,7 @@ public class UserRequestDto {
     private String birthday;
 
     private Gender gender;
-
+    
     public UserRequestDto() {
     }
 

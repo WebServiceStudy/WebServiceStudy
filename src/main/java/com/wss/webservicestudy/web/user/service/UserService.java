@@ -18,6 +18,7 @@ import com.wss.webservicestudy.web.user.exception.RequireLoginExceptrion;
 import com.wss.webservicestudy.web.user.repository.UserRepository;
 import com.wss.webservicestudy.web.user.type.Role;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseCookie;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -27,12 +28,17 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.StringUtils;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.server.ResponseStatusException;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.File;
+import java.io.IOException;
 import java.util.Arrays;
+import java.util.UUID;
 
 
 @Slf4j
@@ -43,6 +49,12 @@ public class UserService {
     private final PasswordEncoder passwordEncoder;
     private final JwtTokenProvider tokenProvider;
     private final RefreshTokenRepository refreshTokenRepository;
+
+    @Value("${image.save.path}")
+    private String imageSavePath;
+
+    @Value("${image.server.path}")
+    private String imageServerPath;
 
     final long refreshTokenValidTime = 1000L * 60 * 60 * 24 * 30;
 
@@ -194,6 +206,34 @@ public class UserService {
         updateUser = req.toUser();
 
         response = userRepository.save(updateUser).toDto();
+
+        return response;
+    }
+
+
+    public UserRespDto updateProfile(MultipartFile uploadImg) throws IOException {
+        UserRespDto response = null;
+
+        User user = findCurrentUser();
+
+        String fileName = uploadImg.getOriginalFilename();
+        String extenstion = StringUtils.getFilenameExtension(fileName);
+        String imgName = "img_"+ UUID.randomUUID()+"."+extenstion;
+
+        String saveFilePath = imageSavePath + imgName;
+
+        File directory = new File(imageSavePath);
+        if (!directory.exists()){
+            directory.mkdirs();
+        }
+        // 이미지 파일 저장
+        File saveFile = new File(saveFilePath);
+
+        uploadImg.transferTo(saveFile);
+
+        user.setProfile(imageServerPath + "/img/" + imgName);
+
+        response = userRepository.save(user).toDto();
 
         return response;
     }

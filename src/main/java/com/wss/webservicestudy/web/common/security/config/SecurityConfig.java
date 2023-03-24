@@ -44,6 +44,7 @@ public class SecurityConfig {
                 .authorizeRequests()
                     .antMatchers("/api/home/**","/api/auth/**").permitAll()
                     .antMatchers("/api/user/**", "/api/feed/**").hasRole("USER")
+                    .antMatchers("/img/**").permitAll()
 //                .antMatchers("/api/feed/**").permitAll()
                 .anyRequest().authenticated()
                 .and()
