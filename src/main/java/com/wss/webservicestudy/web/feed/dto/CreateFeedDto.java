@@ -1,13 +1,10 @@
 package com.wss.webservicestudy.web.feed.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.wss.webservicestudy.web.feed.type.FeedCategory;
 import com.wss.webservicestudy.web.feed.type.MeetingType;
 import com.wss.webservicestudy.web.user.entity.User;
 import lombok.*;
 
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.PositiveOrZero;

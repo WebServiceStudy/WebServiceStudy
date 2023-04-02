@@ -2,7 +2,6 @@ package com.wss.webservicestudy.web.feed.entity;
 
 import com.wss.webservicestudy.web.common.entity.BaseEntity;
 import com.wss.webservicestudy.web.feed.dto.UpdateFeedDto;
-import com.wss.webservicestudy.web.feed.type.FeedCategory;
 import com.wss.webservicestudy.web.feed.type.FeedDeleteYn;
 import com.wss.webservicestudy.web.feed.type.FeedStatus;
 import com.wss.webservicestudy.web.feed.type.MeetingType;
@@ -85,7 +84,9 @@ public class Feed extends BaseEntity {
     // 조회수
     private int views;
 
-    private FeedCategory category;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "writer", referencedColumnName = "id")
+    private Category category;
 
     // 모집 유형
     @Enumerated(EnumType.STRING)
