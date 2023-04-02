@@ -6,6 +6,9 @@ import lombok.*;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
+/**
+ * 로그인 요청 dto
+ */
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
