@@ -12,6 +12,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 import javax.validation.constraints.NotBlank;
 
+/**
+ * 회원가입 요청 dto
+ */
 @Getter
 @Setter
 @NoArgsConstructor
