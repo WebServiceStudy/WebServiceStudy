@@ -1,5 +1,6 @@
 package com.wss.webservicestudy.web.feed.entity;
 
+import com.wss.webservicestudy.web.category.entity.Category;
 import com.wss.webservicestudy.web.common.entity.BaseEntity;
 import com.wss.webservicestudy.web.feed.dto.UpdateFeedDto;
 import com.wss.webservicestudy.web.feed.type.FeedDeleteYn;
@@ -85,7 +86,7 @@ public class Feed extends BaseEntity {
     private int views;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "writer", referencedColumnName = "id")
+    @JoinColumn(name = "category", referencedColumnName = "id")
     private Category category;
 
     // 모집 유형

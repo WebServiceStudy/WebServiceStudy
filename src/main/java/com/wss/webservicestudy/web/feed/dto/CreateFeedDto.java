@@ -1,6 +1,7 @@
 package com.wss.webservicestudy.web.feed.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.wss.webservicestudy.web.category.entity.Category;
 import com.wss.webservicestudy.web.feed.type.MeetingType;
 import com.wss.webservicestudy.web.user.entity.User;
 import lombok.*;
@@ -17,7 +18,7 @@ import java.time.LocalDateTime;
 public class CreateFeedDto {
 
     @Builder
-    public CreateFeedDto(String title, String content, LocalDateTime date, String addr, String latitude, String longitude, int maxUser, int minAge, int maxAge, int maxMale, int maxFemale, MeetingType meetingType, FeedCategory category) {
+    public CreateFeedDto(String title, String content, LocalDateTime date, String addr, String latitude, String longitude, int maxUser, int minAge, int maxAge, int maxMale, int maxFemale, MeetingType meetingType, Category category) {
         this.title = title;
         this.content = content;
         this.date = date;
@@ -80,5 +81,5 @@ public class CreateFeedDto {
     // 모집 유형
     private MeetingType meetingType;
 
-    private FeedCategory category;
+    private Category category;
 }
