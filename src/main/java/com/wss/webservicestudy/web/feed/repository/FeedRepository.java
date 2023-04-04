@@ -12,6 +12,8 @@ import java.util.List;
 @Repository
 public interface FeedRepository extends JpaRepository<Feed, Long> {
 
+    @Query("SELECT f FROM Feed f" +
+            " INNER JOIN FETCH f.writer")
     List<Feed> findAllByOrderByIdDesc();
 
     List<Feed> findAllByWriter(User writer);
