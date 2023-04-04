@@ -1,9 +1,11 @@
 package com.wss.webservicestudy.web.feed.entity;
 
+import com.wss.webservicestudy.web.category.entity.Category;
 import com.wss.webservicestudy.web.common.entity.BaseEntity;
 import com.wss.webservicestudy.web.feed.dto.UpdateFeedDto;
 import com.wss.webservicestudy.web.feed.type.FeedDeleteYn;
 import com.wss.webservicestudy.web.feed.type.FeedStatus;
+import com.wss.webservicestudy.web.feed.type.MeetingType;
 import com.wss.webservicestudy.web.user.entity.User;
 import com.wss.webservicestudy.web.user.type.Gender;
 import lombok.Builder;
@@ -65,6 +67,12 @@ public class Feed extends BaseEntity {
     // 최대인원
     private int maxUser;
 
+    // 남자최대인원
+    private int maxMale;
+
+    // 여자최대인원
+    private int maxFemale;
+
     // 나이제한
     private int minAge;
     private int maxAge;
@@ -73,6 +81,17 @@ public class Feed extends BaseEntity {
 
     // 여자참여수
     private int curFemale;
+
+    // 조회수
+    private int views;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "category", referencedColumnName = "id")
+    private Category category;
+
+    // 모집 유형
+    @Enumerated(EnumType.STRING)
+    private MeetingType meetingType;
 
     // 삭제여부
     @Enumerated(EnumType.STRING)
@@ -126,6 +145,10 @@ public class Feed extends BaseEntity {
 
     public String getWriterName(){
         return this.writer.getNickname();
+    }
+
+    public void addViews(){
+        this.views++;
     }
 
     public Feed update(UpdateFeedDto updateFeedDto){

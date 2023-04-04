@@ -31,6 +31,10 @@ public class FeedsRespDto {
 
     private int maxAge;
 
+    private int curMale;
+
+    private int curFemale;
+
     public FeedsRespDto(Feed feed) {
         this.id = feed.getId();
         this.writerName = feed.getWriterName();
