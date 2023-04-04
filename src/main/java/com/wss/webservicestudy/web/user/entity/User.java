@@ -1,7 +1,5 @@
 package com.wss.webservicestudy.web.user.entity;
 
-import com.wss.webservicestudy.web.feed.entity.Feed;
-import com.wss.webservicestudy.web.feed.entity.FeedMeet;
 import com.wss.webservicestudy.web.common.entity.BaseEntity;
 import com.wss.webservicestudy.web.user.dto.UserRespDto;
 import com.wss.webservicestudy.web.user.type.Gender;
@@ -9,14 +7,11 @@ import com.wss.webservicestudy.web.user.type.LoginType;
 import com.wss.webservicestudy.web.user.type.Role;
 import lombok.Builder;
 import lombok.Getter;
-import lombok.Setter;
 import org.hibernate.annotations.DynamicUpdate;
 
 import javax.persistence.*;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.List;
 
 @Getter
 @DynamicUpdate
@@ -44,13 +39,6 @@ public class User extends BaseEntity {
 
     private String birthday;
 
-//    @JsonManagedReference //참조가 되는 앞부분을 의미하며, 정상적으로 직렬화를 수행한다.
-    @OneToMany(mappedBy = "writer")
-    private List<Feed> feeds = new ArrayList<>();
-
-    @OneToMany(mappedBy = "user")
-    private List<FeedMeet> feedMeets = new ArrayList<>();
-
     @Enumerated(EnumType.STRING)
     private Gender gender;
 
@@ -59,7 +47,7 @@ public class User extends BaseEntity {
     private boolean isInfo;
 
     @Builder
-    public User(Long id, String nickname, String email, String password, LoginType loginType, Role role, String profile, String birthday, List<Feed> feeds, List<FeedMeet> feedMeets, Gender gender, String isWritable, boolean isInfo) {
+    public User(Long id, String nickname, String email, String password, LoginType loginType, Role role, String profile, String birthday, Gender gender, String isWritable, boolean isInfo) {
         this.id = id;
         this.nickname = nickname;
         this.email = email;
@@ -68,8 +56,6 @@ public class User extends BaseEntity {
         this.role = role;
         this.profile = profile;
         this.birthday = birthday;
-        this.feeds = feeds;
-        this.feedMeets = feedMeets;
         this.gender = gender;
         this.isWritable = isWritable;
         this.isInfo = isInfo;

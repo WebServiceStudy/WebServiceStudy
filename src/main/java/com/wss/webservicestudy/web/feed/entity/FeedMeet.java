@@ -39,7 +39,6 @@ public class FeedMeet extends BaseEntity {
 
     public void setUser(User user){
         this.user = user;
-        user.getFeedMeets().add(this);
     }
 
     public FeedMeet approveByWriter(User writer) {

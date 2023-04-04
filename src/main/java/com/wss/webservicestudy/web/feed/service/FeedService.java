@@ -56,10 +56,9 @@ public class FeedService {
 
     @Transactional(readOnly = true)
     public FeedRespDto findRespById(Long feedId) {
-        Feed feed = findOne(feedId);
+        Feed feed = feedRepository.findByIdWithFeedMeets(feedId);
         feed.addViews();
         return FeedMapper.INSTANCE.toFeedRespDto(feed);
-//        return new FeedRespDto(findOne(feedId));
     }
 
     @Transactional(readOnly = true)
