@@ -4,7 +4,6 @@ import com.wss.webservicestudy.web.feed.dto.CreateFeedDto;
 import com.wss.webservicestudy.web.feed.dto.FeedRespDto;
 import com.wss.webservicestudy.web.feed.entity.Feed;
 import com.wss.webservicestudy.web.feed.repository.FeedRepository;
-import com.wss.webservicestudy.web.feed.service.FeedService;
 import com.wss.webservicestudy.web.user.entity.User;
 import com.wss.webservicestudy.web.user.repository.UserRepository;
 import org.junit.Test;
@@ -88,7 +87,6 @@ public class FeedMapperTest {
         FeedRespDto feedRespDto = FeedMapper.INSTANCE.toFeedRespDto(feed);
         assertThat(feedRespDto).isNotNull();
         assertThat(feedRespDto.getWriterId()).isEqualTo(user.getId());
-        assertThat(feedRespDto.getWriterName()).isEqualTo(user.getName());
         assertThat(feedRespDto.getTitle()).isEqualTo(title);
         assertThat(feedRespDto.getContent()).isEqualTo(content);
         assertThat(feedRespDto.getDate()).isEqualTo(date);

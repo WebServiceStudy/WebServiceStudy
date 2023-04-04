@@ -56,8 +56,8 @@ public class FeedService {
 
     @Transactional(readOnly = true)
     public FeedRespDto findRespById(Long feedId) {
-        return FeedMapper.INSTANCE.toFeedRespDto(findOne(feedId));
-//        return new FeedRespDto(findOne(feedId));
+        return FeedMapper.INSTANCE
+                .toFeedRespDto(feedRepository.findByIdWithFeedMeets(feedId));
     }
 
     @Transactional(readOnly = true)
@@ -89,6 +89,7 @@ public class FeedService {
         feed.checkWriter(currentUser);
         return feed.update(feedDto);
     }
+
     @Transactional
     public FeedRespDto updateStatus(Long feedId, FeedStatus feedStatus) {
         Feed feed = findOne(feedId);
