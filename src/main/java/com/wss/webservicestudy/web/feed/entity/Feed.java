@@ -164,19 +164,11 @@ public class Feed extends BaseEntity {
         this.minAge = updateFeedDto.getMinAge();
         return this;
     }
-
-    public void checkWriter(User user) {
-        if (user == null) {
-            throw new IllegalArgumentException("유저 정보 없음");
+    public boolean isFeedWriter(User user) {
+        if(user == null){
+            return false;
         }
-        isFeedWriter(user.getId());
-    }
-
-    public boolean isFeedWriter(Long userId) {
-        if (!this.writer.getId().equals(userId)) {
-            throw new IllegalArgumentException("해당 게시글의 작성자가 아닙니다.");
-        }
-        return true;
+        return this.writer.getId().equals(user.getId());
     }
 
     public boolean existsParticipant() {
