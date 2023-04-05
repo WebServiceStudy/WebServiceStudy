@@ -48,21 +48,37 @@ public class FeedMeetService {
     @Transactional
     public FeedMeet approve(final Long feedMeetId) {
         FeedMeet feedMeet = read(feedMeetId);
+        //현재 유저가
         User currentUser = userService.findCurrentUser();
+        // 쓰기 가능한 유저인지
         currentUser.checkIsWritable();
-        return feedMeet.approveByWriter(currentUser);
+        // 글쓴이인지
+        feedMeet.getFeed().checkWriter(currentUser);
+
+        return feedMeet.approve();
     }
 
     @Transactional
     public FeedMeet cancel(final Long feedMeetId) {
         FeedMeet feedMeet = read(feedMeetId);
-        return feedMeet.cancelByParticipant(userService.findCurrentUser());
+        //현재 유저가
+        User currentUser = userService.findCurrentUser();
+        // 참여신청한 유저가 맞는지
+        feedMeet.checkParticipant(currentUser);
+
+        return feedMeet.cancel();
     }
 
     @Transactional
     public FeedMeet refusal(final Long feedMeetId) {
         FeedMeet feedMeet = read(feedMeetId);
-        return feedMeet.refusalByWriter(userService.findCurrentUser());
+        //현재 유저가
+        User currentUser = userService.findCurrentUser();
+        // 쓰기 가능한 유저인지
+        currentUser.checkIsWritable();
+        // 글쓴이인지
+        feedMeet.getFeed().checkWriter(currentUser);
+        return feedMeet.refusal();
     }
 
     @Transactional

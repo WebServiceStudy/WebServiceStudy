@@ -102,6 +102,8 @@ public class Feed extends BaseEntity {
     }
 
     public void addParticipant(User user) {
+        availableToAdd();
+
         if (user.getGender().equals(Gender.MALE)) {
             addCurMale();
             return;
