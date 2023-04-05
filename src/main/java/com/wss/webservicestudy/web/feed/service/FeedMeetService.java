@@ -49,26 +49,70 @@ public class FeedMeetService {
     public FeedMeet approve(final Long feedMeetId) {
         FeedMeet feedMeet = read(feedMeetId);
         User currentUser = userService.findCurrentUser();
-        currentUser.checkIsWritable();
-        return feedMeet.approveByWriter(currentUser);
-    }
 
+        checkAvailableToApproveByFeedMeetAndActor(feedMeet, currentUser);
+
+        return feedMeet.approve();
+    }
     @Transactional
     public FeedMeet cancel(final Long feedMeetId) {
         FeedMeet feedMeet = read(feedMeetId);
-        return feedMeet.cancelByParticipant(userService.findCurrentUser());
+        User currentUser = userService.findCurrentUser();
+        checkAvailableToCancelByFeedMeetAndActor(feedMeet, currentUser);
+
+        return feedMeet.cancel();
     }
 
     @Transactional
     public FeedMeet refusal(final Long feedMeetId) {
         FeedMeet feedMeet = read(feedMeetId);
-        return feedMeet.refusalByWriter(userService.findCurrentUser());
+        User currentUser = userService.findCurrentUser();
+        checkAvailableToRefusalByFeedMeetAndActor(feedMeet,currentUser);
+
+        return feedMeet.refusal();
     }
 
     @Transactional
     public void delete(final Long feedMeetId) {
         FeedMeet feedMeet = read(feedMeetId);
-        feedMeet.getFeed().checkWriter(userService.findCurrentUser());
+//        feedMeet.getFeed().checkWriter(userService.findCurrentUser());
         feedMeetRepository.delete(read(feedMeetId));
+    }
+
+    private void checkAvailableToApproveByFeedMeetAndActor(FeedMeet feedMeet, User actor){
+        if(!actor.isWritable()){
+            throw new IllegalArgumentException("쓰기 권한 없음");
+        }
+        if (!feedMeet.isFeedWriter(actor)) {
+            throw new IllegalArgumentException("해당 게시글의 작성자가 아닙니다.");
+        }
+        if (!feedMeet.isAvailableToApproveStatus()) {
+            throw new IllegalArgumentException("승인할 수 없는 상태입니다. 상태 = " + feedMeet.getStatus().getName());
+        }
+    }
+    private void checkAvailableToCancelByFeedMeetAndActor(FeedMeet feedMeet, User actor){
+        if(!feedMeet.equalsParticipant(actor)) {
+            throw new IllegalArgumentException("본인의 신청내역만 취소가 가능합니다.");
+        }
+        if (!feedMeet.isAvailableToCancelStatus()) {
+            throw new IllegalArgumentException("승인할 수 없는 상태입니다. 상태 = " + feedMeet.getStatus().getName());
+        }
+        if(feedMeet.isWriterSelf()) {
+            throw new IllegalArgumentException("게시글의 작성자는 항상 참여상태여야 합니다.");
+        }
+    }
+    private void checkAvailableToRefusalByFeedMeetAndActor(FeedMeet feedMeet, User actor){
+        if(!actor.isWritable()){
+            throw new IllegalArgumentException("쓰기 권한 없음");
+        }
+        if (!feedMeet.isFeedWriter(actor)) {
+            throw new IllegalArgumentException("해당 게시글의 작성자가 아닙니다.");
+        }
+        if (!feedMeet.isAvailableToRefusalStatus()) {
+            throw new IllegalArgumentException("승인할 수 없는 상태입니다. 상태 = " + feedMeet.getStatus().getName());
+        }
+        if(feedMeet.isWriterSelf()) {
+            throw new IllegalArgumentException("게시글의 작성자는 항상 참여상태여야 합니다.");
+        }
     }
 }

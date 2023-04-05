@@ -41,61 +41,52 @@ public class FeedMeet extends BaseEntity {
         this.user = user;
     }
 
-    public FeedMeet approveByWriter(User writer) {
-        Feed feed = this.getFeed();
-        feed.checkWriter(writer);
-        feed.availableToAdd();
-        availableToApprove();
+    public void setStatus(ParticipantStatus status) {
+        this.status = status;
+    }
 
-        this.status = ParticipantStatus.PARTICIPATING;
+    public FeedMeet approve(){
+        setStatus(ParticipantStatus.PARTICIPATING);
         this.feed.addParticipant(this.user);
         return this;
     }
 
-    public FeedMeet cancelByParticipant(User participant) {
-        checkParticipant(participant);
-        this.status = ParticipantStatus.CANCEL;
-        deductParticipant(participant);
+    public FeedMeet cancel() {
+        setStatus(ParticipantStatus.CANCEL);
+        this.feed.deductParticipant(this.user);
         return this;
     }
 
-    public FeedMeet refusalByWriter(User writer){
-        this.getFeed().checkWriter(writer);
-        checkWriterSelfCancel(writer);
-        this.status = ParticipantStatus.REFUSAL;
-        deductParticipant(this.user);
+    public FeedMeet refusal(){
+        setStatus(ParticipantStatus.REFUSAL);
+        this.feed.deductParticipant(this.user);
         return this;
     }
-
-    public boolean checkParticipant(User user){
-        if(!isParticipant(user)) {
-            throw new IllegalArgumentException("해당 게시글의 참여자가 아닙니다.");
-        }
-        return checkWriterSelfCancel(user);
-    }
-
-    private boolean isParticipant(User user){
+    public boolean equalsParticipant(User user){
         return this.user.getId().equals(user.getId());
     }
 
-    public boolean checkWriterSelfCancel(User user) {
-        if(user.getId().equals(this.feed.getWriterId())) {
-            throw new IllegalArgumentException("게시글의 작성자는 항상 참여상태여야 합니다.");
-        }
-        return true;
+    public boolean isAvailableToApproveStatus() {
+        return isStatus(ParticipantStatus.APPLYING)
+                || isStatus(ParticipantStatus.REFUSAL);
     }
 
-    private void deductParticipant(User user) {
-        if (this.status.equals(ParticipantStatus.PARTICIPATING)) {
-            this.feed.deductParticipant(user);
-        }
+    public boolean isAvailableToCancelStatus(){
+        return isStatus(ParticipantStatus.PARTICIPATING);
     }
 
-    private boolean availableToApprove() {
-        if (this.status.equals(ParticipantStatus.APPLYING) || this.status.equals(ParticipantStatus.REFUSAL)) {
-            return true;
-        }
-        throw new IllegalArgumentException("승인할 수 없는 상태입니다. 상태 = " + this.status.getName());
+    public boolean isAvailableToRefusalStatus(){
+        return isStatus(ParticipantStatus.PARTICIPATING);
+    }
+    private boolean isStatus(ParticipantStatus status){
+        return this.status.equals(status);
+    }
+    public boolean isWriterSelf(){
+        return user.getId().equals(this.feed.getWriterId());
+    }
+
+    public boolean isFeedWriter(User user) {
+        return this.getFeed().isFeedWriter(user);
     }
 
     @Builder
