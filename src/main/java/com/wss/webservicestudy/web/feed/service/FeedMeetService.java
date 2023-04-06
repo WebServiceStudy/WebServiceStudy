@@ -23,21 +23,19 @@ public class FeedMeetService {
 
     @Transactional
     public FeedMeet create(final Long feedId) {
-        Feed feed = feedRepository.findById(feedId).get();
+        Feed feed = feedRepository.findById(feedId).get(); // 존재 체크 필요
         User user = userService.findCurrentUser();
 
         return create(feed, user);
     }
 
     private FeedMeet create(Feed feed, User user) {
-        user.checkIsWritable();
-        feed.checkAge(user.getAge());
+        checkAvailableToCreateByFeedAndActor(feed, user);
         return feedMeetRepository.save(FeedMeet.builder()
                 .feed(feed)
                 .user(user)
                 .build());
     }
-
     @Transactional
     public FeedMeet read(final Long feedMeetId) {
         Optional<FeedMeet> optionalFeedMeet = feedMeetRepository.findById(feedMeetId);
@@ -54,6 +52,7 @@ public class FeedMeetService {
 
         return feedMeet.approve();
     }
+
     @Transactional
     public FeedMeet cancel(final Long feedMeetId) {
         FeedMeet feedMeet = read(feedMeetId);
@@ -62,7 +61,6 @@ public class FeedMeetService {
 
         return feedMeet.cancel();
     }
-
     @Transactional
     public FeedMeet refusal(final Long feedMeetId) {
         FeedMeet feedMeet = read(feedMeetId);
@@ -77,6 +75,16 @@ public class FeedMeetService {
         FeedMeet feedMeet = read(feedMeetId);
 //        feedMeet.getFeed().checkWriter(userService.findCurrentUser());
         feedMeetRepository.delete(read(feedMeetId));
+    }
+
+    private void checkAvailableToCreateByFeedAndActor(Feed feed, User actor){
+        if(!actor.isWritable()){
+            throw new IllegalArgumentException("쓰기 권한 없음");
+        }
+        // 나이체크
+        if (feed.isAvailableAge(actor.getAge())) {
+            throw new IllegalArgumentException("요구하는 나이와 다름");
+        }
     }
 
     private void checkAvailableToApproveByFeedMeetAndActor(FeedMeet feedMeet, User actor){

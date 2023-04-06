@@ -172,10 +172,7 @@ public class Feed extends BaseEntity {
     }
 
     public boolean existsParticipant() {
-        if(this.curFemale + this.curMale > 1){ // 작성자 제외
-            return true;
-        }
-        return false;
+        return this.curFemale + this.curMale > 1; // 작성자 제외
     }
 
     public void availableToAdd() {
@@ -185,11 +182,9 @@ public class Feed extends BaseEntity {
         }
     }
 
-    public void checkAge(int userAge) {
-        // 나이체크
-        if (this.minAge > userAge || this.maxAge < userAge) {
-            throw new IllegalArgumentException("요구하는 나이와 다름");
-        }
+    public boolean isAvailableAge(int age){
+        return age >= this.minAge
+                && age <= this.maxAge;
     }
 
     @Builder
