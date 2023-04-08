@@ -4,6 +4,7 @@ import com.wss.webservicestudy.web.feed.entity.Feed;
 import com.wss.webservicestudy.web.feed.entity.FeedMeet;
 import com.wss.webservicestudy.web.feed.repository.FeedMeetRepository;
 import com.wss.webservicestudy.web.feed.repository.FeedRepository;
+import com.wss.webservicestudy.web.feed.type.ParticipantStatus;
 import com.wss.webservicestudy.web.user.entity.User;
 import com.wss.webservicestudy.web.user.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -23,7 +24,8 @@ public class FeedMeetService {
 
     @Transactional
     public FeedMeet create(final Long feedId) {
-        Feed feed = feedRepository.findById(feedId).get(); // 존재 체크 필요
+        // TODO : 존재 체크 필요
+        Feed feed = feedRepository.findById(feedId).get();
         User user = userService.findCurrentUser();
 
         return create(feed, user);
@@ -50,7 +52,10 @@ public class FeedMeetService {
 
         checkAvailableToApproveByFeedMeetAndActor(feedMeet, currentUser);
 
-        return feedMeet.approve();
+        feedMeet.setStatus(ParticipantStatus.PARTICIPATING);
+        Feed feed = feedMeet.getFeed();
+        feed.addParticipant(feedMeet.getUser());
+        return feedMeet;
     }
 
     @Transactional
@@ -59,15 +64,22 @@ public class FeedMeetService {
         User currentUser = userService.findCurrentUser();
         checkAvailableToCancelByFeedMeetAndActor(feedMeet, currentUser);
 
-        return feedMeet.cancel();
+        feedMeet.setStatus(ParticipantStatus.CANCEL);
+        Feed feed = feedMeet.getFeed();
+        feed.deductParticipant(feedMeet.getUser());
+        return feedMeet;
     }
+
     @Transactional
     public FeedMeet refusal(final Long feedMeetId) {
         FeedMeet feedMeet = read(feedMeetId);
         User currentUser = userService.findCurrentUser();
         checkAvailableToRefusalByFeedMeetAndActor(feedMeet,currentUser);
 
-        return feedMeet.refusal();
+        feedMeet.setStatus(ParticipantStatus.REFUSAL);
+        Feed feed = feedMeet.getFeed();
+        feed.deductParticipant(feedMeet.getUser());
+        return feedMeet;
     }
 
     @Transactional
