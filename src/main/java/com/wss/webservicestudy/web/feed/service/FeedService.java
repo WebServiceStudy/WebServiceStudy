@@ -57,7 +57,8 @@ public class FeedService {
     @Transactional(readOnly = true)
     public FeedRespDto findRespById(Long feedId) {
         Feed feed = feedRepository.findByIdWithFeedMeets(feedId);
-        feed.addViews();
+        // TODO : feed 상세 페이지 이동 시에만 증가
+        //feed.addViews();
         return FeedMapper.INSTANCE.toFeedRespDto(feed);
     }
 
