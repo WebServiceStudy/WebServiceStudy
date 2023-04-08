@@ -4,7 +4,9 @@ import com.wss.webservicestudy.web.feed.entity.Feed;
 import com.wss.webservicestudy.web.feed.entity.FeedMeet;
 import com.wss.webservicestudy.web.feed.repository.FeedMeetRepository;
 import com.wss.webservicestudy.web.feed.repository.FeedRepository;
-import com.wss.webservicestudy.web.feed.type.ParticipantStatus;
+import com.wss.webservicestudy.web.feed.status.ApproveChanger;
+import com.wss.webservicestudy.web.feed.status.CancelChanger;
+import com.wss.webservicestudy.web.feed.status.RefusalChanger;
 import com.wss.webservicestudy.web.user.entity.User;
 import com.wss.webservicestudy.web.user.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -47,39 +49,20 @@ public class FeedMeetService {
 
     @Transactional
     public FeedMeet approve(final Long feedMeetId) {
-        FeedMeet feedMeet = read(feedMeetId);
-        User currentUser = userService.findCurrentUser();
-
-        checkAvailableToApproveByFeedMeetAndActor(feedMeet, currentUser);
-
-        feedMeet.setStatus(ParticipantStatus.PARTICIPATING);
-        Feed feed = feedMeet.getFeed();
-        feed.addParticipant(feedMeet.getUser());
-        return feedMeet;
+        ApproveChanger participation = new ApproveChanger(this, userService);
+        return participation.changeStatus(feedMeetId);
     }
 
     @Transactional
     public FeedMeet cancel(final Long feedMeetId) {
-        FeedMeet feedMeet = read(feedMeetId);
-        User currentUser = userService.findCurrentUser();
-        checkAvailableToCancelByFeedMeetAndActor(feedMeet, currentUser);
-
-        feedMeet.setStatus(ParticipantStatus.CANCEL);
-        Feed feed = feedMeet.getFeed();
-        feed.deductParticipant(feedMeet.getUser());
-        return feedMeet;
+        CancelChanger participation = new CancelChanger(this, userService);
+        return participation.changeStatus(feedMeetId);
     }
 
     @Transactional
     public FeedMeet refusal(final Long feedMeetId) {
-        FeedMeet feedMeet = read(feedMeetId);
-        User currentUser = userService.findCurrentUser();
-        checkAvailableToRefusalByFeedMeetAndActor(feedMeet,currentUser);
-
-        feedMeet.setStatus(ParticipantStatus.REFUSAL);
-        Feed feed = feedMeet.getFeed();
-        feed.deductParticipant(feedMeet.getUser());
-        return feedMeet;
+        RefusalChanger participation = new RefusalChanger(this, userService);
+        return participation.changeStatus(feedMeetId);
     }
 
     @Transactional
@@ -96,43 +79,6 @@ public class FeedMeetService {
         // 나이체크
         if (feed.isAvailableAge(actor.getAge())) {
             throw new IllegalArgumentException("요구하는 나이와 다름");
-        }
-    }
-
-    private void checkAvailableToApproveByFeedMeetAndActor(FeedMeet feedMeet, User actor){
-        if(!actor.isWritable()){
-            throw new IllegalArgumentException("쓰기 권한 없음");
-        }
-        if (!feedMeet.isFeedWriter(actor)) {
-            throw new IllegalArgumentException("해당 게시글의 작성자가 아닙니다.");
-        }
-        if (!feedMeet.isAvailableToApproveStatus()) {
-            throw new IllegalArgumentException("승인할 수 없는 상태입니다. 상태 = " + feedMeet.getStatus().getName());
-        }
-    }
-    private void checkAvailableToCancelByFeedMeetAndActor(FeedMeet feedMeet, User actor){
-        if(!feedMeet.equalsParticipant(actor)) {
-            throw new IllegalArgumentException("본인의 신청내역만 취소가 가능합니다.");
-        }
-        if (!feedMeet.isAvailableToCancelStatus()) {
-            throw new IllegalArgumentException("승인할 수 없는 상태입니다. 상태 = " + feedMeet.getStatus().getName());
-        }
-        if(feedMeet.isWriterSelf()) {
-            throw new IllegalArgumentException("게시글의 작성자는 항상 참여상태여야 합니다.");
-        }
-    }
-    private void checkAvailableToRefusalByFeedMeetAndActor(FeedMeet feedMeet, User actor){
-        if(!actor.isWritable()){
-            throw new IllegalArgumentException("쓰기 권한 없음");
-        }
-        if (!feedMeet.isFeedWriter(actor)) {
-            throw new IllegalArgumentException("해당 게시글의 작성자가 아닙니다.");
-        }
-        if (!feedMeet.isAvailableToRefusalStatus()) {
-            throw new IllegalArgumentException("승인할 수 없는 상태입니다. 상태 = " + feedMeet.getStatus().getName());
-        }
-        if(feedMeet.isWriterSelf()) {
-            throw new IllegalArgumentException("게시글의 작성자는 항상 참여상태여야 합니다.");
         }
     }
 }
