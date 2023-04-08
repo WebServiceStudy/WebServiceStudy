@@ -7,7 +7,6 @@ import com.wss.webservicestudy.web.feed.type.FeedDeleteYn;
 import com.wss.webservicestudy.web.feed.type.FeedStatus;
 import com.wss.webservicestudy.web.feed.type.MeetingType;
 import com.wss.webservicestudy.web.user.entity.User;
-import com.wss.webservicestudy.web.user.type.Gender;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -127,7 +126,7 @@ public class Feed extends BaseEntity {
     public void addParticipant(User user) {
         availableToAdd();
 
-        if (user.getGender().equals(Gender.MALE)) {
+        if (user.isMale()) {
             addCurMale();
             return;
         }
@@ -135,26 +134,26 @@ public class Feed extends BaseEntity {
     }
 
     public void deductParticipant(User user){
-        if (user.getGender().equals(Gender.MALE)) {
+        if (user.isMale()) {
             deductCurMale();
             return;
         }
         deductCurFemale();
     }
 
-    public void addCurMale() {
+    private void addCurMale() {
         this.curMale++;
     }
 
-    public void addCurFemale() {
+    private void addCurFemale() {
         this.curFemale++;
     }
 
-    public void deductCurMale(){
+    private void deductCurMale(){
         this.curMale--;
     }
 
-    public void deductCurFemale() {
+    private void deductCurFemale() {
         this.curFemale--;
     }
 

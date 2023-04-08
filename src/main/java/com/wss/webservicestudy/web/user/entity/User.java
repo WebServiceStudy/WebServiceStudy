@@ -92,8 +92,13 @@ public class User extends BaseEntity {
         if(!isWritable()) throw new IllegalArgumentException("쓰기 권한 없음");
     }
 
+    // TODO : 값 확인 필요
     public boolean isWritable(){
         return this.isWritable.equals("y");
+    }
+
+    public boolean isMale() {
+        return this.gender == Gender.MALE;
     }
 
     public void setPassword(String password) {
