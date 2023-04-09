@@ -1,5 +1,6 @@
 package com.wss.webservicestudy.web.feed.dto;
 
+import com.wss.webservicestudy.web.category.entity.Category;
 import com.wss.webservicestudy.web.feed.entity.Feed;
 import com.wss.webservicestudy.web.feed.entity.FeedMeet;
 import com.wss.webservicestudy.web.feed.type.FeedStatus;
@@ -26,6 +27,8 @@ public class FeedRespDto {
 
     private List<FeedMeetRespDto> feedMeets = new ArrayList<>();
 
+    private Category category;
+
     private String title;
 
     private String content;
@@ -49,6 +52,8 @@ public class FeedRespDto {
     private int curMale;
 
     private int curFemale;
+
+    private int views;
 
     @Builder
     public FeedRespDto(Long id, Long writerId, String writerName, List<FeedMeet> feedMeets, String title, String content, FeedStatus status, LocalDateTime date, String addr, String latitude, String longitude, int maxUser, int minAge, int maxAge, int curMale, int curFemale) {
@@ -81,6 +86,7 @@ public class FeedRespDto {
                 .stream()
                 .map(FeedMeetRespDto::new)
                 .collect(Collectors.toList());
+        this.category = feed.getCategory();
         this.title = feed.getTitle();
         this.content = feed.getContent();
         this.status = feed.getStatus();
@@ -93,5 +99,6 @@ public class FeedRespDto {
         this.maxAge = feed.getMaxAge();
         this.curMale = feed.getCurMale();
         this.curFemale = feed.getCurFemale();
+        this.views = feed.getViews();
     }
 }

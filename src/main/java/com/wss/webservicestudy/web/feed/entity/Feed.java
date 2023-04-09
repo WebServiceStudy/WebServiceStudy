@@ -7,7 +7,6 @@ import com.wss.webservicestudy.web.feed.type.FeedDeleteYn;
 import com.wss.webservicestudy.web.feed.type.FeedStatus;
 import com.wss.webservicestudy.web.feed.type.MeetingType;
 import com.wss.webservicestudy.web.user.entity.User;
-import com.wss.webservicestudy.web.user.type.Gender;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -36,6 +35,10 @@ public class Feed extends BaseEntity {
     // 일대다 관계 - 참여자
     @OneToMany(mappedBy = "feed", cascade = CascadeType.ALL)
     private List<FeedMeet> feedMeets = new ArrayList<>();
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "category", referencedColumnName = "id")
+    private Category category;
 
     // 피드 제목
     @Column(nullable = false)
@@ -75,7 +78,9 @@ public class Feed extends BaseEntity {
 
     // 나이제한
     private int minAge;
+
     private int maxAge;
+
     // 남자참여수
     private int curMale;
 
@@ -85,10 +90,6 @@ public class Feed extends BaseEntity {
     // 조회수
     private int views;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "category", referencedColumnName = "id")
-    private Category category;
-
     // 모집 유형
     @Enumerated(EnumType.STRING)
     private MeetingType meetingType;
@@ -97,48 +98,19 @@ public class Feed extends BaseEntity {
     @Enumerated(EnumType.STRING)
     private FeedDeleteYn deleteYn;
 
+
+
     public void setWriter(User user){
         this.writer = user;
-    }
-
-    public void addParticipant(User user) {
-        availableToAdd();
-
-        if (user.getGender().equals(Gender.MALE)) {
-            addCurMale();
-            return;
-        }
-        addCurFemale();
-    }
-
-    public void deductParticipant(User user){
-        if (user.getGender().equals(Gender.MALE)) {
-            deductCurMale();
-            return;
-        }
-        deductCurFemale();
     }
 
     public void setStatus(FeedStatus status) {
         this.status = status;
     }
 
+    // TODO : FeedDeleteYn 제대로 들어가는 게 맞는지 확인 필요
     public void setDeleteYn(FeedDeleteYn feedDeleteYn) {
         this.deleteYn = feedDeleteYn;
-    }
-
-    public void addCurMale() {
-        this.curMale++;
-    }
-
-    public void addCurFemale() {
-        this.curFemale++;
-    }
-
-    public void deductCurMale(){ this.curMale--;}
-
-    public void deductCurFemale() {
-        this.curFemale--;
     }
 
     public Long getWriterId(){
@@ -149,21 +121,46 @@ public class Feed extends BaseEntity {
         return this.writer.getNickname();
     }
 
+
+
+    public void addParticipant(User user) {
+        availableToAdd();
+
+        if (user.isMale()) {
+            addCurMale();
+            return;
+        }
+        addCurFemale();
+    }
+
+    public void deductParticipant(User user){
+        if (user.isMale()) {
+            deductCurMale();
+            return;
+        }
+        deductCurFemale();
+    }
+
+    private void addCurMale() {
+        this.curMale++;
+    }
+
+    private void addCurFemale() {
+        this.curFemale++;
+    }
+
+    private void deductCurMale(){
+        this.curMale--;
+    }
+
+    private void deductCurFemale() {
+        this.curFemale--;
+    }
+
     public void addViews(){
         this.views++;
     }
 
-    public Feed update(UpdateFeedDto updateFeedDto){
-        this.title = updateFeedDto.getTitle();
-        this.content = updateFeedDto.getContent();
-        this.date = updateFeedDto.getDate();
-        this.addr = updateFeedDto.getAddr();
-        this.latitude = updateFeedDto.getLatitude();
-        this.longitude = updateFeedDto.getLongitude();
-        this.maxUser = updateFeedDto.getMaxUser();
-        this.minAge = updateFeedDto.getMinAge();
-        return this;
-    }
     public boolean isFeedWriter(User user) {
         if(user == null){
             return false;
@@ -187,6 +184,9 @@ public class Feed extends BaseEntity {
                 && age <= this.maxAge;
     }
 
+
+
+    // TODO : Mapper 삭제 후 방식 통일
     @Builder
     public Feed(User writer, String title, String content, FeedStatus status, LocalDateTime date, String addr, String latitude, String longitude, int maxUser, int minAge, int maxAge) {
         setWriter(writer);
@@ -200,5 +200,17 @@ public class Feed extends BaseEntity {
         this.maxUser = maxUser;
         this.minAge = minAge;
         this.maxAge = maxAge;
+    }
+
+    public Feed update(UpdateFeedDto updateFeedDto){
+        this.title = updateFeedDto.getTitle();
+        this.content = updateFeedDto.getContent();
+        this.date = updateFeedDto.getDate();
+        this.addr = updateFeedDto.getAddr();
+        this.latitude = updateFeedDto.getLatitude();
+        this.longitude = updateFeedDto.getLongitude();
+        this.maxUser = updateFeedDto.getMaxUser();
+        this.minAge = updateFeedDto.getMinAge();
+        return this;
     }
 }

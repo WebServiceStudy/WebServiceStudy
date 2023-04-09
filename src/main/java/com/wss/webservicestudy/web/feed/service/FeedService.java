@@ -57,7 +57,8 @@ public class FeedService {
     @Transactional(readOnly = true)
     public FeedRespDto findRespById(Long feedId) {
         Feed feed = feedRepository.findByIdWithFeedMeets(feedId);
-        feed.addViews();
+        // TODO : feed 상세 페이지 이동 시에만 증가
+        //feed.addViews();
         return FeedMapper.INSTANCE.toFeedRespDto(feed);
     }
 
@@ -87,7 +88,7 @@ public class FeedService {
         User currentUser = userService.findCurrentUser();
         currentUser.checkIsWritable();
 
-        feed.checkWriter(currentUser);
+        feed.isFeedWriter(currentUser);
         return feed.update(feedDto);
     }
     @Transactional
@@ -96,7 +97,7 @@ public class FeedService {
 
         User currentUser = userService.findCurrentUser();
         currentUser.checkIsWritable();
-        feed.checkWriter(currentUser);
+        feed.isFeedWriter(currentUser);
 
         if(!feed.existsParticipant()){
             throw new IllegalArgumentException("참가자가 2명이상은 되어야합니다.");
@@ -111,7 +112,7 @@ public class FeedService {
 
         User currentUser = userService.findCurrentUser();
         currentUser.checkIsWritable();
-        feed.checkWriter(currentUser);
+        feed.isFeedWriter(currentUser);
 
         if(feed.existsParticipant()){
             feed.setDeleteYn(FeedDeleteYn.DELETED);
