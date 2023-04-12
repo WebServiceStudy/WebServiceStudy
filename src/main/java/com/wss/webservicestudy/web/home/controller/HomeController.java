@@ -29,7 +29,7 @@ public class HomeController {
 
     @ApiOperation(value = "피드 목록 조회", notes = "피드 목록 조회")
     @GetMapping("/feeds")
-    public ApiResponse<List<FeedsRespDto>> feeds(@PageableDefault(size = 2) Pageable pageable) {
+    public ApiResponse<List<FeedsRespDto>> feeds(@PageableDefault(size = 5) Pageable pageable) {
         return ApiResponse.ok(feedService.findAllDesc(pageable));
     }
 }
