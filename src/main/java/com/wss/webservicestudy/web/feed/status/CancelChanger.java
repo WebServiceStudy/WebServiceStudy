@@ -7,10 +7,13 @@ import com.wss.webservicestudy.web.feed.type.ParticipantStatus;
 import com.wss.webservicestudy.web.user.entity.User;
 import com.wss.webservicestudy.web.user.service.UserService;
 
+import java.util.Arrays;
+import java.util.List;
+
 public class CancelChanger extends ParticipationChanger {
 
     private final ParticipantStatus status = ParticipantStatus.CANCEL;
-
+    private final List<ParticipantStatus> preStatus = Arrays.asList(ParticipantStatus.APPLYING, ParticipantStatus.REFUSAL);
 
     public CancelChanger(FeedMeetService feedMeetService, UserService userService) {
         super(feedMeetService, userService);
@@ -18,9 +21,9 @@ public class CancelChanger extends ParticipationChanger {
 
     @Override
     protected void checkChangeAvailable(FeedMeet feedMeet, User currentUser) {
+        checkStatus(feedMeet);
         checkParticipant(feedMeet, currentUser);
         checkIsWriterSelf(feedMeet);
-        checkCancelStatus(feedMeet);
     }
 
     @Override
@@ -39,9 +42,10 @@ public class CancelChanger extends ParticipationChanger {
         }
     }
 
-    private void checkCancelStatus(FeedMeet feedMeet) {
-        if (!feedMeet.isAvailableToCancelStatus()) {
-            throw new IllegalArgumentException("취소할 수 없는 상태입니다. 상태 = " + feedMeet.getStatus().getName());
+    @Override
+    protected void checkStatus(FeedMeet feedMeet) {
+        if (!preStatus.contains(feedMeet.getStatus())) {
+            throw new IllegalArgumentException("승인할 수 없는 상태입니다. 상태 = " + feedMeet.getStatus().getName());
         }
     }
 }

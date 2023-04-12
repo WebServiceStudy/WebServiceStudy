@@ -33,6 +33,9 @@ public abstract class ParticipationChanger {
     protected void changeParticipantNumber(Feed feed, User actor) {
     }
 
+    protected void checkStatus(FeedMeet feedMeet) {
+    }
+
     protected void checkWriterPermission(User currentUser) {
         if(!currentUser.isWritable()){
             throw new IllegalArgumentException("쓰기 권한 없음");

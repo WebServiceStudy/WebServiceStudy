@@ -7,10 +7,13 @@ import com.wss.webservicestudy.web.feed.type.ParticipantStatus;
 import com.wss.webservicestudy.web.user.entity.User;
 import com.wss.webservicestudy.web.user.service.UserService;
 
+import java.util.Arrays;
+import java.util.List;
+
 public class ApproveChanger extends ParticipationChanger {
 
     private final ParticipantStatus status = ParticipantStatus.PARTICIPATING;
-
+    private final List<ParticipantStatus> preStatus = Arrays.asList(ParticipantStatus.APPLYING, ParticipantStatus.REFUSAL);
 
     public ApproveChanger(FeedMeetService feedMeetService, UserService userService) {
         super(feedMeetService, userService);
@@ -18,7 +21,7 @@ public class ApproveChanger extends ParticipationChanger {
 
     @Override
     protected void checkChangeAvailable(FeedMeet feedMeet, User currentUser) {
-        checkApproveStatus(feedMeet);
+        checkStatus(feedMeet);
         checkFeedWriter(feedMeet, currentUser);
         checkWriterPermission(currentUser);
     }
@@ -33,8 +36,9 @@ public class ApproveChanger extends ParticipationChanger {
         feed.addParticipant(actor);
     }
 
-    private void checkApproveStatus(FeedMeet feedMeet) {
-        if (!feedMeet.isAvailableToApproveStatus()) {
+    @Override
+    protected void checkStatus(FeedMeet feedMeet) {
+        if (!preStatus.contains(feedMeet.getStatus())) {
             throw new IllegalArgumentException("승인할 수 없는 상태입니다. 상태 = " + feedMeet.getStatus().getName());
         }
     }

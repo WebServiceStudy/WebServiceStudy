@@ -7,10 +7,13 @@ import com.wss.webservicestudy.web.feed.type.ParticipantStatus;
 import com.wss.webservicestudy.web.user.entity.User;
 import com.wss.webservicestudy.web.user.service.UserService;
 
+import java.util.Arrays;
+import java.util.List;
+
 public class RefusalChanger extends ParticipationChanger {
 
     private final ParticipantStatus status = ParticipantStatus.PARTICIPATING;
-
+    private final List<ParticipantStatus> preStatus = Arrays.asList(ParticipantStatus.APPLYING, ParticipantStatus.PARTICIPATING);
 
     public RefusalChanger(FeedMeetService feedMeetService, UserService userService) {
         super(feedMeetService, userService);
@@ -18,10 +21,10 @@ public class RefusalChanger extends ParticipationChanger {
 
     @Override
     protected void checkChangeAvailable(FeedMeet feedMeet, User currentUser) {
+        checkStatus(feedMeet);
         checkWriterPermission(currentUser);
         checkFeedWriter(feedMeet, currentUser);
         checkIsWriterSelf(feedMeet);
-        checkRefusalStatus(feedMeet);
     }
 
     @Override
@@ -34,9 +37,10 @@ public class RefusalChanger extends ParticipationChanger {
         feed.deductParticipant(actor);
     }
 
-    private static void checkRefusalStatus(FeedMeet feedMeet) {
-        if (!feedMeet.isAvailableToRefusalStatus()) {
-            throw new IllegalArgumentException("거절할 수 없는 상태입니다. 상태 = " + feedMeet.getStatus().getName());
+    @Override
+    protected void checkStatus(FeedMeet feedMeet) {
+        if (!preStatus.contains(feedMeet.getStatus())) {
+            throw new IllegalArgumentException("승인할 수 없는 상태입니다. 상태 = " + feedMeet.getStatus().getName());
         }
     }
 }
