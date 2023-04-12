@@ -15,6 +15,7 @@ import com.wss.webservicestudy.web.user.service.UserService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -31,8 +32,8 @@ public class FeedService {
     private final UserService userService;
 
     @Transactional(readOnly = true)
-    public List<FeedsRespDto> findAllDesc() {
-        return feedRepository.findAllByOrderByIdDesc()
+    public List<FeedsRespDto> findAllDesc(Pageable pageable) {
+        return feedRepository.findAllByOrderByIdDesc(pageable)
                 .stream()
                 .map(FeedsRespDto::new)
                 .collect(Collectors.toList());
