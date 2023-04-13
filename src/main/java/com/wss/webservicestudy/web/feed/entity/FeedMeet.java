@@ -49,22 +49,6 @@ public class FeedMeet extends BaseEntity {
         return this.user.getId().equals(user.getId());
     }
 
-    // TODO : enum에서 관리로 변경
-    public boolean isAvailableToApproveStatus() {
-        return isStatus(ParticipantStatus.APPLYING)
-                || isStatus(ParticipantStatus.REFUSAL);
-    }
-
-    public boolean isAvailableToCancelStatus(){
-        return isStatus(ParticipantStatus.PARTICIPATING);
-    }
-
-    public boolean isAvailableToRefusalStatus(){
-        return isStatus(ParticipantStatus.PARTICIPATING);
-    }
-    private boolean isStatus(ParticipantStatus status){
-        return this.status.equals(status);
-    }
     public boolean isWriterSelf(){
         return user.getId().equals(this.feed.getWriterId());
     }
