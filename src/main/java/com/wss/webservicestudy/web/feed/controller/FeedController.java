@@ -29,13 +29,13 @@ public class FeedController {
 
     @ApiOperation(value = "사용자 작성 피드 조회", notes = "사용자 작성 피드 조회")
     @GetMapping("/writer")
-    public ApiResponse<List<FeedsRespDto>> userFeeds(@PageableDefault(size = 2) Pageable pageable) {
+    public ApiResponse<List<FeedsRespDto>> userFeeds(@PageableDefault(size = 5) Pageable pageable) {
         return ApiResponse.ok(feedService.findUserFeeds(pageable));
     }
 
     @ApiOperation(value = "사용자 참여 요청 피드 조회", notes = "사용자 참여 요청 피드 조회")
     @GetMapping("/applied")
-    public ApiResponse<List<FeedsRespDto>> userAppliedFeeds(@PageableDefault(size = 2) Pageable pageable) {
+    public ApiResponse<List<FeedsRespDto>> userAppliedFeeds(@PageableDefault(size = 5) Pageable pageable) {
         return ApiResponse.ok(feedService.findUserAppliedFeeds(pageable));
     }
 
