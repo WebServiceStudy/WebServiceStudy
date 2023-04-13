@@ -13,10 +13,20 @@ import java.util.List;
 public class CancelChanger extends ParticipationChanger {
 
     private final ParticipantStatus status = ParticipantStatus.CANCEL;
-    private final List<ParticipantStatus> preStatus = Arrays.asList(ParticipantStatus.APPLYING, ParticipantStatus.REFUSAL);
+    private final List<ParticipantStatus> preStatus = Arrays.asList(ParticipantStatus.APPLYING, ParticipantStatus.PARTICIPATING);
 
     public CancelChanger(FeedMeetService feedMeetService, UserService userService) {
         super(feedMeetService, userService);
+    }
+
+    @Override
+    protected ParticipantStatus getNewStatus() {
+        return status;
+    }
+
+    @Override
+    protected List<ParticipantStatus> getPreStatusList() {
+        return preStatus;
     }
 
     @Override
@@ -27,11 +37,6 @@ public class CancelChanger extends ParticipationChanger {
     }
 
     @Override
-    protected void changeFeedMeetStatus(FeedMeet feedMeet) {
-        feedMeet.setStatus(status);
-    }
-
-    @Override
     protected void changeParticipantNumber(Feed feed, User actor) {
         feed.deductParticipant(actor);
     }
@@ -39,13 +44,6 @@ public class CancelChanger extends ParticipationChanger {
     private void checkParticipant(FeedMeet feedMeet, User currentUser) {
         if(!feedMeet.equalsParticipant(currentUser)) {
             throw new IllegalArgumentException("본인의 신청내역만 취소가 가능합니다.");
-        }
-    }
-
-    @Override
-    protected void checkStatus(FeedMeet feedMeet) {
-        if (!preStatus.contains(feedMeet.getStatus())) {
-            throw new IllegalArgumentException("승인할 수 없는 상태입니다. 상태 = " + feedMeet.getStatus().getName());
         }
     }
 }

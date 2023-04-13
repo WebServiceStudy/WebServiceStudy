@@ -20,6 +20,16 @@ public class ApproveChanger extends ParticipationChanger {
     }
 
     @Override
+    protected ParticipantStatus getNewStatus() {
+        return status;
+    }
+
+    @Override
+    protected List<ParticipantStatus> getPreStatusList() {
+        return preStatus;
+    }
+
+    @Override
     protected void checkChangeAvailable(FeedMeet feedMeet, User currentUser) {
         checkStatus(feedMeet);
         checkFeedWriter(feedMeet, currentUser);
@@ -27,19 +37,7 @@ public class ApproveChanger extends ParticipationChanger {
     }
 
     @Override
-    protected void changeFeedMeetStatus(FeedMeet feedMeet) {
-        feedMeet.setStatus(status);
-    }
-
-    @Override
     protected void changeParticipantNumber(Feed feed, User actor) {
         feed.addParticipant(actor);
-    }
-
-    @Override
-    protected void checkStatus(FeedMeet feedMeet) {
-        if (!preStatus.contains(feedMeet.getStatus())) {
-            throw new IllegalArgumentException("승인할 수 없는 상태입니다. 상태 = " + feedMeet.getStatus().getName());
-        }
     }
 }
