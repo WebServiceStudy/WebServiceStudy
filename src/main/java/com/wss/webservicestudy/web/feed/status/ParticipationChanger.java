@@ -31,17 +31,9 @@ public abstract class ParticipationChanger {
         changeParticipantNumber(feedMeet.getFeed(), feedMeet.getUser());
     }
 
-    protected abstract ParticipantStatus getNewStatus();
-
-    protected abstract List<ParticipantStatus> getPreStatusList();
-
-    protected void checkChangeAvailable(FeedMeet feedMeet, User currentUser) {}
-
     protected void changeFeedMeetStatus(FeedMeet feedMeet) {
         feedMeet.setStatus(getNewStatus());
     }
-
-    protected void changeParticipantNumber(Feed feed, User actor) {}
 
     protected void checkStatus(FeedMeet feedMeet) {
         if (!getPreStatusList().contains(feedMeet.getStatus())) {
@@ -66,4 +58,12 @@ public abstract class ParticipationChanger {
             throw new IllegalArgumentException("게시글의 작성자는 항상 참여상태여야 합니다.");
         }
     }
+
+    protected abstract void checkChangeAvailable(FeedMeet feedMeet, User currentUser);
+
+    protected abstract void changeParticipantNumber(Feed feed, User actor);
+
+    protected abstract ParticipantStatus getNewStatus();
+
+    protected abstract List<ParticipantStatus> getPreStatusList();
 }

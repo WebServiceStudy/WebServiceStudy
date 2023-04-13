@@ -12,8 +12,8 @@ import java.util.List;
 
 public class RefusalChanger extends ParticipationChanger {
 
-    private final ParticipantStatus status = ParticipantStatus.REFUSAL;
-    private final List<ParticipantStatus> preStatus = Arrays.asList(ParticipantStatus.APPLYING, ParticipantStatus.PARTICIPATING);
+    private final ParticipantStatus STATUS = ParticipantStatus.REFUSAL;
+    private final List<ParticipantStatus> PRE_STATUS = Arrays.asList(ParticipantStatus.APPLYING, ParticipantStatus.PARTICIPATING);
 
     public RefusalChanger(FeedMeetService feedMeetService, UserService userService) {
         super(feedMeetService, userService);
@@ -21,12 +21,12 @@ public class RefusalChanger extends ParticipationChanger {
 
     @Override
     protected ParticipantStatus getNewStatus() {
-        return status;
+        return STATUS;
     }
 
     @Override
     protected List<ParticipantStatus> getPreStatusList() {
-        return preStatus;
+        return PRE_STATUS;
     }
 
     @Override
