@@ -27,8 +27,8 @@ public abstract class ParticipationChanger {
     }
 
     private void updateFeedMeet(FeedMeet feedMeet) {
-        changeFeedMeetStatus(feedMeet);
         changeParticipantNumber(feedMeet, feedMeet.getFeed(), feedMeet.getUser());
+        changeFeedMeetStatus(feedMeet);
     }
 
     protected void changeFeedMeetStatus(FeedMeet feedMeet) {
