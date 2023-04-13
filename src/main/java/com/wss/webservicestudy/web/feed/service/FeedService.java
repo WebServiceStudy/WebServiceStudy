@@ -40,16 +40,16 @@ public class FeedService {
     }
 
     @Transactional
-    public List<FeedsRespDto> findUserFeeds() {
-        return feedRepository.findAllByWriter(userService.findCurrentUser())
+    public List<FeedsRespDto> findUserFeeds(Pageable pageable) {
+        return feedRepository.findAllByWriter(pageable, userService.findCurrentUser())
                 .stream()
                 .map(FeedsRespDto::new)
                 .collect(Collectors.toList());
     }
 
     @Transactional
-    public List<FeedsRespDto> findUserAppliedFeeds() {
-        return feedRepository.findAllByFeedMeets_User(userService.findCurrentUser())
+    public List<FeedsRespDto> findUserAppliedFeeds(Pageable pageable) {
+        return feedRepository.findAllByFeedMeets_User(pageable, userService.findCurrentUser())
                 .stream()
                 .map(FeedsRespDto::new)
                 .collect(Collectors.toList());

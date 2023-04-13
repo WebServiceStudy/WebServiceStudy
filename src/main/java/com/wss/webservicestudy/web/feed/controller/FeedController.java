@@ -11,6 +11,8 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.validation.BindingResult;
 
@@ -27,14 +29,14 @@ public class FeedController {
 
     @ApiOperation(value = "사용자 작성 피드 조회", notes = "사용자 작성 피드 조회")
     @GetMapping("/writer")
-    public ApiResponse<List<FeedsRespDto>> userFeeds() {
-        return ApiResponse.ok(feedService.findUserFeeds());
+    public ApiResponse<List<FeedsRespDto>> userFeeds(@PageableDefault(size = 2) Pageable pageable) {
+        return ApiResponse.ok(feedService.findUserFeeds(pageable));
     }
 
     @ApiOperation(value = "사용자 참여 요청 피드 조회", notes = "사용자 참여 요청 피드 조회")
     @GetMapping("/applied")
-    public ApiResponse<List<FeedsRespDto>> userAppliedFeeds() {
-        return ApiResponse.ok(feedService.findUserAppliedFeeds());
+    public ApiResponse<List<FeedsRespDto>> userAppliedFeeds(@PageableDefault(size = 2) Pageable pageable) {
+        return ApiResponse.ok(feedService.findUserAppliedFeeds(pageable));
     }
 
     @ApiOperation(value = "피드 조회", notes = "피드 조회")

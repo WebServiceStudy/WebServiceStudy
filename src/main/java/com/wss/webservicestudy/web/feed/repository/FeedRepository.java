@@ -18,9 +18,9 @@ public interface FeedRepository extends JpaRepository<Feed, Long> {
             " INNER JOIN FETCH f.writer")
     List<Feed> findAllByOrderByIdDesc(Pageable pageable);
 
-    List<Feed> findAllByWriter(User writer);
+    List<Feed> findAllByWriter(Pageable pageable, User writer);
 
-    List<Feed> findAllByFeedMeets_User(User user);
+    List<Feed> findAllByFeedMeets_User(Pageable pageable, User user);
 
     Feed findTop1ByOrderByIdDesc();
 
