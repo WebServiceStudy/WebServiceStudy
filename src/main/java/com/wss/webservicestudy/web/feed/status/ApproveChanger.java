@@ -37,7 +37,7 @@ public class ApproveChanger extends ParticipationChanger {
     }
 
     @Override
-    protected void changeParticipantNumber(Feed feed, User actor) {
+    protected void changeParticipantNumber(FeedMeet feedMeet, Feed feed, User actor) {
         feed.addParticipant(actor);
     }
 }

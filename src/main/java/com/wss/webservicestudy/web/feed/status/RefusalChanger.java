@@ -38,7 +38,9 @@ public class RefusalChanger extends ParticipationChanger {
     }
 
     @Override
-    protected void changeParticipantNumber(Feed feed, User actor) {
-        feed.deductParticipant(actor);
+    protected void changeParticipantNumber(FeedMeet feedMeet, Feed feed, User actor) {
+        if (feedMeet.isParticipating()) {
+            feed.deductParticipant(actor);
+        }
     }
 }

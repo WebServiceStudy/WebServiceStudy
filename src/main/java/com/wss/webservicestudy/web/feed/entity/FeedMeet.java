@@ -57,6 +57,10 @@ public class FeedMeet extends BaseEntity {
         return this.getFeed().isFeedWriter(user);
     }
 
+    public boolean isParticipating() {
+        return status.equals(ParticipantStatus.PARTICIPATING);
+    }
+
     @Builder
     public FeedMeet(Feed feed, User user) {
         setFeed(feed);

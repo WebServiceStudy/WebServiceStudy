@@ -28,7 +28,7 @@ public abstract class ParticipationChanger {
 
     private void updateFeedMeet(FeedMeet feedMeet) {
         changeFeedMeetStatus(feedMeet);
-        changeParticipantNumber(feedMeet.getFeed(), feedMeet.getUser());
+        changeParticipantNumber(feedMeet, feedMeet.getFeed(), feedMeet.getUser());
     }
 
     protected void changeFeedMeetStatus(FeedMeet feedMeet) {
@@ -61,7 +61,7 @@ public abstract class ParticipationChanger {
 
     protected abstract void checkChangeAvailable(FeedMeet feedMeet, User currentUser);
 
-    protected abstract void changeParticipantNumber(Feed feed, User actor);
+    protected abstract void changeParticipantNumber(FeedMeet feedMeet, Feed feed, User actor);
 
     protected abstract ParticipantStatus getNewStatus();
 
