@@ -18,20 +18,20 @@ public abstract class ParticipationChanger {
 
     public FeedMeet changeStatus(long feedMeetId) {
         FeedMeet feedMeet = feedMeetService.read(feedMeetId);
+        // 상태 변경 가능 여부 체크
         checkChangeAvailable(feedMeet, userService.findCurrentUser());
+        // 상태 변경
         changeFeedMeetStatus(feedMeet);
+        // 참여자 인원수 변경
         changeParticipantNumber(feedMeet.getFeed(), feedMeet.getUser());
         return feedMeet;
     }
 
-    protected void checkChangeAvailable(FeedMeet feedMeet, User currentUser) {
-    }
+    protected abstract void checkChangeAvailable(FeedMeet feedMeet, User currentUser);
 
-    protected void changeFeedMeetStatus(FeedMeet feedMeet) {
-    }
+    protected abstract void changeFeedMeetStatus(FeedMeet feedMeet);
 
-    protected void changeParticipantNumber(Feed feed, User actor) {
-    }
+    protected abstract void changeParticipantNumber(Feed feed, User actor);
 
     protected void checkWriterPermission(User currentUser) {
         if(!currentUser.isWritable()){
