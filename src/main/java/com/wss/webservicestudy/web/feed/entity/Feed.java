@@ -90,9 +90,8 @@ public class Feed extends BaseEntity {
     // 조회수
     private int views;
 
-    // 모집 유형
-    @Enumerated(EnumType.STRING)
-    private MeetingType meetingType;
+    // 남녀 구분 유무
+    private boolean genderDivisionYn;
 
     // 삭제여부
     @Enumerated(EnumType.STRING)

@@ -6,6 +6,7 @@ import com.wss.webservicestudy.web.feed.type.MeetingType;
 import com.wss.webservicestudy.web.user.entity.User;
 import lombok.*;
 
+import javax.validation.constraints.Future;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.PositiveOrZero;
@@ -18,7 +19,7 @@ import java.time.LocalDateTime;
 public class CreateFeedDto {
 
     @Builder
-    public CreateFeedDto(String title, String content, LocalDateTime date, String addr, String latitude, String longitude, int maxUser, int minAge, int maxAge, int maxMale, int maxFemale, MeetingType meetingType, Category category) {
+    public CreateFeedDto(String title, String content, LocalDateTime date, String addr, String latitude, String longitude, int maxUser, int minAge, int maxAge, int maxMale, int maxFemale, boolean genderDivisionYn, Category category) {
         this.title = title;
         this.content = content;
         this.date = date;
@@ -30,7 +31,7 @@ public class CreateFeedDto {
         this.maxAge = maxAge; // ?:: minAge <= maxAge Exception?
         this.maxMale = maxMale;
         this.maxFemale = maxFemale;
-        this.meetingType = meetingType;
+        this.genderDivisionYn = genderDivisionYn;
         this.category = category;
     }
 
@@ -47,6 +48,7 @@ public class CreateFeedDto {
 
     // 모집일
     @JsonFormat(pattern = "yyyy-MM-dd kk:mm")
+    @Future
     @NotNull(message = "모집일은 필수 입력값입니다.")
     private LocalDateTime date;
 
@@ -79,7 +81,7 @@ public class CreateFeedDto {
     private int maxFemale;
 
     // 모집 유형
-    private MeetingType meetingType;
+    private boolean genderDivisionYn;
 
     private Category category;
 }
