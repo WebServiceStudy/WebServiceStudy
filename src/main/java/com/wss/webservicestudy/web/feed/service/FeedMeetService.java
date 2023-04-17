@@ -6,6 +6,7 @@ import com.wss.webservicestudy.web.feed.repository.FeedMeetRepository;
 import com.wss.webservicestudy.web.feed.repository.FeedRepository;
 import com.wss.webservicestudy.web.feed.status.ApproveChanger;
 import com.wss.webservicestudy.web.feed.status.CancelChanger;
+import com.wss.webservicestudy.web.feed.status.CreateChanger;
 import com.wss.webservicestudy.web.feed.status.RefusalChanger;
 import com.wss.webservicestudy.web.user.entity.User;
 import com.wss.webservicestudy.web.user.service.UserService;
@@ -26,10 +27,12 @@ public class FeedMeetService {
 
     @Transactional
     public FeedMeet create(final Long feedId) {
-        // TODO : 존재 체크 필요
-        Feed feed = feedRepository.findById(feedId).get();
+        Feed feed = feedRepository.findById(feedId).orElseThrow(()->
+                new IllegalArgumentException("feed 없음. id="+feedId));
         User user = userService.findCurrentUser();
+        // TODO : FeedMeet 존재 체크 필요
 
+        CreateChanger createChanger = new CreateChanger(this, userService);
         return create(feed, user);
     }
 
@@ -43,6 +46,12 @@ public class FeedMeetService {
     @Transactional
     public FeedMeet read(final Long feedMeetId) {
         Optional<FeedMeet> optionalFeedMeet = feedMeetRepository.findById(feedMeetId);
+        return optionalFeedMeet.orElseThrow(()->
+                new IllegalArgumentException("feedMeet 없음. id="+feedMeetId));
+    }
+
+    private FeedMeet read(Long feedId, Long userId){
+        Optional<FeedMeet> optionalFeedMeet = feedMeetRepository.findBy(feedMeetId);
         return optionalFeedMeet.orElseThrow(()->
                 new IllegalArgumentException("feedMeet 없음. id="+feedMeetId));
     }
