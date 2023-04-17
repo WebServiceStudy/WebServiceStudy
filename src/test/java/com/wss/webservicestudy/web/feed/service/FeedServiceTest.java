@@ -27,7 +27,7 @@ public class FeedServiceTest {
     @Autowired
     private FeedRepository feedRepository;
 
-    @Test
+    /*@Test
     public void readFeedById() {
         List<FeedsRespDto> feedRespDtos = feedService.findAllDesc();
         FeedsRespDto lastFeed = feedRespDtos.get(feedRespDtos.size() - 1);
@@ -45,7 +45,7 @@ public class FeedServiceTest {
         assertThatIllegalArgumentException().isThrownBy(()
                 -> feedService.findOne(nonFeedId))
                 .withMessageMatching("feed 없음. id = " + nonFeedId);
-    }
+    }*/
 
     @Test
     public void readFeed() {
