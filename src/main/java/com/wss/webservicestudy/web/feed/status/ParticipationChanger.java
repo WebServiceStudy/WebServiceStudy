@@ -3,8 +3,11 @@ package com.wss.webservicestudy.web.feed.status;
 import com.wss.webservicestudy.web.feed.entity.Feed;
 import com.wss.webservicestudy.web.feed.entity.FeedMeet;
 import com.wss.webservicestudy.web.feed.service.FeedMeetService;
+import com.wss.webservicestudy.web.feed.type.ParticipantStatus;
 import com.wss.webservicestudy.web.user.entity.User;
 import com.wss.webservicestudy.web.user.service.UserService;
+
+import java.util.List;
 
 public abstract class ParticipationChanger {
 
@@ -20,18 +23,24 @@ public abstract class ParticipationChanger {
         FeedMeet feedMeet = feedMeetService.read(feedMeetId);
         // 상태 변경 가능 여부 체크
         checkChangeAvailable(feedMeet, userService.findCurrentUser());
-        // 상태 변경
-        changeFeedMeetStatus(feedMeet);
-        // 참여자 인원수 변경
-        changeParticipantNumber(feedMeet.getFeed(), feedMeet.getUser());
+        updateFeedMeet(feedMeet);
         return feedMeet;
     }
 
-    protected abstract void checkChangeAvailable(FeedMeet feedMeet, User currentUser);
+    private void updateFeedMeet(FeedMeet feedMeet) {
+        changeParticipantNumber(feedMeet, feedMeet.getFeed(), feedMeet.getUser());
+        changeFeedMeetStatus(feedMeet);
+    }
 
-    protected abstract void changeFeedMeetStatus(FeedMeet feedMeet);
+    protected void changeFeedMeetStatus(FeedMeet feedMeet) {
+        feedMeet.setStatus(getNewStatus());
+    }
 
-    protected abstract void changeParticipantNumber(Feed feed, User actor);
+    protected void checkStatus(FeedMeet feedMeet) {
+        if (!getPreStatusList().contains(feedMeet.getStatus())) {
+            throw new IllegalArgumentException("승인할 수 없는 상태입니다. 상태 = " + feedMeet.getStatus().getName());
+        }
+    }
 
     protected void checkWriterPermission(User currentUser) {
         if(!currentUser.isWritable()){
@@ -50,4 +59,12 @@ public abstract class ParticipationChanger {
             throw new IllegalArgumentException("게시글의 작성자는 항상 참여상태여야 합니다.");
         }
     }
+
+    protected abstract void checkChangeAvailable(FeedMeet feedMeet, User currentUser);
+
+    protected abstract void changeParticipantNumber(FeedMeet feedMeet, Feed feed, User actor);
+
+    protected abstract ParticipantStatus getNewStatus();
+
+    protected abstract List<ParticipantStatus> getPreStatusList();
 }
