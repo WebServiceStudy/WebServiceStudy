@@ -11,58 +11,61 @@ import java.util.List;
 
 public abstract class ParticipationChanger {
 
-    private final FeedMeetService feedMeetService;
+    private final FeedMeet feedMeet;
     private final UserService userService;
 
-    protected ParticipationChanger(FeedMeetService feedMeetService, UserService userService) {
-        this.feedMeetService = feedMeetService;
+    protected ParticipationChanger(FeedMeet feedMeet, UserService userService) {
+        this.feedMeet = feedMeet;
         this.userService = userService;
     }
 
-    public FeedMeet changeStatus(long feedMeetId) {
-        FeedMeet feedMeet = feedMeetService.read(feedMeetId);
+    public FeedMeet changeStatus() {
         // 상태 변경 가능 여부 체크
-        checkChangeAvailable(feedMeet, userService.findCurrentUser());
-        updateFeedMeet(feedMeet);
-        return feedMeet;
+        checkChangeAvailable(userService.findCurrentUser());
+        updateFeedMeet();
+        return this.feedMeet;
     }
 
-    private void updateFeedMeet(FeedMeet feedMeet) {
-        changeParticipantNumber(feedMeet, feedMeet.getFeed(), feedMeet.getUser());
-        changeFeedMeetStatus(feedMeet);
+    private final void updateFeedMeet() {
+        changeParticipantNumber(this.feedMeet.getFeed(), this.feedMeet.getUser());
+        changeFeedMeetStatus();
     }
 
-    protected void changeFeedMeetStatus(FeedMeet feedMeet) {
-        feedMeet.setStatus(getNewStatus());
+    protected final void changeFeedMeetStatus() {
+        this.feedMeet.setStatus(getNewStatus());
     }
 
-    protected void checkStatus(FeedMeet feedMeet) {
-        if (!getPreStatusList().contains(feedMeet.getStatus())) {
-            throw new IllegalArgumentException("승인할 수 없는 상태입니다. 상태 = " + feedMeet.getStatus().getName());
+    protected final void checkStatus() {
+        if (!getPreStatusList().contains(this.feedMeet.getStatus())) {
+            throw new IllegalArgumentException("승인할 수 없는 상태입니다. 상태 = " + this.feedMeet.getStatus().getName());
         }
     }
 
-    protected void checkWriterPermission(User currentUser) {
-        if(!currentUser.isWritable()){
+    protected final void checkWriterPermission(User actor) {
+        if(!actor.isWritable()){
             throw new IllegalArgumentException("쓰기 권한 없음");
         }
     }
 
-    protected void checkFeedWriter(FeedMeet feedMeet, User currentUser) {
-        if (!feedMeet.isFeedWriter(currentUser)) {
+    protected final void checkFeedWriter(User actor) {
+        if (!this.feedMeet.isFeedWriter(actor)) {
             throw new IllegalArgumentException("해당 게시글의 작성자가 아닙니다.");
         }
     }
 
-    protected void checkIsWriterSelf(FeedMeet feedMeet) {
-        if(feedMeet.isWriterSelf()) {
+    protected final void checkIsWriterSelf() {
+        if(this.feedMeet.isWriterSelf()) {
             throw new IllegalArgumentException("게시글의 작성자는 항상 참여상태여야 합니다.");
         }
     }
 
-    protected abstract void checkChangeAvailable(FeedMeet feedMeet, User currentUser);
+    protected final FeedMeet getFeedMeet() {
+        return this.feedMeet;
+    }
 
-    protected abstract void changeParticipantNumber(FeedMeet feedMeet, Feed feed, User actor);
+    protected abstract void checkChangeAvailable(User actor);
+
+    protected abstract void changeParticipantNumber(Feed feed, User user);
 
     protected abstract ParticipantStatus getNewStatus();
 
