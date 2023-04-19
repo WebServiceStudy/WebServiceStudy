@@ -77,7 +77,7 @@ public class FeedService {
         Feed feed = FeedMapper.INSTANCE.toFeed(feedDto);
         feedRepository.save(feed);
 
-        FeedMeet feedMeet = feedMeetService.create(feed.getId());
+        FeedMeet feedMeet = feedMeetService.apply(feed.getId());
         feedMeetService.approve(feedMeet.getId());
         return feed;
     }
