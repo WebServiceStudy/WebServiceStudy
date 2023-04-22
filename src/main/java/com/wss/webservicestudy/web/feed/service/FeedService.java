@@ -63,10 +63,14 @@ public class FeedService {
         return FeedMapper.INSTANCE.toFeedRespDto(feed);
     }
 
-    @Transactional(readOnly = true)
     public Feed findOne(Long feedId) {
         return feedRepository.findById(feedId)
                 .orElseThrow(() -> new IllegalArgumentException("feed 없음. id = " + feedId));
+    }
+
+    @Transactional(readOnly = true)
+    public FeedStatus findFeedStatus(Long feedId) {
+        return findOne(feedId).getStatus();
     }
 
     @Transactional
