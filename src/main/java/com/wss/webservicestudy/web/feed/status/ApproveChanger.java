@@ -15,8 +15,8 @@ public class ApproveChanger extends ParticipationChanger {
     private final ParticipantStatus STATUS = ParticipantStatus.PARTICIPATING;
     private final List<ParticipantStatus> PRE_STATUS = Arrays.asList(ParticipantStatus.APPLYING, ParticipantStatus.REFUSAL);
 
-    public ApproveChanger(FeedMeetService feedMeetService, UserService userService) {
-        super(feedMeetService, userService);
+    public ApproveChanger(FeedMeet feedMeet, UserService userService) {
+        super(feedMeet, userService);
     }
 
     @Override
@@ -30,14 +30,14 @@ public class ApproveChanger extends ParticipationChanger {
     }
 
     @Override
-    protected void checkChangeAvailable(FeedMeet feedMeet, User currentUser) {
-        checkStatus(feedMeet);
-        checkFeedWriter(feedMeet, currentUser);
-        checkWriterPermission(currentUser);
+    protected void checkChangeAvailable(User actor) {
+        checkStatus();
+        checkFeedWriter(actor);
+        checkWriterPermission(actor);
     }
 
     @Override
-    protected void changeParticipantNumber(FeedMeet feedMeet, Feed feed, User actor) {
-        feed.addParticipant(actor);
+    protected void changeParticipantNumber(Feed feed, User user) {
+        feed.addParticipant(user);
     }
 }

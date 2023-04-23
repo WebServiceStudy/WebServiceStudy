@@ -90,9 +90,8 @@ public class Feed extends BaseEntity {
     // 조회수
     private int views;
 
-    // 모집 유형
-    @Enumerated(EnumType.STRING)
-    private MeetingType meetingType;
+    // 남녀 구분 유무
+    private boolean genderDivisionYn;
 
     // 삭제여부
     @Enumerated(EnumType.STRING)
@@ -188,7 +187,7 @@ public class Feed extends BaseEntity {
 
     // TODO : Mapper 삭제 후 방식 통일
     @Builder
-    public Feed(User writer, String title, String content, FeedStatus status, LocalDateTime date, String addr, String latitude, String longitude, int maxUser, int minAge, int maxAge) {
+    public Feed(User writer, String title, String content, FeedStatus status, LocalDateTime date, String addr, String latitude, String longitude, int maxUser, int maxMale, int maxFemale, int minAge, int maxAge) {
         setWriter(writer);
         this.title = title;
         this.content = content;
@@ -198,6 +197,8 @@ public class Feed extends BaseEntity {
         this.latitude = latitude;
         this.longitude = longitude;
         this.maxUser = maxUser;
+        this.maxMale = maxMale;
+        this.maxFemale = maxFemale;
         this.minAge = minAge;
         this.maxAge = maxAge;
     }

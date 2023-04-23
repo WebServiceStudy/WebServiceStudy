@@ -45,6 +45,12 @@ public class FeedController {
         return ApiResponse.ok(feedService.findRespById(feedId));
     }
 
+    @ApiOperation(value = "피드 상태값 조회", notes = "피드 상태값 조회")
+    @GetMapping("/{feed}/status")
+    public ApiResponse<FeedStatus> readFeedStatus(@PathVariable("feed") Long feedId){
+        return ApiResponse.ok(feedService.findFeedStatus(feedId));
+    }
+
     @ApiOperation(value = "피드 생성", notes = "피드 생성")
     @PostMapping("")
     public ApiResponse<Long> create(@RequestBody @Valid CreateFeedDto feedDto,
@@ -77,5 +83,4 @@ public class FeedController {
     public ApiResponse<Long> delete(@PathVariable(name = "feed") Long feedId) {
         return ApiResponse.ok(feedService.delete(feedId));
     }
-
 }

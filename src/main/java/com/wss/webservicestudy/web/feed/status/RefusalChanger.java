@@ -15,8 +15,8 @@ public class RefusalChanger extends ParticipationChanger {
     private final ParticipantStatus STATUS = ParticipantStatus.REFUSAL;
     private final List<ParticipantStatus> PRE_STATUS = Arrays.asList(ParticipantStatus.APPLYING, ParticipantStatus.PARTICIPATING);
 
-    public RefusalChanger(FeedMeetService feedMeetService, UserService userService) {
-        super(feedMeetService, userService);
+    public RefusalChanger(FeedMeet feedMeet, UserService userService) {
+        super(feedMeet, userService);
     }
 
     @Override
@@ -30,17 +30,17 @@ public class RefusalChanger extends ParticipationChanger {
     }
 
     @Override
-    protected void checkChangeAvailable(FeedMeet feedMeet, User currentUser) {
-        checkStatus(feedMeet);
-        checkWriterPermission(currentUser);
-        checkFeedWriter(feedMeet, currentUser);
-        checkIsWriterSelf(feedMeet);
+    protected void checkChangeAvailable(User actor) {
+        checkStatus();
+        checkWriterPermission(actor);
+        checkFeedWriter(actor);
+        checkIsWriterSelf();
     }
 
     @Override
-    protected void changeParticipantNumber(FeedMeet feedMeet, Feed feed, User actor) {
-        if (feedMeet.isParticipating()) {
-            feed.deductParticipant(actor);
+    protected void changeParticipantNumber(Feed feed, User user) {
+        if (getFeedMeet().isParticipating()) {
+            feed.deductParticipant(user);
         }
     }
 }

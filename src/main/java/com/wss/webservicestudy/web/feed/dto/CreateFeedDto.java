@@ -2,35 +2,39 @@ package com.wss.webservicestudy.web.feed.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.wss.webservicestudy.web.category.entity.Category;
-import com.wss.webservicestudy.web.feed.type.MeetingType;
+import com.wss.webservicestudy.web.feed.valid.Mode;
 import com.wss.webservicestudy.web.user.entity.User;
 import lombok.*;
 
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.PositiveOrZero;
+import javax.validation.constraints.*;
 import java.time.LocalDateTime;
 
 @Getter
 @Setter
 @ToString
 @NoArgsConstructor
+@Mode(mode = "genderDivisionYn"
+        , modeOnItems = {"maxMale", "maxFemale"}
+        , modeOffItems = {"maxUser"}
+        , message = "공통 모집인 경우 최대인원만을 설정하고, "
+                    + "남녀 구분 모집일 경우 남/녀 최대인원만 설정합니다."
+        )
 public class CreateFeedDto {
 
     @Builder
-    public CreateFeedDto(String title, String content, LocalDateTime date, String addr, String latitude, String longitude, int maxUser, int minAge, int maxAge, int maxMale, int maxFemale, MeetingType meetingType, Category category) {
+    public CreateFeedDto(String title, String content, LocalDateTime date, String addr, String latitude, String longitude, Integer maxUser, Integer minAge, Integer maxAge, Integer maxMale, Integer maxFemale, boolean genderDivisionYn, Category category) {
         this.title = title;
         this.content = content;
         this.date = date;
         this.addr = addr;
         this.latitude = latitude;
         this.longitude = longitude;
-        this.maxUser = maxUser;
         this.minAge = minAge;
         this.maxAge = maxAge; // ?:: minAge <= maxAge Exception?
+        this.maxUser = maxUser;
         this.maxMale = maxMale;
         this.maxFemale = maxFemale;
-        this.meetingType = meetingType;
+        this.genderDivisionYn = genderDivisionYn;
         this.category = category;
     }
 
@@ -47,6 +51,7 @@ public class CreateFeedDto {
 
     // 모집일
     @JsonFormat(pattern = "yyyy-MM-dd kk:mm")
+    @Future
     @NotNull(message = "모집일은 필수 입력값입니다.")
     private LocalDateTime date;
 
@@ -60,26 +65,26 @@ public class CreateFeedDto {
     // 경도
     private String longitude;
 
-    // 최대인원
-    @PositiveOrZero(message = "최대 인원은 음수가 될 수 없습니다.")
-    private int maxUser;
-
     // 나이제한
     @PositiveOrZero(message = "최소 나이는 음수가 될 수 없습니다.")
-    private int minAge;
+    private Integer minAge;
     @PositiveOrZero(message = "최대 나이는 음수가 될 수 없습니다.")
-    private int maxAge;
+    private Integer maxAge;
+
+    // 최대인원
+    @Positive(message = "최대 인원은 0보다 커야합니다.")
+    private Integer maxUser;
 
     // 남자최대인원
-    @PositiveOrZero(message = "최대 나이는 음수가 될 수 없습니다.")
-    private int maxMale;
+    @PositiveOrZero(message = "남자 인원은 음수가 될 수 없습니다.")
+    private Integer maxMale;
 
     // 여자최대인원
-    @PositiveOrZero(message = "최대 나이는 음수가 될 수 없습니다.")
-    private int maxFemale;
+    @PositiveOrZero(message = "여자 인원은 음수가 될 수 없습니다.")
+    private Integer maxFemale;
 
     // 모집 유형
-    private MeetingType meetingType;
+    private boolean genderDivisionYn;
 
     private Category category;
 }

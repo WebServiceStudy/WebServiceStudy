@@ -15,8 +15,8 @@ public class CancelChanger extends ParticipationChanger {
     private final ParticipantStatus STATUS = ParticipantStatus.CANCEL;
     private final List<ParticipantStatus> PRE_STATUS = Arrays.asList(ParticipantStatus.APPLYING, ParticipantStatus.PARTICIPATING);
 
-    public CancelChanger(FeedMeetService feedMeetService, UserService userService) {
-        super(feedMeetService, userService);
+    public CancelChanger(FeedMeet feedMeet, UserService userService) {
+        super(feedMeet, userService);
     }
 
     @Override
@@ -30,21 +30,21 @@ public class CancelChanger extends ParticipationChanger {
     }
 
     @Override
-    protected void checkChangeAvailable(FeedMeet feedMeet, User currentUser) {
-        checkStatus(feedMeet);
-        checkParticipant(feedMeet, currentUser);
-        checkIsWriterSelf(feedMeet);
+    protected void checkChangeAvailable(User actor) {
+        checkStatus();
+        checkParticipant(actor);
+        checkIsWriterSelf();
     }
 
     @Override
-    protected void changeParticipantNumber(FeedMeet feedMeet, Feed feed, User actor) {
-        if (feedMeet.isParticipating()) {
-            feed.deductParticipant(actor);
+    protected void changeParticipantNumber(Feed feed, User user) {
+        if (getFeedMeet().isParticipating()) {
+            feed.deductParticipant(user);
         }
     }
 
-    private void checkParticipant(FeedMeet feedMeet, User currentUser) {
-        if(!feedMeet.equalsParticipant(currentUser)) {
+    private void checkParticipant(User actor) {
+        if(!getFeedMeet().equalsParticipant(actor)) {
             throw new IllegalArgumentException("본인의 신청내역만 취소가 가능합니다.");
         }
     }

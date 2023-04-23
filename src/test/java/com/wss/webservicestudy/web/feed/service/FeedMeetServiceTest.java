@@ -24,7 +24,7 @@ public class FeedMeetServiceTest {
     @Test
     public void create(){
         int index = feedRepository.findAll().size() - 1;
-        feedMeetService.create((long)index);
+        feedMeetService.apply((long)index);
     }
 
     @Test

@@ -14,10 +14,10 @@ import org.springframework.web.bind.annotation.*;
 public class FeedMeetController {
     private final FeedMeetService feedMeetService;
 
-    @ApiOperation(value = "FeedMeet create", notes = "사용자가 피드에 참여 신청한다.")
+    @ApiOperation(value = "FeedMeet apply", notes = "사용자가 피드에 참여 신청한다.")
     @PostMapping()
-    public ApiResponse<Long> create(@RequestParam(name="feed") final Long feedId){
-        return ApiResponse.ok(feedMeetService.create(feedId).getId());
+    public ApiResponse<Long> apply(@RequestParam(name="feed") final Long feedId){
+        return ApiResponse.ok(feedMeetService.apply(feedId).getId());
     }
 
     @ApiOperation(value = "FeedMeet read", notes = "FeedMeet 정보를 찾는다.")
