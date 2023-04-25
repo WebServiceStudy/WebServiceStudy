@@ -172,6 +172,7 @@ public class Feed extends BaseEntity {
     }
 
     public void availableToAdd() {
+        // TODO: 남녀구분 모집일 때 로직 추가
         // 정원 체크
         if (this.maxUser == curMale + curFemale) {
             throw new IllegalArgumentException("정원 다 참");

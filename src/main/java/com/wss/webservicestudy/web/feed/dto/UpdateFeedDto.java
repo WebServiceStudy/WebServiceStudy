@@ -12,6 +12,7 @@ import java.time.LocalDateTime;
 @Setter
 @ToString
 @NoArgsConstructor
+// TODO: createDto 랑 차이점 있는지?
 public class UpdateFeedDto {
     @Builder
     public UpdateFeedDto(String title, String content, LocalDateTime date, String addr, String latitude, String longitude, int maxUser, int minAge, int maxAge) {
