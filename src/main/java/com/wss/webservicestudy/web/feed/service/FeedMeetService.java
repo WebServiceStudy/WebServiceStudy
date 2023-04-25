@@ -30,7 +30,7 @@ public class FeedMeetService {
         Feed feed = readFeed(feedId);
         User user = userService.findCurrentUser();
 
-        // FeedMeet 존재 체크
+        // FeedMeet 존재 체크 후 없으면 생성
         FeedMeet feedMeet = feedMeetRepository.findByFeedIdAndUserId(feedId,user.getId()).orElseGet(()->create(feed, user));
         ApplyChanger participation = new ApplyChanger(read(feedMeet.getId()), userService);
 
@@ -40,7 +40,7 @@ public class FeedMeetService {
         return feedRepository.findById(feedId).orElseThrow(()-> new IllegalArgumentException("feed 없음. id="+feedId));
     }
 
-    private FeedMeet create(Feed feed, User user) {
+    public FeedMeet create(Feed feed, User user) {
         return feedMeetRepository.save(FeedMeet.builder()
                 .feed(feed)
                 .user(user)

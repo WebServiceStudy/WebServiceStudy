@@ -77,11 +77,13 @@ public class FeedService {
     public Feed create(CreateFeedDto feedDto) {
         User currentUser = userService.findCurrentUser();
         currentUser.checkIsWritable();
+        // TODO : 나이 제한 체크
         feedDto.setWriter(currentUser);
         Feed feed = FeedMapper.INSTANCE.toFeed(feedDto);
+        feed.setStatus(FeedStatus.RECRUITING);
         feedRepository.save(feed);
 
-        FeedMeet feedMeet = feedMeetService.apply(feed.getId());
+        FeedMeet feedMeet = feedMeetService.create(feed, currentUser);
         feedMeetService.approve(feedMeet.getId());
         return feed;
     }
