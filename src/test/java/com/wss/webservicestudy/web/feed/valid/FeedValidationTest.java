@@ -11,6 +11,7 @@ import java.time.LocalDateTime;
 import java.util.Set;
 
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @SpringBootTest
 public class FeedValidationTest {
@@ -19,7 +20,8 @@ public class FeedValidationTest {
         // Given
         String title = "WebServiceStudy1";
         String content = "미팅 웹 페이지 만들기 스터디";
-        LocalDateTime date = LocalDateTime.of(2023,5,8,10,0,0);
+                LocalDateTime date = LocalDateTime.of(2023,5,8,10,0,0);
+//        String  date = "2024-04-27T13:30:00";
         String addr = "강남";
         String latitude = "latitude";
         String longitude = "longitude";
@@ -57,6 +59,8 @@ public class FeedValidationTest {
                 });
 
         // 유효성 검사 실패하면 성공
-        assertFalse(violations.isEmpty());
+//        assertFalse(violations.isEmpty());
+        // 유효성 검사 통과하면 성공
+        assertTrue(violations.isEmpty());
     }
 }

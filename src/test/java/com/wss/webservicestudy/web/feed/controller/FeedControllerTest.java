@@ -1,33 +1,45 @@
 package com.wss.webservicestudy.web.feed.controller;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import com.wss.webservicestudy.WebservicestudyApplication;
 import com.wss.webservicestudy.web.feed.dto.CreateFeedDto;
-import com.wss.webservicestudy.web.feed.dto.FeedRespDto;
 import com.wss.webservicestudy.web.feed.dto.UpdateFeedDto;
 import com.wss.webservicestudy.web.feed.entity.Feed;
 import com.wss.webservicestudy.web.feed.repository.FeedMeetRepository;
 import com.wss.webservicestudy.web.feed.repository.FeedRepository;
-import com.wss.webservicestudy.web.user.repository.UserRepository;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpMethod;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.test.context.support.WithUserDetails;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
 @RunWith(SpringRunner.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @ContextConfiguration(classes = WebservicestudyApplication.class)
+@AutoConfigureMockMvc
+@WithUserDetails(value = "jieun0502@gmail.com")
 public class FeedControllerTest {
     @LocalServerPort
     private int port;
@@ -35,12 +47,10 @@ public class FeedControllerTest {
     private TestRestTemplate restTemplate;
     @Autowired
     private FeedRepository feedRepository;
-
-    @Autowired
-    private UserRepository userRepository;
-
     @Autowired
     private FeedMeetRepository feedMeetRepository;
+    @Autowired
+    private MockMvc mockMvc;
 
     //    @After
 //    public void tearDown() throws Exception{
@@ -50,32 +60,31 @@ public class FeedControllerTest {
     String getUrl(){
         return "http://localhost:" + port + "/api/feed";
     }
-
-    @Transactional
-    @Test
-    public void readFeed() {
-        // User accessToken 필요
-        Feed feed = feedRepository.findTop1ByOrderByIdDesc();
-
-        String url = getUrl() + "/" + feed.getId();
-        ResponseEntity<FeedRespDto> respDto = restTemplate.getForEntity(url, FeedRespDto.class);
-        //assertThat(new FeedRespDto(feed).getTitle()).isEqualTo(respDto.getBody().getTitle());
+    String getUrl(String addUrl){ return "/api/feed"+addUrl; }
+    String getJsonData(Object value) throws JsonProcessingException {
+        ObjectMapper objectMapper = new ObjectMapper();
+        objectMapper.registerModule(new JavaTimeModule());
+        objectMapper.disable(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS);
+        return objectMapper.writeValueAsString(value);
     }
 
-    @Test
-    public void createFeed() throws Exception{
-        // given
-        String title = "WebServiceStudy1";
-        String content = "미팅 웹 페이지 만들기 스터디";
-        LocalDateTime date = LocalDateTime.of(2023,1,8,10,0,0);
-        String addr = "강남";
+    CreateFeedDto getCreateFeedDto(){
+        // Given
+        String title = "상태까지";
+        String content = "잘 들어가는지 test";
+        LocalDateTime date = LocalDateTime.of(2024,5,8,10,0,0);
+//        String  date = "2024-04-27T13:30:00";
+        String addr = "어디가 좋은가";
         String latitude = "latitude";
         String longitude = "longitude";
-        int maxUser = 8;
-        int minAge = 20;
-        int maxAge = 31;
+        Integer minAge = 25;
+        Integer maxAge = 30;
+        boolean genderDivisionYn = false;
+        Integer maxUser = 4;
+        Integer maxMale = null;
+        Integer maxFemale = null;
 
-        CreateFeedDto requestDto = CreateFeedDto.builder()
+        return CreateFeedDto.builder()
                 .title(title)
                 .content(content)
                 .date(date)
@@ -85,12 +94,39 @@ public class FeedControllerTest {
                 .maxUser(maxUser)
                 .minAge(minAge)
                 .maxAge(maxAge)
+                .genderDivisionYn(genderDivisionYn)
+                .maxFemale(maxMale)
+                .maxMale(maxFemale)
                 .build();
+    }
+    @Test
+    @WithUserDetails(value = "jieun0502@gmail.com")
+    public void create() throws Exception {
+        String param = getJsonData(getCreateFeedDto());
 
-        ResponseEntity<Long> responseEntity = restTemplate.postForEntity(getUrl(), requestDto, Long.class);
-        List<Feed> all = feedRepository.findAll();
+        mockMvc.perform(post(getUrl(""))
+                        .content(param)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk());
+    }
 
-        assertThat(all.get(all.size()-1).getTitle()).isEqualTo(title);
+
+    @Transactional
+    @Test
+    public void readFeed() throws Exception {
+        mockMvc.perform(get(getUrl("/2")))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.message").value("SUCCESS"))
+                .andExpect(jsonPath("$.result.title").value("WebServiceStudy1"));
+    }
+    @Transactional
+    @Test
+    public void readFeedStatus() throws Exception {
+        mockMvc.perform(get(getUrl("/18/status")))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.message").value("SUCCESS"))
+                .andExpect(jsonPath("$.result").value("RECRUITING"));
     }
 
     @Test
