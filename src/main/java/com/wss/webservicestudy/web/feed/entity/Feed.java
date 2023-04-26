@@ -34,7 +34,7 @@ public class Feed extends BaseEntity {
 
     // 일대다 관계 - 참여자
     @OneToMany(mappedBy = "feed", cascade = CascadeType.ALL)
-    private List<FeedMeet> feedMeets = new ArrayList<>();
+    private final List<FeedMeet> feedMeets = new ArrayList<>();
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "category", referencedColumnName = "id")
@@ -123,7 +123,7 @@ public class Feed extends BaseEntity {
 
 
     public void addParticipant(User user) {
-        availableToAdd();
+        availableToAdd(user);
 
         if (user.isMale()) {
             addCurMale();
@@ -171,11 +171,12 @@ public class Feed extends BaseEntity {
         return this.curFemale + this.curMale > 1; // 작성자 제외
     }
 
-    public void availableToAdd() {
-        // TODO: 남녀구분 모집일 때 로직 추가
-        // 정원 체크
-        if (this.maxUser == curMale + curFemale) {
-            throw new IllegalArgumentException("정원 다 참");
+    public void availableToAdd(User user) {
+        // 인원수 체크
+        if(this.genderDivisionYn
+            ? (user.isMale() ? this.maxMale == this.curMale : this.maxFemale == this.curFemale)
+            : (this.maxUser == this.curMale + this.curFemale)){
+            throw new IllegalArgumentException("인원 수를 확인해 주세요.");
         }
     }
 
@@ -188,7 +189,7 @@ public class Feed extends BaseEntity {
 
     // TODO : Mapper 삭제 후 방식 통일
     @Builder
-    public Feed(User writer, String title, String content, FeedStatus status, LocalDateTime date, String addr, String latitude, String longitude, int maxUser, int maxMale, int maxFemale, int minAge, int maxAge) {
+    public Feed(User writer, String title, String content, FeedStatus status, LocalDateTime date, String addr, String latitude, String longitude, int maxUser, int maxMale, int maxFemale, int minAge, int maxAge, boolean genderDivisionYn) {
         setWriter(writer);
         this.title = title;
         this.content = content;
@@ -202,6 +203,7 @@ public class Feed extends BaseEntity {
         this.maxFemale = maxFemale;
         this.minAge = minAge;
         this.maxAge = maxAge;
+        this.genderDivisionYn = genderDivisionYn;
     }
 
     public Feed update(UpdateFeedDto updateFeedDto){
