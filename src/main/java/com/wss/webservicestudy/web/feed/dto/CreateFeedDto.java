@@ -2,6 +2,8 @@ package com.wss.webservicestudy.web.feed.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.wss.webservicestudy.web.category.entity.Category;
+import com.wss.webservicestudy.web.common.util.SecurityUtil;
+import com.wss.webservicestudy.web.feed.type.FeedStatus;
 import com.wss.webservicestudy.web.feed.valid.Mode;
 import com.wss.webservicestudy.web.user.entity.User;
 import lombok.*;
@@ -38,12 +40,11 @@ public class CreateFeedDto {
         this.category = category;
     }
 
+    private final FeedStatus status = FeedStatus.RECRUITING;
+    private final User writer = SecurityUtil.getLoginUserWithWritable();
     // 제목
     @NotBlank(message = "제목은 필수 입력값입니다.")
     private String title;
-
-    // 작성자
-    private User writer;
 
     // 내용
     @NotBlank(message = "내용은 필수 입력값입니다.")
@@ -87,4 +88,5 @@ public class CreateFeedDto {
     private boolean genderDivisionYn;
 
     private Category category;
+
 }
