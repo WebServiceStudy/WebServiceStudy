@@ -88,8 +88,9 @@ public class User extends BaseEntity {
         return age;
     }
 
-    public void checkIsWritable(){
+    public User checkIsWritable(){
         if(!isWritable()) throw new IllegalArgumentException("쓰기 권한 없음");
+        return this;
     }
 
     // TODO : 값 확인 필요

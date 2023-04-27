@@ -1,5 +1,6 @@
 package com.wss.webservicestudy.web.user.service;
 
+import com.wss.webservicestudy.web.common.security.domain.PrincipalDetail;
 import com.wss.webservicestudy.web.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -38,11 +39,11 @@ public class CustomUserDetailsService implements UserDetailsService {
     private UserDetails createUserDetails(com.wss.webservicestudy.web.user.entity.User user) {
         log.info("===============login service===============");
         GrantedAuthority grantedAuthority = new SimpleGrantedAuthority(user.getRole().name());
-
-        return new User(
-            user.getEmail(),
-            user.getPassword(),
-            Collections.singleton(grantedAuthority)
-        );
+        return new PrincipalDetail(user, null);
+//        return new User(
+//            user.getEmail(),
+//            user.getPassword(),
+//            Collections.singleton(grantedAuthority)
+//        );
     }
 }
