@@ -22,7 +22,7 @@ public class ApplyChanger extends ParticipationChanger  {
         checkStatus();
         checkWriterPermission(actor);
         checkParticipant(actor);
-        checkAge(getFeedMeet().getFeed(), actor.getAge());
+        checkAge(actor.getAge());
     }
 
     @Override
@@ -42,12 +42,6 @@ public class ApplyChanger extends ParticipationChanger  {
     private void checkParticipant(User actor) {
         if(!getFeedMeet().equalsParticipant(actor)) {
             throw new IllegalArgumentException("본인의 내역만 신청가능합니다.");
-        }
-    }
-
-    private void checkAge(Feed feed, int age){
-        if (feed.isAvailableAge(age)) {
-            throw new IllegalArgumentException("요구하는 나이와 다름");
         }
     }
 }

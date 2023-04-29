@@ -63,6 +63,12 @@ public abstract class ParticipationChanger {
         return this.feedMeet;
     }
 
+    protected final void checkAge(int age){
+        if (!this.feedMeet.getFeed().isAvailableAge(age)) {
+            throw new IllegalArgumentException("요구하는 나이와 다름");
+        }
+    }
+
     protected abstract void checkChangeAvailable(User actor);
 
     protected abstract void changeParticipantNumber(Feed feed, User user);
