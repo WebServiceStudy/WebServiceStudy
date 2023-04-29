@@ -1,5 +1,6 @@
 package com.wss.webservicestudy.web.feed.service;
 
+import com.wss.webservicestudy.web.common.util.SecurityUtil;
 import com.wss.webservicestudy.web.feed.dto.CreateFeedDto;
 import com.wss.webservicestudy.web.feed.dto.FeedRespDto;
 import com.wss.webservicestudy.web.feed.dto.FeedsRespDto;
@@ -75,36 +76,25 @@ public class FeedService {
 
     @Transactional
     public Feed create(CreateFeedDto feedDto) {
-        User currentUser = userService.findCurrentUser();
-        currentUser.checkIsWritable();
-        // TODO : 나이 제한 체크
-        feedDto.setWriter(currentUser);
         Feed feed = FeedMapper.INSTANCE.toFeed(feedDto);
-        feed.setStatus(FeedStatus.RECRUITING);
         feedRepository.save(feed);
 
-        FeedMeet feedMeet = feedMeetService.create(feed, currentUser);
+        FeedMeet feedMeet = feedMeetService.create(feed, feed.getWriter());
         feedMeetService.approve(feedMeet.getId());
         return feed;
     }
 
+    //TODO: isFeedWriter 값만 들고오고 하는거 없음.
     @Transactional
     public Feed update(final Long feedId, UpdateFeedDto feedDto) {
         Feed feed = findOne(feedId);
-
-        User currentUser = userService.findCurrentUser();
-        currentUser.checkIsWritable();
-
-        feed.isFeedWriter(currentUser);
+        feed.isFeedWriter(SecurityUtil.getLoginUserWithWritable());
         return feed.update(feedDto);
     }
     @Transactional
     public FeedRespDto updateStatus(Long feedId, FeedStatus feedStatus) {
         Feed feed = findOne(feedId);
-
-        User currentUser = userService.findCurrentUser();
-        currentUser.checkIsWritable();
-        feed.isFeedWriter(currentUser);
+        feed.isFeedWriter(SecurityUtil.getLoginUserWithWritable());
 
         if(!feed.existsParticipant()){
             throw new IllegalArgumentException("참가자가 2명이상은 되어야합니다.");
@@ -116,10 +106,7 @@ public class FeedService {
     @Transactional
     public Long delete(Long feedId) {
         Feed feed = findOne(feedId);
-
-        User currentUser = userService.findCurrentUser();
-        currentUser.checkIsWritable();
-        feed.isFeedWriter(currentUser);
+        feed.isFeedWriter(SecurityUtil.getLoginUserWithWritable());
 
         if(feed.existsParticipant()){
             feed.setDeleteYn(FeedDeleteYn.DELETED);

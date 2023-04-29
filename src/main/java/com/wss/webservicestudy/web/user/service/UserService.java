@@ -174,8 +174,10 @@ public class UserService {
 
 
     public UserRespDto getUserInfo(String email){
-        User user = userRepository.findByEmail(email);
-
+//        User user = userRepository.findByEmail(email);
+//        return user.toDto();
+        //test중
+        User user = SecurityUtil.getLoginUser();
         return user.toDto();
     }
 

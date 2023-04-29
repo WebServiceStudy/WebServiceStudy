@@ -32,6 +32,7 @@ public class ApproveChanger extends ParticipationChanger {
     @Override
     protected void checkChangeAvailable(User actor) {
         checkStatus();
+        checkAge(actor.getAge());
         checkFeedWriter(actor);
         checkWriterPermission(actor);
     }

@@ -39,7 +39,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @ContextConfiguration(classes = WebservicestudyApplication.class)
 @AutoConfigureMockMvc
-@WithUserDetails(value = "jieun0502@gmail.com")
 public class FeedControllerTest {
     @LocalServerPort
     private int port;
@@ -70,19 +69,19 @@ public class FeedControllerTest {
 
     CreateFeedDto getCreateFeedDto(){
         // Given
-        String title = "상태까지";
-        String content = "잘 들어가는지 test";
+        String title = "시큐리티 유틸3";
+        String content = "이용 test";
         LocalDateTime date = LocalDateTime.of(2024,5,8,10,0,0);
 //        String  date = "2024-04-27T13:30:00";
-        String addr = "어디가 좋은가";
+        String addr = "나이시";
         String latitude = "latitude";
         String longitude = "longitude";
         Integer minAge = 25;
         Integer maxAge = 30;
-        boolean genderDivisionYn = false;
-        Integer maxUser = 4;
-        Integer maxMale = null;
-        Integer maxFemale = null;
+        boolean genderDivisionYn = true;
+        Integer maxUser = null;
+        Integer maxMale = 2;
+        Integer maxFemale = 2;
 
         return CreateFeedDto.builder()
                 .title(title)
